@@ -1,10 +1,14 @@
-<h1>I'm the identer partial: {{identer.title}}</h1>
+<h1>Animal Identification {{identer.title}}</h1>
 <p>current taxa name: {{identer.currentTaxa.name}}</p>
 <p>current taxa level: {{identer.currentTaxa.rank}}</p>
 
 <ul ng-repeat="subtaxa in identer.currentTaxa.child_taxa">
-  <li><a ng-click="identer.sendNewTaxa(subtaxa.name)">{{subtaxa.name}}</a></li>
+  <li><a ng-click="identer.sendTaxa(subtaxa.name)">{{subtaxa.name}}</a></li>
 </ul>
 
-<button ng-click="identer.startPage()">Start Over</button>
-<button ng-click="identer.sendNewTaxa(identer.currentTaxa.classification[identer.currentTaxa.classification.length - 1].name)">Go Back</button>
+
+<!-- Start Over Button. -->
+<button ng-click="identer.sendTaxa('mammalia')">Start Over</button>
+
+<!-- go back button. grabs the classification data (last item is the next up) and re-GETs. -->
+<button ng-click="identer.sendTaxa(identer.currentTaxa.classification[identer.currentTaxa.classification.length - 1].name)">Go Back</button>
