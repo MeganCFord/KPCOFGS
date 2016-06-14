@@ -5,3 +5,6 @@
 <ul ng-repeat="subtaxa in identer.currentTaxa.child_taxa">
   <li><a ng-click="identer.sendNewTaxa(subtaxa.name)">{{subtaxa.name}}</a></li>
 </ul>
+
+<button ng-click="identer.startPage()">Start Over</button>
+<button ng-click="identer.sendNewTaxa(identer.currentTaxa.classification[identer.currentTaxa.classification.length - 1].name)">Go Back</button>

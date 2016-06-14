@@ -17,7 +17,11 @@ angular.module("Ident", ["ngRoute"])
 
     identer.title="hello world (angular)";
 
-    COLFactory.startPage().then((data) => {identer.currentTaxa = data; console.log("identer taxa", identer.currentTaxa);});
+    identer.startPage = () => {
+      COLFactory.startPage().then((data) => {identer.currentTaxa = data; console.log("identer taxa", identer.currentTaxa);});
+    };
+
+    identer.startPage();
 
     identer.sendNewTaxa = (nameToSend) => {
       console.log("name to send", nameToSend );
@@ -36,7 +40,7 @@ angular.module("Ident", ["ngRoute"])
       startPage: () => {
         return  $http({
           method: "GET", 
-          url: "http://www.catalogueoflife.org/col/webservice?name=Chordata&format=json&response=full"
+          url: "http://www.catalogueoflife.org/col/webservice?name=Mammalia&format=json&response=full"
         }).then( (res) => {
           currentTaxa = res.data.results[0];
           return currentTaxa;
@@ -53,6 +57,16 @@ angular.module("Ident", ["ngRoute"])
           res.data.results ?
           currentTaxa = res.data.results[0] :
           currentTaxa = res.data;
+
+          //loop through child taxa and remove extinct ones.
+          currentTaxa.child_taxa.forEach(function(taxa) {
+            if (taxa.is_extinct === true) {
+              console.log("this one is extinct", taxa.name );
+            } else {
+              console.log("this one is not extinct", taxa.name );
+            }
+          });
+
 
           console.log("current taxa in factory", currentTaxa );
           return currentTaxa;
