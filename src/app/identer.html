@@ -1,1 +1,6 @@
-<h1>I'm the identer partial: {{title}}</h1>
+<h1>I'm the identer partial: {{identer.title}}</h1>
+<p>HEY {{identer.currentTaxa.name}}</p>
+
+<ul ng-repeat="subtaxa in identer.currentTaxa.child_taxa">
+  <li><a ng-click="identer.sendNewTaxa(subtaxa.name_html)">{{subtaxa.name}}</a></li>
+</ul>
