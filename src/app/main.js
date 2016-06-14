@@ -20,7 +20,7 @@ angular.module("Ident", ["ngRoute"])
     COLFactory.startPage().then((data) => {identer.currentTaxa = data; console.log("identer taxa", identer.currentTaxa);});
 
     identer.sendNewTaxa = (nameToSend) => {
-      console.log("url to send", nameToSend );
+      console.log("name to send", nameToSend );
       COLFactory.sendNewTaxa(nameToSend).then((data) => {identer.currentTaxa = data; console.log("new identer taxa", identer.currentTaxa);});
     };
   })
@@ -50,8 +50,11 @@ angular.module("Ident", ["ngRoute"])
           method: "GET", 
           url: `http://www.catalogueoflife.org/col/webservice?name=${nameToSend}&format=json&response=full`
         }).then( (res) => {
-          currentTaxa = res.data.results[0];
-          console.log("current taxa data", currentTaxa );
+          res.data.results ?
+          currentTaxa = res.data.results[0] :
+          currentTaxa = res.data;
+
+          console.log("current taxa in factory", currentTaxa );
           return currentTaxa;
         }, (e) => {
           console.log("error", e );
