@@ -1,0 +1,25 @@
+{
+  "name": "nss-frontend-capstone",
+  "authors": [
+    "Megan Ford <meg.c.ford@gmail.com>"
+  ],
+  "description": "",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.6",
+    "jquery": "^3.0.0",
+    "bootstrap": "^3.3.6",
+    "angular-route": "^1.5.6",
+    "firebase": "^3.0.4"
+  }
+}
