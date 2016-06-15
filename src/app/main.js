@@ -14,16 +14,26 @@ angular.module("Ident", ["ngRoute"])
 
     const identer = this;
     identer.currentTaxa = {};
+    identer.subTaxa = [];
 
-    identer.title="Hello World";
+    identer.title= identer.currentTaxa.name;
 
-
-    identer.sendTaxa = (nameToSend) => {
-      console.log("name I'm sending", nameToSend );
-      COLFactory.COLforTaxa(nameToSend).then((data) => {identer.currentTaxa = data; console.log("new identer taxa", identer.currentTaxa);});
-    };
+//gets the current taxa, then runs through all the subtaxa to get all their info. it does NOT get the vernacular info of the current taxa though. 
+    identer.setUpPage = (nameToSend) => {
+      identer.subTaxa = [];
+      COLFactory.COLforTaxa(nameToSend)
+      .then((data) => {identer.currentTaxa = data; console.log("current taxa data", identer.currentTaxa );})
+      .then(() => {
+        return Promise.all(identer.currentTaxa.child_taxa.map(function (taxa) {
+          return COLFactory.EOLforID(taxa.name);
+        }));
+      }).then((subtaxaInfo) => {
+        identer.subTaxa =subtaxaInfo;
+        console.log("array of subtaxa info", subtaxaInfo );
+      });//end of .then
+    };//end of setUpPage
     //run this on start, perhaps as a resolve or something? 
-    identer.sendTaxa("chordata");
+    identer.setUpPage("Reptilia");
   });
 
   

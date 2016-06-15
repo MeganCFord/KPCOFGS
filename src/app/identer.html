@@ -2,13 +2,16 @@
 <p>current taxa name: {{identer.currentTaxa.name}}</p>
 <p>current taxa level: {{identer.currentTaxa.rank}}</p>
 
-<ul ng-repeat="subtaxa in identer.currentTaxa.child_taxa">
-  <li><a ng-click="identer.sendTaxa(subtaxa.name)">{{subtaxa.name}}</a></li>
+<ul ng-repeat="subtaxa in identer.subTaxa">
+  <li><a ng-click="identer.setUpPage(subtaxa.scientificName)">{{subtaxa.scientificName}}</a></li>
 </ul>
 
 
 <!-- Start Over Button. -->
-<button ng-click="identer.sendTaxa('mammalia')">Start Over</button>
+<button ng-click="identer.setUpPage('mammalia')">Start Over</button>
 
 <!-- go back button. grabs the classification data (last item is the next up) and re-GETs. -->
-<button ng-click="identer.sendTaxa(identer.currentTaxa.classification[identer.currentTaxa.classification.length - 1].name)">Go Back</button>
+<button ng-click="identer.setUpPage(identer.currentTaxa.classification[identer.currentTaxa.classification.length - 1].name)">Go Back</button>
+
+
+
