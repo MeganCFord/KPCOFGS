@@ -10,13 +10,10 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
       .otherwise("/");
   })
 
-  .controller("Identer", function(COLFactory, $scope, $sce, $uibModal ) {
+  .controller("Identer", function(COLFactory, $scope, $uibModal ) {
     const identer = this;
 
-    //runs to make any HTML description text show correctly. 
-    $scope.renderHtml = function(code) {
-      return $sce.trustAsHtml(code);
-    };
+    
 
     // $scope.animationsEnabled = true;
 
@@ -65,13 +62,22 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
 
   
 
-.controller("modalController", function($scope, $uibModalInstance, data) {
+.controller("modalController", function($scope, $uibModalInstance, data, $sce) {
   const modalController = this;
   
   modalController.data= data;
+  console.log("data", data );
 
-  modalController.ok = function () {
+  //runs to make any HTML description text show correctly. 
+  $scope.renderHtml = function(code) {
+      return $sce.trustAsHtml(code);
+    };
+
+  $scope.active = 0;
+
+  modalController.ok = function (nameToSend) {
     $uibModalInstance.close();
+    
   };
 
   modalController.cancel = function () {

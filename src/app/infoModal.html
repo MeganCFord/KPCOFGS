@@ -1,12 +1,26 @@
 <div class="modal-header">
-  <h3>Modal Header</h3>
+  <h3>{{modalController.data.commonName}}</h3>
+  <h5>Scientific Name: {{modalController.data.scientificName}}</h5>
 </div>
+
 <div class="modal-body">
-  <p>{{modalController.data}}</p>
-</div>
+  <!-- image div. This doesn't work, get help. -->
+  <div style="height: 305px">
+    <uib-carousel active="0">
+      <uib-slide ng-repeat="image in modalController.data.pictures">
+        <img ng-src="{{image}}" style="margin:auto;">
+      </uib-slide>
+    </uib-carousel>
+  </div>
+
+  <!-- text div -->
+  <div ng-repeat="text in modalController.data.textStuff">
+    <div ng-bind-html="renderHtml(text)"></div>
+  </div>
+
 <div class="modal-footer">
   <button type="button" class="btn" 
-          data-ng-click="modalController.cancel()">Cancel</button>
+          data-ng-click="modalController.cancel()">Back</button>
   <button class="btn btn-primary" 
-          data-ng-click="modalController.ok();">OK</button>
+          data-ng-click="modalController.ok(modalController.data.scientificName);">Select This Taxa</button>
 </div>

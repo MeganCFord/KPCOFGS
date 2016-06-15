@@ -13,9 +13,25 @@ angular.module("Ident")
       
       }, (e) => {
         console.err(e);
+      }).then((data) => {
+        data.child_taxa.forEach((taxa) => {
+          taxa.question = checkScientificName(taxa);
+        });
+        return data;
       });//end of .then. 
     }//end of COLforTaxa
 
+    function checkScientificName(name) {
+      let question = "";
+      switch(name) {
+      case "reptilia":
+        question = "Does it have scales?";
+        break;
+      default: 
+        question="question forthcoming- please see 'more info'.";
+      }
+      return question;
+    }
 
     function populateTaxaCard (nameToSend) {
         return $http({
@@ -54,7 +70,7 @@ angular.module("Ident")
 
         subtaxa.vernacularNames.forEach((name) => {
           if(name.language === "en" && name.eol_preferred=== true) {
-            subtaxa.commonName = name.vernacularName;
+            subtaxa.commonName = checkName(name.vernacularName);
           }//end of if-else
         });//end of vernacularname forEach 
 
@@ -65,11 +81,25 @@ angular.module("Ident")
           if (object.mimeType === "image/jpeg") {
             subtaxa.pictures.push( object.mediaURL);
           }//end of if-else
+
         });//end of dataObjects forEach
         
         resolve(subtaxa);
       });//end of promise
     }//end of parseCommonInfo
+
+    function checkName(name) {
+      let correctName = "";
+      switch(name) {
+      case "tuataras":
+        correctName = "Tuatara";
+        break;
+      default:
+        correctName = name;
+      }
+      return correctName;
+
+    }
 
     return {
       COLforTaxa: COLforTaxa, 

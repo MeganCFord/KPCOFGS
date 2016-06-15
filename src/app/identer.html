@@ -4,8 +4,9 @@
 
 <ul ng-repeat="subtaxa in identer.currentTaxa.child_taxa">
   <li>
+  {{subtaxa.name}}
   <!-- add questions in here based on the subtaxa names.  -->
-    <a class="btn btn-default" ng-click="identer.setUpPage(subtaxa.name)">{{subtaxa.name}}</a>
+    <a class="btn btn-default" ng-click="identer.setUpPage(subtaxa.name)">{{subtaxa.question}}</a>
     <a class="btn btn-danger" ng-click = "identer.openModal(subtaxa.name)">More Info</a>
   </li>
 </ul>
@@ -18,3 +19,6 @@
 <button class="btn btn-success" ng-click="identer.setUpPage(identer.currentTaxa.classification[identer.currentTaxa.classification.length - 1].name)">Go Back</button>
 
 
+<form ng-submit="identer.setUpPage(subTaxa.name)">
+
+</form>
