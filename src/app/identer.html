@@ -1,17 +1,20 @@
-<h1>Animal Identification {{identer.title}}</h1>
+<h1>Animal Identification</h1>
 <p>current taxa name: {{identer.currentTaxa.name}}</p>
 <p>current taxa level: {{identer.currentTaxa.rank}}</p>
 
-<ul ng-repeat="subtaxa in identer.subTaxa">
-  <li><a ng-click="identer.setUpPage(subtaxa.scientificName)">{{subtaxa.scientificName}}</a></li>
+<ul ng-repeat="subtaxa in identer.currentTaxa.child_taxa">
+  <li>
+  <!-- add questions in here based on the subtaxa names.  -->
+    <a class="btn btn-default" ng-click="identer.setUpPage(subtaxa.name)">{{subtaxa.name}}</a>
+    <a class="btn btn-danger" ng-click = "identer.openModal(subtaxa.name)">More Info</a>
+  </li>
 </ul>
 
 
 <!-- Start Over Button. -->
-<button ng-click="identer.setUpPage('mammalia')">Start Over</button>
+<button class="btn btn-warning" ng-click="identer.setUpPage('mammalia')">Start Over</button>
 
 <!-- go back button. grabs the classification data (last item is the next up) and re-GETs. -->
-<button ng-click="identer.setUpPage(identer.currentTaxa.classification[identer.currentTaxa.classification.length - 1].name)">Go Back</button>
-
+<button class="btn btn-success" ng-click="identer.setUpPage(identer.currentTaxa.classification[identer.currentTaxa.classification.length - 1].name)">Go Back</button>
 
 
