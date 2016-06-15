@@ -1,4 +1,4 @@
-angular.module("Ident", ["ngRoute"])
+angular.module("Ident", ["ngRoute", "ui.bootstrap"])
 
   .config(($routeProvider) => {
     $routeProvider
