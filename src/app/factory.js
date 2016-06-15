@@ -41,11 +41,12 @@ angular.module("Ident")
         return res.data;
       }, (e) => {
         console.log("error", e );
-      })//end of resolve/reject
+      });//end of resolve/reject
     }//end of EOLforCommonInfo
 
+
     function parseCommonInfo(subtaxa) {
-      return new Promise(function(resolve, reject) {
+      return new Promise(function(resolve) {
       // console.log("parser is starting" );
         // console.log("object", subtaxa);
         subtaxa.textStuff = [];
@@ -58,7 +59,6 @@ angular.module("Ident")
         });//end of vernacularname forEach 
 
         subtaxa.dataObjects.forEach((object) => {
-          console.log("running data objects loop", object );
           if (object.mimeType === "text/plain" || object.mimeType === "text/html") {
             subtaxa.textStuff.push( object.description);
           } 

@@ -1,4 +1,4 @@
-angular.module("Ident", ["ngRoute", "ui.bootstrap"])
+angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
 
   .config(($routeProvider) => {
     $routeProvider
@@ -10,15 +10,17 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap"])
       .otherwise("/");
   })
 
-  .controller("Identer", function(COLFactory, $scope, $sce, $timeout) {
+  .controller("Identer", function(COLFactory, $scope, $sce, $uibModal ) {
     const identer = this;
 
-    
+    //runs to make any HTML description text show correctly. 
     $scope.renderHtml = function(code) {
       return $sce.trustAsHtml(code);
     };
 
-//gets the current taxa with scientific names only of child taxa. add'l info loads on a click. 
+    // $scope.animationsEnabled = true;
+
+    //gets the current taxa with scientific names only of child taxa. add'l info loads on a click. 
     identer.setUpPage = (nameToSend) => {
       identer.subTaxa = [];
       COLFactory.COLforTaxa(nameToSend)
@@ -33,13 +35,47 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap"])
     identer.populateTaxaCard = (scientificName) => {
       COLFactory.populateTaxaCard(scientificName)
       .then((info) => {
-        identer.modalInfo = info;
-        console.log("identer modal info", identer.modalInfo );
+        console.log("identer modal info", info );
+        return info;
       });
     };
 
+    //loads on click to open modal and get the subtaxa info. 
+    identer.openModal = (scientificName) => {
+
+      
+      const modalInstance = $uibModal.open({
+        // animation: $scope.animationsEnabled, 
+        size: "lg",
+        templateUrl: "app/infoModal.html", 
+        controller: "modalController",
+        controllerAs: "modalController", 
+        resolve: { 
+          data: function (COLFactory) {
+            return COLFactory.populateTaxaCard(scientificName);
+          }//end of data function
+        }//end of resolve
+            
+      });//end of modal.open
+    }; //end of identer.openModal
+
     //run this on start, perhaps as a resolve or something? 
     identer.setUpPage("Reptilia");
-  });
+  })//end of controller
 
   
+
+.controller("modalController", function($scope, $uibModalInstance, data) {
+  const modalController = this;
+  
+  modalController.data= data;
+
+  modalController.ok = function () {
+    $uibModalInstance.close();
+  };
+
+  modalController.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+
+});
