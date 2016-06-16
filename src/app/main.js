@@ -13,9 +13,7 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
   .controller("Identer", function(COLFactory, $scope, $uibModal ) {
     const identer = this;
 
-    
-
-    // $scope.animationsEnabled = true;
+    $scope.animationsEnabled = true;
 
     //gets the current taxa with scientific names only of child taxa. add'l info loads on a click. 
     identer.setUpPage = (nameToSend) => {
@@ -70,15 +68,16 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
 
   //runs to make any HTML description text show correctly. 
   $scope.renderHtml = function(code) {
-      return $sce.trustAsHtml(code);
-    };
+    return $sce.trustAsHtml(code);
+  };
 
   $scope.active = 0;
 
   modalController.ok = function (nameToSend) {
-    $uibModalInstance.close();
-    
+    $uibModalInstance.close(nameToSend);
+
   };
+
 
   modalController.cancel = function () {
     $uibModalInstance.dismiss('cancel');

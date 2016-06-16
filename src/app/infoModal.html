@@ -7,7 +7,7 @@
   <!-- image div. This doesn't work, get help. -->
   <div style="height: 305px">
     <uib-carousel active="0">
-      <uib-slide ng-repeat="image in modalController.data.pictures">
+      <uib-slide ng-repeat="image in modalController.data.pictures track by $index" index="$index">
         <img ng-src="{{image}}" style="margin:auto;">
       </uib-slide>
     </uib-carousel>

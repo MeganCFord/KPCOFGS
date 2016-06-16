@@ -2,6 +2,7 @@ angular.module("Ident")
   .factory("COLFactory", function($http) {
 
     function COLforTaxa (nameToSend) {
+      console.log("COLforTaxa Data", nameToSend );
       return $http({
         method: "GET", 
         url: `http://www.catalogueoflife.org/col/webservice?name=${nameToSend}&format=json&response=full`
@@ -79,6 +80,7 @@ angular.module("Ident")
             subtaxa.textStuff.push( object.description);
           } 
           if (object.mimeType === "image/jpeg") {
+            //I need to run a function somewhere that filters this array- runs a GET and if it returns success, add it to the 'pictures' array, and if not do nothing. 
             subtaxa.pictures.push( object.mediaURL);
           }//end of if-else
 
