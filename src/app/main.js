@@ -3,42 +3,39 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
   .config(($routeProvider) => {
     $routeProvider
       .when("/", {
-        templateUrl: "app/identer.html",
-        controller: "Identer", 
-        controllerAs: "identer"
+        templateUrl: "app/tree.html",
+        controller: "Tree", 
+        controllerAs: "tree"
       })
       .otherwise("/");
   })
 
-  .controller("Identer", function(COLFactory, $scope, $uibModal ) {
-    const identer = this;
 
-    $scope.animationsEnabled = true;
 
-    //gets the current taxa with scientific names only of child taxa. add'l info loads on a click. 
-    identer.setUpPage = (nameToSend) => {
-      identer.subTaxa = [];
-      COLFactory.COLforTaxa(nameToSend)
+
+
+  ////////////////CONTROLLER
+  
+  .controller("Tree", function(COLFactory, $scope, $uibModal ) {
+    const tree = this;
+
+      
+    tree.loadSubtaxa = (aScientificName) => {
+      //clear subtaxa.
+      tree.subTaxa = [];
+      COLFactory.COLforTaxa(aScientificName)
       
       .then((data) => {
-        identer.currentTaxa = data; 
-        console.log("current taxa data", identer.currentTaxa );
-      });
-    };//end of setUpPage
+        tree.currentTaxa = data; 
+        console.log("current taxa data", tree.currentTaxa );
+      });//end of .then
+    };//end of loadSubtaxa
 
 
-    identer.populateTaxaCard = (scientificName) => {
-      COLFactory.populateTaxaCard(scientificName)
-      .then((info) => {
-        console.log("identer modal info", info );
-        return info;
-      });
-    };
 
-    //loads on click to open modal and get the subtaxa info. 
-    identer.openModal = (scientificName) => {
-
-      
+    //loads on "more info" button click to open modal and get subtaxa info. 
+    tree.openModal = (scientificName) => {
+ 
       const modalInstance = $uibModal.open({
         // animation: $scope.animationsEnabled, 
         size: "lg",
@@ -47,40 +44,19 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
         controllerAs: "modalController", 
         resolve: { 
           data: function (COLFactory) {
+            //TODO: replace this with a wikipedia search.
+            //TODO: run the card population in the background for faster modal load.
             return COLFactory.populateTaxaCard(scientificName);
           }//end of data function
-        }//end of resolve
-            
+        }//end of resolve  
       });//end of modal.open
-    }; //end of identer.openModal
+    }; //end of tree.openModal
 
-    //run this on start, perhaps as a resolve or something? 
-    identer.setUpPage("Reptilia");
-  })//end of controller
+
+    //TODO: replace this with a 'start' page to load up an initial tree. 
+    tree.loadSubtaxa("Chordata");
+  });//end of controller
 
   
 
-.controller("modalController", function($scope, $uibModalInstance, data, $sce) {
-  const modalController = this;
-  
-  modalController.data= data;
-  console.log("data", data );
 
-  //runs to make any HTML description text show correctly. 
-  $scope.renderHtml = function(code) {
-    return $sce.trustAsHtml(code);
-  };
-
-  $scope.active = 0;
-
-  modalController.ok = function (nameToSend) {
-    $uibModalInstance.close(nameToSend);
-
-  };
-
-
-  modalController.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
-  };
-
-});
