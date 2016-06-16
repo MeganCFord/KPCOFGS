@@ -1,12 +1,46 @@
 <div class="modal-header">
-  <h3>Modal Header</h3>
+  <h3>{{modalController.data.commonName}}</h3>
+  <h5>Scientific Name: {{modalController.data.scientificName}}</h5>
 </div>
+
 <div class="modal-body">
-  <p>{{modalController.data}}</p>
-</div>
+  <!-- image div. This doesn't work, get help. -->
+  <div style="max-height: 305px">
+    <uib-carousel active="0">
+      <uib-slide ng-repeat="image in modalController.data.pictures track by $index" index="$index">
+        <img ng-src="{{image}}" style="margin:auto;">
+      </uib-slide>
+    </uib-carousel>
+  </div>
+
+  <!-- text div -->
+  <div ng-repeat="text in modalController.data.textStuff">
+    <div ng-bind-html="renderHtml(text)"></div>
+  </div>
+
 <div class="modal-footer">
   <button type="button" class="btn" 
-          data-ng-click="modalController.cancel()">Cancel</button>
-  <button class="btn btn-primary" 
-          data-ng-click="modalController.ok();">OK</button>
+          data-ng-click="modalController.cancel()">Back</button>
+
+          
+  <!-- TODO: activate this button to connect to the radio button. -->
+  <!-- <button class="btn btn-primary" 
+          data-ng-click="modalController.ok(modalController.data.scientificName);">Select This Taxa</button> -->
 </div>
+
+
+<!-- NOTE NOTE NOTE: in order to make this carousel work, I had to remove the animation from the angular template file. The "$scope.$currentTransition"s are commented out per this github issue: https://github.com/angular-ui/bootstrap/issues/5379
+For reference, this is the full function, currently found on lines 489 ff of ui-bootstrap-tpls.js: 
+
+
+//Prevent this user-triggered transition from occurring if there is already one in progress
+    if (nextSlide.slide.index !== currentIndex 
+    //&& !$scope.$currentTransition <<<<<<<<<< COMMENTED THIS OUT
+      ) {
+      goNext(nextSlide.slide, nextIndex, direction);
+    } else if (nextSlide && nextSlide.slide.index !== currentIndex 
+    //&& $scope.$currentTransition <<<<<<<<<<< COMMENTED THIS OUT
+      ) {
+      bufferedTransitions.push(slides[nextIndex]);
+    }
+  }; -->
