@@ -1,7 +1,7 @@
 <h1>Traverse The Tree</h1>
 
-<!-- TODO: change this to a common name instead of the scientific name.  -->
-<h1>I know my animal is: {{tree.currentTaxa.name}}</h1>
+<!-- TODO: flesh this data out. make it cumulative. -->
+<h1>I know my animal: {{tree.currentTaxa.question}}</h1>
 
  <p>current level: {{tree.currentTaxa.rank}}</p>
 
@@ -19,7 +19,7 @@
             <!-- nested div for margin purposes -->
             <div class="btn-group" data-toggle="buttons">
              <!-- TODO: put an image here once I load the switch statement images into firebase. -->
-              <h3>{{subtaxa.question}}</h3>
+              <h3>My animal also {{subtaxa.question}}</h3>
              <!-- this button opens the Modal. -->
               <a class="btn btn-lg btn-default" ng-click="tree.openModal(subtaxa.name)">More Info</a>
              <!-- these two buttons show/hide based on whether the taxa is selected. -->
@@ -37,7 +37,7 @@
         <!-- SUBMIT BUTTON -->
         <button class="btn btn-lg btn-default" type="submit" ng-class="{'disabled': tree.mySubtaxa === null}">Submit</button> 
         <!-- START OVER BUTTON -->
-        <button class="btn btn-lg btn-default" ng-click="tree.mySubtaxa='Chordata'; tree.loadSubtaxa()">Start Over</button>
+        <a href="#/" class="btn btn-lg btn-default">Start Over</a>
         <!-- GO BACK BUTTON -->
         <button class="btn btn-lg btn-default" ng-click="tree.mySubtaxa= tree.currentTaxa.classification[tree.currentTaxa.classification.length - 1].name; tree.loadSubtaxa()">Go Back</button>
       </form>
