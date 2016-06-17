@@ -2,7 +2,7 @@ angular.module("Ident")
   .controller("Tree", function(COLFactory, InfoFactory, $scope, $uibModal ) {
     const tree = this;
 
-    //runs on initial load of page to get the 'start' page starting taxa. gets reassigned on new clicks.
+    //runs on initial load of page to get the 'start' page starting taxa. Gets reassigned to a data object on new clicks.
     tree.currentTaxa = COLFactory.getCurrentTaxa(); 
   
 

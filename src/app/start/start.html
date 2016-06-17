@@ -1,11 +1,16 @@
-<h1>{{start.title}}</h1>
+<h1>Identify Your Mystery Animal</h1>
+
+
 <div ng-if="start.iKnow===false">
   <a class="btn btn-lg btn-default" ng-click="start.openTree()">Start at the Beginning</a>
 
   <a class="btn btn-lg btn-default" ng-click="start.iKnow = true">I already know some things</a>
 </div>
 
-<div ng-if="start.iKnow===true" ng-include="'app/start/additionalButtons.html'">
+<div ng-if="start.iKnow===true">
+  <div ng-include="'app/start/additionalButtons.html'">
+  </div>
+<a class="btn btn-lg btn-default" ng-click="start.iKnow = false">Go Back</a>
 </div>
 
 
