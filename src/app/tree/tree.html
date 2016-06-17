@@ -1,0 +1,52 @@
+<h1>Traverse The Tree</h1>
+
+<!-- TODO: change this to a common name instead of the scientific name.  -->
+<h1>I know my animal is: {{tree.currentTaxa.name}}</h1>
+
+ <p>current level: {{tree.currentTaxa.rank}}</p>
+
+<div class="container">
+  <div class="row">
+    <!-- empty left column -->
+    <div class="col col-xs-1">
+    </div>
+
+    <!-- Centered main content column -->
+    <div class="col col-xs-10">
+      <form ng-submit="tree.loadSubtaxa()">
+        <div class="row">
+          <div class="col col-xs-4" ng-class="{'specialTest': tree.mySubtaxa===subtaxa.name}" ng-repeat="subtaxa in tree.currentTaxa.child_taxa">
+            <!-- nested div for margin purposes -->
+            <div class="btn-group" data-toggle="buttons">
+             <!-- TODO: put an image here once I load the switch statement images into firebase. -->
+              <h3>{{subtaxa.question}}</h3>
+             <!-- this button opens the Modal. -->
+              <a class="btn btn-lg btn-default" ng-click="tree.openModal(subtaxa.name)">More Info</a>
+             <!-- these two buttons show/hide based on whether the taxa is selected. -->
+              <label class="btn btn-primary btn-lg" ng-class="{'hideMe' : tree.mySubtaxa === subtaxa.name}""> 
+                <input type="radio" ng-value="subtaxa.name" name="subtaxaOptions" ng-model="tree.mySubtaxa">Select This Taxa
+              </label>
+            
+              <a class="btn btn-primary btn-lg disabled" ng-class="{'hideMe': tree.mySubtaxa !== subtaxa.name}">Taxa Selected</a>
+
+            </div><!-- end of nested sub-div. -->
+          </div><!-- end of 'col' repeated div.-->
+        </div><!-- end of 'row' card div. -->
+
+
+        <!-- SUBMIT BUTTON -->
+        <button class="btn btn-lg btn-default" type="submit">Submit</button> 
+        <!-- START OVER BUTTON -->
+        <button class="btn btn-lg btn-default" ng-click="tree.mySubtaxa='Chordata'; tree.loadSubtaxa()">Start Over</button>
+        <!-- GO BACK BUTTON -->
+        <button class="btn btn-lg btn-default" ng-click="tree.mySubtaxa= tree.currentTaxa.classification[tree.currentTaxa.classification.length - 1].name; tree.loadSubtaxa()">Go Back</button>
+      </form>
+    </div>
+
+    <!-- empty right column -->
+    <div class="col col-xs-1">
+    </div>
+  </div>
+</div>
+
+

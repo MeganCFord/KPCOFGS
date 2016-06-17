@@ -1,0 +1,7 @@
+.specialTest {
+  border: 2px solid green;
+}
+
+.hideMe {
+  display: none;
+}
