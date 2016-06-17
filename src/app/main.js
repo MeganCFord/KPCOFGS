@@ -8,7 +8,7 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
         controllerAs: "tree"
       })
       .when("/", {
-        templateUrl: "app/start.html", 
+        templateUrl: "app/start/start.html", 
         controller: "Start", 
         controllerAs: "start"
       })

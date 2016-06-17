@@ -27,7 +27,7 @@
                 <input type="radio" ng-value="subtaxa.name" name="subtaxaOptions" ng-model="tree.mySubtaxa">Select This Taxa
               </label>
             
-              <a class="btn btn-primary btn-lg disabled" ng-class="{'hideMe': tree.mySubtaxa !== subtaxa.name}">Taxa Selected</a>
+              <a class="btn btn-primary btn-lg" ng-class="{'hideMe': tree.mySubtaxa !== subtaxa.name}" ng-click="tree.mySubtaxa = null">Deselect</a>
 
             </div><!-- end of nested sub-div. -->
           </div><!-- end of 'col' repeated div.-->
@@ -35,7 +35,7 @@
 
 
         <!-- SUBMIT BUTTON -->
-        <button class="btn btn-lg btn-default" type="submit">Submit</button> 
+        <button class="btn btn-lg btn-default" type="submit" ng-class="{'disabled': tree.mySubtaxa === null}">Submit</button> 
         <!-- START OVER BUTTON -->
         <button class="btn btn-lg btn-default" ng-click="tree.mySubtaxa='Chordata'; tree.loadSubtaxa()">Start Over</button>
         <!-- GO BACK BUTTON -->

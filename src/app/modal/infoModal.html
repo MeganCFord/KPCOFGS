@@ -1,34 +1,32 @@
 <div class="modal-header">
-  <!-- {{$$prevSibling.tree.setSubtaxa()}} -->
   <h3>{{modalController.data.commonName}}</h3>
   <h5>Scientific Name: {{modalController.data.scientificName}}</h5>
-</div>
-
-<div class="modal-body">
-  <!-- image div. This doesn't work, get help. -->
-  <div style="max-height: 305px">
-    <uib-carousel active="0">
+   <!-- images -->
+  <div class="infoImages">
+    <uib-carousel active="active">
       <uib-slide ng-repeat="image in modalController.data.pictures track by $index" index="$index">
-        <img ng-src="{{image}}" style="margin:auto;">
+        <img ng-src="{{image}}">
       </uib-slide>
     </uib-carousel>
-  </div>
+  </div><!-- end of images div -->
+</div>  <!-- end of header -->
 
-  <!-- text div -->
-  <div ng-repeat="text in modalController.data.textStuff">
-    <div ng-bind-html="renderHtml(text)"></div>
+
+<div class="modal-body">
+  <!-- text -->
+  <div  class="infoText" ng-repeat="text in modalController.data.textStuff">
+    <p ng-bind-html="renderHtml(text)"></p>
   </div>
+</div>
+
 
 <div class="modal-footer">
   <button type="button" class="btn" 
-          data-ng-click="modalController.cancel()">Back</button>
-
-          
-  <!-- TODO: activate this button to connect to the radio button. -->
+          data-ng-click="modalController.cancel()">Back</button>          
   <button class="btn btn-primary" 
           data-ng-click="modalController.ok(modalController.data.scientificName);">Select This Taxa</button>
-</div>
 
+</div>
 
 <!-- NOTE NOTE NOTE: in order to make this carousel work, I had to remove the animation from the angular template file. The "$scope.$currentTransition"s are commented out per this github issue: https://github.com/angular-ui/bootstrap/issues/5379
 For reference, this is the full function, currently found on lines 489 ff of ui-bootstrap-tpls.js: 

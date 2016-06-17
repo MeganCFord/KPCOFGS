@@ -3,8 +3,6 @@ angular.module("Ident")
   const tree = this;
 
   //TODO: replace this with a 'start' page to load up an initial tree.
-   tree.mySubtaxa = "Chordata"; 
-
 
 
 
@@ -29,7 +27,7 @@ angular.module("Ident")
     const modalInstance = $uibModal.open({
       // animation: $scope.animationsEnabled, 
       size: "lg",
-      templateUrl: "app/infoModal.html", 
+      templateUrl: "app/modal/infoModal.html", 
       controller: "modalController",
       controllerAs: "modalController", 
       resolve: { 
@@ -46,6 +44,7 @@ angular.module("Ident")
 
   
     tree.loadSubtaxa();
+    tree.mySubtaxa = null;
   });//end of controller
 
   

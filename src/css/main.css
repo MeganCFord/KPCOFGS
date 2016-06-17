@@ -5,3 +5,17 @@
 .hideMe {
   display: none;
 }
+
+.modal-body {
+  max-height: 600px;
+  overflow-y: scroll;
+}
+
+.infoImages {
+  height: 400px;
+}
+
+.infoImages img {
+  max-height: 400px;
+  margin: auto;
+}
