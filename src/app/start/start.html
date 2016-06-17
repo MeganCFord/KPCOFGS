@@ -1,2 +1,13 @@
 <h1>{{start.title}}</h1>
-<a class="btn btn-lg btn-default" ng-click="start.startTaxa = 'Chordata'; start.openTree()">get started</a>
+<div ng-if="start.iKnow===false">
+  <a class="btn btn-lg btn-default" ng-click="start.openTree()">Start at the Beginning</a>
+
+  <a class="btn btn-lg btn-default" ng-click="start.iKnow = true">I already know some things</a>
+</div>
+
+<div ng-if="start.iKnow===true" ng-include="'app/start/additionalButtons.html'">
+</div>
+
+
+
+

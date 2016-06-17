@@ -4,6 +4,7 @@ angular.module("Ident")
     start.title="hello world (start page)";
 
     start.startTaxa = "Animalia";
+    start.iKnow=false;
 
     start.openTree = function() {
       COLFactory.COLforTaxa(start.startTaxa)
