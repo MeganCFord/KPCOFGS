@@ -1,6 +1,12 @@
 angular.module("Ident")
   .factory("COLFactory", function($http) {
 
+    let currentTaxaData = null;
+
+    function getCurrentTaxa () {
+      return currentTaxaData;
+    }
+
     function COLforTaxa (nameToSend) {
       console.log("COLforTaxa Data", nameToSend );
       return $http({
@@ -21,6 +27,7 @@ angular.module("Ident")
         data.child_taxa.forEach((taxa) => {
           taxa = checkScientificName(taxa);
         });
+        currentTaxaData = data;
         return data;
       });//end of .then. 
     }//end of COLforTaxa
@@ -35,66 +42,71 @@ angular.module("Ident")
         //CHORDATA SUBTAXA
       case "Actinopterygii":
         currentTaxa.question = "My animal is a fish with fins that are webs of skin supported by bony spines.";
-        currentTaxa.disableMe=true;
+        currentTaxa.enableMe=false;
         break;
       case "Amphibia": 
         currentTaxa.question = "My animal is probably an amphibian: it has slimy skin with no scales or fur/hair, and goes through a metamorphosis from an egg laid in water to adult form.";
-        currentTaxa.disableMe=true;
+        currentTaxa.enableMe=false;
         break;
       case "Appendicularia":
         currentTaxa.question = "My animal is a tiny clear plankton that usually floats near the ocean's surface and filters seawater through a sac to eat.";
-        currentTaxa.disableMe=true;
+        currentTaxa.enableMe=false;
         break;
       case "Ascidiacea":
         currentTaxa.question = "My animal is attached to a rock in the ocean and filters seawater through a sac to eat.";
-        currentTaxa.disableMe=true;
+        currentTaxa.enableMe=false;
         break;
       case "Aves":
         currentTaxa.question = "My animal has feathers and wings.";
-        currentTaxa.disableMe=true;
+        currentTaxa.enableMe=false;
         break;
       case "Cephalaspidomorphi":
         currentTaxa.question = "My animal is fish with a sucker mouth and no jaw.";
-        currentTaxa.disableMe=true;
+        currentTaxa.enableMe=false;
         break;
       case "Elasmobranchii":
         currentTaxa.question = "My animal is a fish with cartilage instead of bones and a bony jaw separate from its skull- probably a shark or ray.";
-        currentTaxa.disableMe=true;
+        currentTaxa.enableMe=false;
         break;
       case "Holocephali":
         currentTaxa.question = "My animal is a fish with cartilage instead of bones, a long, whiplike tail, and a small, fleshy mouth." ;
-        currentTaxa.disableMe=true;
+        currentTaxa.enableMe=false;
         break;
       case "Leptocardii":
         currentTaxa.question = "My animal is a 2-3 inch long worm-shaped fish with no fins, a poorly-shaped tail, and only a little cartilage stiffening its gills.";
-        currentTaxa.disableMe=true;
+        currentTaxa.enableMe=false;
         break;
       case "Mammalia": 
         currentTaxa.question = "My animal has fur or hair and gives birth to its babies.";
+        currentTaxa.enableMe=true;
         break;
       case "Myxini": 
         currentTaxa.question = "My animal is a slimy eel-shaped fish with eye spots, a cartilaginous skull, one nostril but no spinal bones.";
-        currentTaxa.disableMe=true;
+        currentTaxa.enableMe=false;
         break;
       case "Reptilia":
         currentTaxa.question = "My animal is a reptile, so it's probably dry and has scales.";
+        currentTaxa.enableMe=true;
         break;
       case "Sarcopterygii":
         currentTaxa.question = "My animal is a bony fish with lobed fins attached to the body by a single bone.";
+          currentTaxa.enableMe=true;
         break;
       case "Thaliacea":
         currentTaxa.question = "My animal is a small, free-floating sac-like creature that filters seawater for food and propulsion.";
-        currentTaxa.disableMe=true;
+        currentTaxa.enableMe=false;
         break;
       default: 
         currentTaxa.question = `scientific name: ${currentTaxa.name}. Description Forthcoming, see 'More info'.`;
+        currentTaxa.enableMe=true;
       }
       return taxa;
     }
     
     //public functions
     return {
-      COLforTaxa: COLforTaxa 
+      COLforTaxa: COLforTaxa, 
+      getCurrentTaxa: getCurrentTaxa
       
     };//end of return
 

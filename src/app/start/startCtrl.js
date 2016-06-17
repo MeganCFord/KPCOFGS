@@ -1,14 +1,14 @@
 angular.module("Ident")
-  .controller("Start", function(COLFactory, $routeParams, $scope) {
+  .controller("Start", function(COLFactory, $scope, $location) {
     const start=this;
-
     start.title="hello world (start page)";
 
-    start.openTree = function(nameToSend) {
-      console.log("next sibling", $scope );
-      // $scope.$$nextSibling.tree.loadSubtaxa(nameToSend);
-      // $location.url("/tree");
+    start.startTaxa = "Animalia";
 
-
+    start.openTree = function() {
+      COLFactory.COLforTaxa(start.startTaxa)
+        .then(() => {$location.url("/tree");});
     };
+
+
   });//end of module

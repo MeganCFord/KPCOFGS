@@ -15,7 +15,7 @@
     <div class="col col-xs-10">
       <form ng-submit="tree.loadSubtaxa()">
         <div class="row">
-          <div class="col col-xs-4" ng-class="{'specialTest': tree.mySubtaxa===subtaxa.name}" ng-repeat="subtaxa in tree.currentTaxa.child_taxa">
+          <div class="col col-xs-4" ng-class="{'specialTest': tree.mySubtaxa===subtaxa.name}" ng-repeat="subtaxa in tree.currentTaxa.child_taxa | filter:{enableMe:true}">
             <!-- nested div for margin purposes -->
             <div class="btn-group" data-toggle="buttons">
              <!-- TODO: put an image here once I load the switch statement images into firebase. -->
