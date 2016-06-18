@@ -6,8 +6,7 @@ angular.module("Ident")
     start.iKnow=false;
 
     start.openTree = function() {
-      COLFactory.COLforTaxa(start.startTaxa)
-        .then(() => {$location.url("/tree");});
+        $location.url(`/tree/${start.startTaxa}`);
     };
 
 

@@ -1,5 +1,5 @@
 angular.module("Ident")
-  .controller("Tree", function(COLFactory, InfoFactory, $scope, $uibModal ) {
+  .controller("Tree", function(COLFactory, InfoFactory, $scope, $uibModal, $location) {
     const tree = this;
 
     //runs on initial load of page to get the 'start' page starting taxa. Gets reassigned to a data object on new clicks.
@@ -7,19 +7,16 @@ angular.module("Ident")
   
 
     tree.loadSubtaxa = () => {
-      //clear subtaxa display array.
-      tree.subTaxa = [];
 
       if (tree.mySubtaxa) {
-        COLFactory.COLforTaxa(tree.mySubtaxa)
-        .then((data) => {
-          tree.currentTaxa = data; 
-          console.log("current taxa data", tree.currentTaxa );
-        });//end of .then
+        //part of this redirect runs the GET request to the COLFactory.
+        $location.path(`/tree/${tree.mySubtaxa}`);
       } else {
         console.log("nothing was selected");
       }//end of if tree.mySubtaxa
     };//end of loadSubtaxa
+
+
 
     //loads on "more info" button click to open modal and get subtaxa info. 
     tree.openModal = (scientificName) => {
