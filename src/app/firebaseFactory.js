@@ -44,6 +44,10 @@ angular.module("Ident")
     };
 
   });
+
+
+
+  
  //TODO: move this data into firebase
       
     function addMyOwnData(taxa) {

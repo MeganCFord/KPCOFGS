@@ -1,7 +1,7 @@
 <h1>Traverse The Tree</h1>
 
 <!-- TODO: flesh this data out. make it cumulative. -->
-<h3>I know my animal: {{tree.currentTaxa.question}}</h3>
+<h3>My animal: {{tree.currentTaxa.name}}</h3>
 
  <p>current level: {{tree.currentTaxa.rank}}</p>
 
@@ -12,7 +12,7 @@
     </div>
 
     <!-- Centered main content column -->
-    <div class="col col-xs-10" ng-include="tree.currentTaxa.atSpecies ? '/app/tree/tree-species.html' : '/app/tree/tree-traversable.html'">
+    <div class="col col-xs-10" ng-include="tree.currentTaxa.traversable ? '/app/tree/tree-traversable.html' : '/app/tree/tree-species.html'">
       
     </div>
 
