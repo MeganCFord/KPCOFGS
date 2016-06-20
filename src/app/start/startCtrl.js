@@ -6,7 +6,7 @@ angular.module("Ident")
     start.iKnow=false;
 
     start.openTree = function() {
-        $location.url(`/tree/${start.startTaxa}`);
+      $location.url(`/tree/${start.startTaxa}`);
     };
 
 

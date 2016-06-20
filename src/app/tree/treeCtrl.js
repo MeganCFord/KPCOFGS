@@ -1,9 +1,19 @@
 angular.module("Ident")
-  .controller("Tree", function(COLFactory, InfoFactory, $scope, $uibModal, $location) {
+  .controller("Tree", function(COLFactory, InfoFactory, $scope, $uibModal, $location, $timeout) {
     const tree = this;
 
-    //runs on initial load of page to get the 'start' page starting taxa. Gets reassigned to a data object on new clicks.
-    tree.currentTaxa = COLFactory.getCurrentTaxa(); 
+    //with redirect, this loads each time the submit button is clicked.
+    tree.loadcurrentTaxa = () => {
+      $timeout().then(() => {tree.currentTaxa = COLFactory.getCurrentTaxa();
+      console.log("tree.currentTaxa", tree.currentTaxa);
+      });
+    };
+    tree.loadcurrentTaxa();
+    tree.mySubtaxa = null;
+  
+    //TODO: add firebase cumulative object to top of traversal.  
+
+
   
 
     tree.loadSubtaxa = () => {
