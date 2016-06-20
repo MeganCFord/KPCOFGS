@@ -5,11 +5,11 @@ angular.module("Ident")
       apiKey: "AIzaSyCURkkPgQCr7Z6tyaAUP38_wpKqkEDLiwk",
       authDomain: "animal-identification.firebaseapp.com",
       databaseURL: "https://animal-identification.firebaseio.com",
-      storageBucket: ""
+      storageBucket: "animal-identification.appspot.com"
     });
   })
   
-  .factory ("FirebaseFactory", function($http) {
+  .factory ("FirebaseFactory", function($http, $timeout) {
 
 
     //adds my question/enable or disable boolean to the subtaxa on the page. 
@@ -29,18 +29,44 @@ angular.module("Ident")
       });//end of get special data .then
     }
   
+    function uploadImage(file, path=file.name) {
+      return $timeout().then(() => (
+        new Promise ((resolve, reject) => {
+          const uploadTask = firebase.storage().ref()
+            .child(path).put(file);
 
+          uploadTask.on('state_changed',
+            null,
+            reject,
+            () => resolve(uploadTask.snapshot)
+          );
+        })
+      ));
+    }
 
 
 
     let whatIKnowAboutMyAnimalSoFar = {};
-    function getWhatIKnow() {
+    
+    function getUserObject() {
+      return $http({
+        method: "GET", 
+        url: "https://animal-identification.firebaseio.com/currentUserObject/.json"
+      }).then((res)=>{
+        whatIKnowAboutMyAnimalSoFar = res.data;
+        return whatIKnowAboutMyAnimalSoFar;
+      });
+        
+    }
+    function getWhatIKnow () {
       return whatIKnowAboutMyAnimalSoFar;
     }
 
     return {
+      uploadImage: uploadImage,
       getSpecialData: getSpecialData,
-      getWhatIKnow: getWhatIKnow
+      getWhatIKnow: getWhatIKnow, 
+      getUserObject: getUserObject
     };
 
   });

@@ -1,5 +1,5 @@
 angular.module("Ident")
-  .controller("Tree", function(COLFactory, InfoFactory, $scope, $uibModal, $location, $timeout) {
+  .controller("Tree", function(COLFactory, InfoFactory, FirebaseFactory, $scope, $uibModal, $location, $timeout) {
     const tree = this;
 
     tree.mySubtaxa = null;
@@ -12,8 +12,13 @@ angular.module("Ident")
     };
     tree.loadcurrentTaxa();
 
+    tree.loadcurrentUserObject = () => {
+      $timeout().then(() => {tree.currentUserObject = FirebaseFactory.getWhatIKnow(); 
+        console.log("current user object", tree.currentUserObject );
+      });
+    };
+    tree.loadcurrentUserObject();
     
-  
     //TODO: add firebase cumulative object to top of traversal.  
 
 

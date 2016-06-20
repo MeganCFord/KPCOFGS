@@ -9,6 +9,9 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
         resolve:  {
           currentTaxa: function(COLFactory, $route) {
             return COLFactory.COLforTaxa($route.current.params.taxa);
+          }, 
+          currentUserObject: function(FirebaseFactory) {
+            return FirebaseFactory.getUserObject();
           }
         }
       })
@@ -19,6 +22,9 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
         resolve: {
           currentTaxa: function(COLFactory, $route) {
             return COLFactory.COLforTaxa($route.current.params.taxa);
+          }, 
+          currentUserObject: function(FirebaseFactory) {
+            return FirebaseFactory.getUserObject();
           }
         }
       })
