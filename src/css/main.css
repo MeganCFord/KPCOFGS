@@ -19,3 +19,13 @@
   max-height: 400px;
   margin: auto;
 }
+
+
+.speciesColumn {
+  height: 800px;
+}
+
+.speciesText {
+  height: 240px;
+  overflow-y: scroll;
+}

@@ -1,0 +1,43 @@
+<h1>You're at the genus/species level! </h1>
+<h5>Your animal is probably one of the following:</h5>
+<div class="container">
+  <div class="row">
+    <!-- empty left column -->
+    <div class="col col-xs-1">
+    </div>
+
+    <div class="col col-xs-10">
+      <div class="row">
+        <div class="col col-xs-6 speciesColumn" ng-repeat="species in species.currentTaxa.child_taxa">
+          <!-- div for margins eventually -->
+          <div>
+            <h3>{{species.modalData.commonName}}</h3>
+
+            <div class="infoImages">
+              <uib-carousel active="active">
+                <uib-slide ng-repeat="image in species.modalData.pictures track by $index" index="$index">
+                  <img ng-src="{{image}}">
+                </uib-slide>
+             </uib-carousel>
+            </div><!-- end of images div -->
+        
+            <div class="speciesText">
+              <div ng-repeat="text in species.modalData.textStuff">
+                <p ng-bind-html="renderHtml(text)"></p>
+              </div>
+            </div>
+          </div><!-- end of margins div -->
+        </div><!-- end of speciesColumn div -->
+      </div><!-- end of row div -->
+
+        <!-- START OVER BUTTON -->
+        <a href="#/" class="btn btn-lg btn-default">Start Over</a>
+        <!-- GO BACK BUTTON -->
+        <button class="btn btn-lg btn-default" ng-click="species.goBackButton()">Go Back</button>
+    </div>
+
+    <!-- empty right column -->
+    <div class="col col-xs-1">
+    </div>
+  </div>
+</div>

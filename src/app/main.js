@@ -12,6 +12,16 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
           }
         }
       })
+      .when("/species/:taxa", {
+        templateUrl:"app/species/species.html", 
+        controller: "Species", 
+        controllerAs: "species", 
+        resolve: {
+          currentTaxa: function(COLFactory, $route) {
+            return COLFactory.COLforTaxa($route.current.params.taxa);
+          }
+        }
+      })
       .when("/", {
         templateUrl: "app/start/start.html", 
         controller: "Start", 

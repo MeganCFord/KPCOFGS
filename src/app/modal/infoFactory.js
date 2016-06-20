@@ -38,8 +38,8 @@ angular.module("Ident")
 
         subtaxa.vernacularNames.forEach((name) => {
           if(name.language === "en" && name.eol_preferred=== true) {
-            //TODO: add this in later. basically a QC to make the modal info prettier, but not absolutely necessary at this point.
-            // subtaxa.commonName = checkName(name.vernacularName);
+            //TODO: add a QC to make the modal info prettier, but not absolutely necessary at this point.
+            subtaxa.commonName = name.vernacularName;
           }//end of if-else
         });//end of vernacularname forEach 
 
@@ -48,7 +48,7 @@ angular.module("Ident")
             subtaxa.textStuff.push( object.description);
           } 
           if (object.mimeType === "image/jpeg") {
-            //I need to run a function somewhere that filters this array- runs a GET and if it returns success, add it to the 'pictures' array, and if not do nothing. 
+            //TODO: run a function somewhere that filters this array- runs a GET and if it returns success, add it to the 'pictures' array, and if not do nothing. 
             subtaxa.pictures.push( object.mediaURL);
           }//end of if-else
 
@@ -58,25 +58,10 @@ angular.module("Ident")
       });//end of promise
     }//end of parseCommonInfo
 
-    // //TODO: make this a firebase call. Add in later maybe.
-    // function checkName(name) {
-    //   let correctName = "";
-    //   switch(name) {
-    //   case "tuataras":
-    //     correctName = "Tuatara";
-    //     break;
-    //   default:
-    //     correctName = name;
-    //   }
-    //   return correctName;
-
-    // }
-
 
     //public functions.
     return {
       populateTaxaCard: populateTaxaCard
     };
-
 
   });//end of factory

@@ -39,7 +39,12 @@ angular.module("Ident")
 
 
     function findOutIfSpecies () {
-      if (currentTaxaData.child_taxa[0].rank === "Genus") {
+      if (currentTaxaData.rank === "Family") {
+        currentTaxaData.stub = true;
+      } else {
+        currentTaxaData.stub = false;
+      }
+      if (currentTaxaData.child_taxa[0].rank === "Family" || currentTaxaData.child_taxa[0].rank === "Genus" || currentTaxaData.child_taxa[0].rank === "Species" || currentTaxaData.child_taxa[0].rank === "Infraspecies" ) {
         currentTaxaData.traversable = false;
       } else {
         currentTaxaData.traversable = true;
@@ -49,7 +54,7 @@ angular.module("Ident")
 
     function loadEitherQuestionsOrInfo (data) {
       //if we're going to continue traversing, add the questions to the subtaxa. 
-      if (data.traversable ===true) {
+      if (data.stub ===false) {
         return Promise.all(data.child_taxa.map((cardInfo) => {
           return FirebaseFactory.getSpecialData(cardInfo.name)
           .then((res) => {

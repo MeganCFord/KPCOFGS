@@ -2,6 +2,8 @@ angular.module("Ident")
   .controller("Tree", function(COLFactory, InfoFactory, $scope, $uibModal, $location, $timeout) {
     const tree = this;
 
+    tree.mySubtaxa = null;
+    
     //with redirect, this loads each time the submit button is clicked.
     tree.loadcurrentTaxa = () => {
       $timeout().then(() => {tree.currentTaxa = COLFactory.getCurrentTaxa();
@@ -9,18 +11,20 @@ angular.module("Ident")
       });
     };
     tree.loadcurrentTaxa();
-    tree.mySubtaxa = null;
+
+    
   
     //TODO: add firebase cumulative object to top of traversal.  
 
 
-  
-
     tree.loadSubtaxa = () => {
 
       if (tree.mySubtaxa) {
-        //part of this redirect runs the GET request to the COLFactory.
-        $location.path(`/tree/${tree.mySubtaxa}`);
+        if (tree.currentTaxa.traversable===false){
+          $location.path(`/species/${tree.mySubtaxa}`);
+        } else {
+          $location.path(`/tree/${tree.mySubtaxa}`);
+        }
       } else {
         console.log("nothing was selected");
       }//end of if tree.mySubtaxa
