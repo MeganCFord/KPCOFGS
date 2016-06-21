@@ -40,6 +40,7 @@ angular.module("Ident")
 
     //runs every time the tree or species pages load. 
     function getUserObject() {
+      console.log("getting user object" );
       return $http({
         method: "GET", 
         url: "https://animal-identification.firebaseio.com/currentUserObject/.json"
@@ -53,7 +54,19 @@ angular.module("Ident")
       return whatIKnowAboutMyAnimalSoFar;
     }
 
-
+    //send selected subtaxa to user object.
+    function sendUserAnswer(answer) {
+      return $http({
+        method: "PATCH", 
+        url: "https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/.json",
+        data: {answer: answer}
+      }).then((res) => {
+        console.log("return from patch", res.data );
+      }, 
+      (e) => {
+        console.log("error", e );
+      });
+    }
 
     //adds my question/enable or disable boolean to the subtaxa on the page. 
     function getSpecialData (nameToSend) {
@@ -75,6 +88,7 @@ angular.module("Ident")
 
     //Public Functions
     return {
+      sendUserAnswer: sendUserAnswer,
       uploadImage: uploadImage,
       getSpecialData: getSpecialData,
       getWhatIKnow: getWhatIKnow, 

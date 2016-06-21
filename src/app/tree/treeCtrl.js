@@ -1,7 +1,7 @@
 angular.module("Ident")
   .controller("Tree", function(COLFactory, InfoFactory, FirebaseFactory, $scope, $uibModal, $location, $timeout) {
     const tree = this;
-
+    //this is just the name at this point. 
     tree.mySubtaxa = null;
     
     //with redirect, this loads each time the submit button is clicked.
@@ -10,16 +10,7 @@ angular.module("Ident")
       console.log("tree.currentTaxa", tree.currentTaxa);
       });
     };
-    tree.loadcurrentTaxa();
-
-    tree.loadcurrentUserObject = () => {
-      $timeout().then(() => {tree.currentUserObject = FirebaseFactory.getWhatIKnow(); 
-        console.log("current user object", tree.currentUserObject );
-      });
-    };
-    tree.loadcurrentUserObject();
-    
-    //TODO: add firebase cumulative object to top of traversal.  
+    tree.loadcurrentTaxa(); 
 
 
     tree.loadSubtaxa = () => {
