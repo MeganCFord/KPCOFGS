@@ -8,8 +8,10 @@
     <input type="text" ng-model="start.userDescription" placeholder ="add an optional description" />
   </form>
 </div>
-<!-- TODO: make this work! -->
-<img ng-src="{{url}}" ng-repeat="url in start.userImageURLs">
+
+
+<div ng-include="'/app/myAnimal.html'"></div>
+
 
 <div>
   <a class="btn btn-lg btn-default" ng-click="start.openTree()">Start at the Beginning</a>
