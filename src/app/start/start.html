@@ -1,20 +1,27 @@
 <h1>Identify Your Mystery Animal!</h1>
 
-<div ng-include="'/app/userObject/myAnimal.html'"></div>
+<!-- took the animal object out of the DOM here, I'm going to manually add it instead I think.  -->
 
-<div ng-if="start.myAnimalReference===null">
-  <h2>Add what you know about your animal, for reference</h2>
+<div ng-class="{'hideMe': start.hideUserAnimal === true}">
+  <img ng-src="{{start.userImage}}">
+  <h5>{{start.userDescription}}</h5>
+</div>
+
+<div ng-class="{'hideMe': start.hideUserAnimal === false}">
   <form ng-submit="start.uploadUserData()">
+    <h2>Add what you know about your animal, for reference</h2>
     <input type="file" ng-model="start.userImage" accept="image/*" />
-    <input type="submit" value="Upload Now!" />
     <input type="text" ng-model="start.userDescription" placeholder ="add an optional description" />
-  </form>
+    <input type="submit" class="btn btn-lg btn-default" ng-class="{'hideMe': start.hideUserAnimal === false}" value="Upload Now!" />
+  </form>   
 </div>
 
 
 
 
-<div>
+<div ng-class="{'hideMe': start.hideUserAnimal === true}">
+  <a class="btn btn-lg btn-default" ng-click="start.hideUserAnimal=true; start.userDescription = '';
+" ng-class="{'hideMe': start.hideUserAnimal === true}">Reset</a>
   <a class="btn btn-lg btn-default" ng-click="start.openTree()">Start at the Beginning</a>
 
   <a class="btn btn-lg btn-default" ng-if="start.iKnow===false" ng-click="start.iKnow = true">I already know some things</a>

@@ -4,6 +4,8 @@ angular.module("Ident")
 
     start.startTaxa = "Animalia";
     start.iKnow=false;
+    start.hideUserAnimal = true;
+    start.userDescription = "";
 
     start.openTree = function() {
       $location.url(`/tree/${start.startTaxa}`);
@@ -17,12 +19,17 @@ angular.module("Ident")
 
       FirebaseFactory.uploadImage(file)
         .then(res => {
+          start.userImage = res.downloadURL;
+          start.hideUserAnimal = false;
           return res.downloadURL;
         })
         .then((userURL) => {
           firebase.database().ref("/currentUserObject").set({url: userURL, description: start.userDescription});
+        }).then(() => {
+          input.value="";
         });
     };
 
 
   });//end of module
+  

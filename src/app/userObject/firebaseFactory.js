@@ -55,7 +55,6 @@ angular.module("Ident")
 
 
 
-
     //adds my question/enable or disable boolean to the subtaxa on the page. 
     function getSpecialData (nameToSend) {
       return $http({
