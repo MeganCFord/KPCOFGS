@@ -11,7 +11,7 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
             return COLFactory.COLforTaxa($route.current.params.taxa);
           }, 
           currentUserObject: function(FirebaseFactory, $route) {
-            return FirebaseFactory.sendUserAnswer($route.current.params.taxa).then(()=> {FirebaseFactory.getUserObject();});
+            return FirebaseFactory.getAnswerIntoUserAnimal($route.current.params.taxa);
           }
         }
       })

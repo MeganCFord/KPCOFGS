@@ -55,11 +55,11 @@ angular.module("Ident")
     }
 
     //send selected subtaxa to user object.
-    function sendUserAnswer(answer) {
+    function sendUserAnswer(pathName, answer) {
       return $http({
         method: "PATCH", 
-        url: "https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/.json",
-        data: {answer: answer}
+        url: `https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/${pathName}.json`,
+        data: {answer: answer.question}
       }).then((res) => {
         console.log("return from patch", res.data );
       }, 
@@ -68,6 +68,19 @@ angular.module("Ident")
       });
     }
 
+
+    function getAnswerIntoUserAnimal (nameToSend) {
+      console.log("name to send in resolve", nameToSend);
+      return getSpecialData(nameToSend)
+        .then((res) => {
+          console.log("res from getSpecialData", res );
+          return sendUserAnswer(nameToSend, res);
+        }).then(()=> {
+          return getUserObject();
+          console.log("user object gotten", whatIKnowAboutMyAnimalSoFar);
+        });
+
+    }
     //adds my question/enable or disable boolean to the subtaxa on the page. 
     function getSpecialData (nameToSend) {
       return $http({
@@ -88,7 +101,7 @@ angular.module("Ident")
 
     //Public Functions
     return {
-      sendUserAnswer: sendUserAnswer,
+      getAnswerIntoUserAnimal: getAnswerIntoUserAnimal,
       uploadImage: uploadImage,
       getSpecialData: getSpecialData,
       getWhatIKnow: getWhatIKnow, 

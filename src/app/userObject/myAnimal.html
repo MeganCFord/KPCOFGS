@@ -1,5 +1,8 @@
 <div ng-controller="UserObject as user">
   <img ng-src="{{user.userAnimal.url}}">
   <h5>{{user.userAnimal.description}}</h5>
-  <p ng-repeat="answer in user.userAnimal.answeredQuestions">I know my animal is {{answer}}</p>
+  <div>
+    <h5>I know my animal:</h5>
+      <p ng-repeat="answer in user.userAnimal.answeredQuestions">{{answer.answer}}</p>
+  </div>
 </div>
