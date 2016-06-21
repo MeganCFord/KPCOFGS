@@ -1,5 +1,7 @@
 <h1>Identify Your Mystery Animal!</h1>
 
+<div ng-include="'/app/userObject/myAnimal.html'"></div>
+
 <div ng-if="start.myAnimalReference===null">
   <h2>Add what you know about your animal, for reference</h2>
   <form ng-submit="start.uploadUserData()">
@@ -10,7 +12,6 @@
 </div>
 
 
-<div ng-include="'/app/myAnimal.html'"></div>
 
 
 <div>

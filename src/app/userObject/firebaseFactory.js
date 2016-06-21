@@ -12,6 +12,50 @@ angular.module("Ident")
   .factory ("FirebaseFactory", function($http, $timeout) {
 
 
+    function clearUserObject () {
+      return $http({
+        method: "DELETE", 
+        url: "https://animal-identification.firebaseio.com/currentUserObject/.json"
+      });
+    }
+
+
+    function uploadImage(file, path="userImage") {
+      return $timeout().then(() => (
+        new Promise((resolve, reject) => {
+          const uploadTask = firebase.storage().ref()
+            .child(path).put(file);
+
+          uploadTask.on('state_changed',
+            null,
+            reject,
+            () => resolve(uploadTask.snapshot)
+          );
+        })
+      ));
+    }
+
+
+    let whatIKnowAboutMyAnimalSoFar = {};
+
+    //runs every time the tree or species pages load. 
+    function getUserObject() {
+      return $http({
+        method: "GET", 
+        url: "https://animal-identification.firebaseio.com/currentUserObject/.json"
+      }).then((res)=>{
+        whatIKnowAboutMyAnimalSoFar = res.data;
+        return whatIKnowAboutMyAnimalSoFar;
+      });   
+    }
+
+    function getWhatIKnow () {
+      return whatIKnowAboutMyAnimalSoFar;
+    }
+
+
+
+
     //adds my question/enable or disable boolean to the subtaxa on the page. 
     function getSpecialData (nameToSend) {
       return $http({
@@ -28,50 +72,20 @@ angular.module("Ident")
         }//end of if res is null statement.
       });//end of get special data .then
     }
-  
-    function uploadImage(file, path=file.name) {
-      return $timeout().then(() => (
-        new Promise ((resolve, reject) => {
-          const uploadTask = firebase.storage().ref()
-            .child(path).put(file);
-
-          uploadTask.on('state_changed',
-            null,
-            reject,
-            () => resolve(uploadTask.snapshot)
-          );
-        })
-      ));
-    }
-
-
-
-    let whatIKnowAboutMyAnimalSoFar = {};
     
-    function getUserObject() {
-      return $http({
-        method: "GET", 
-        url: "https://animal-identification.firebaseio.com/currentUserObject/.json"
-      }).then((res)=>{
-        whatIKnowAboutMyAnimalSoFar = res.data;
-        return whatIKnowAboutMyAnimalSoFar;
-      });
-        
-    }
-    function getWhatIKnow () {
-      return whatIKnowAboutMyAnimalSoFar;
-    }
 
+    //Public Functions
     return {
       uploadImage: uploadImage,
       getSpecialData: getSpecialData,
       getWhatIKnow: getWhatIKnow, 
-      getUserObject: getUserObject
+      getUserObject: getUserObject, 
+      clearUserObject: clearUserObject
     };
 
   });
 
-
+  
 
   
  //TODO: move this data into firebase

@@ -31,7 +31,12 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
       .when("/", {
         templateUrl: "app/start/start.html", 
         controller: "Start", 
-        controllerAs: "start"
+        controllerAs: "start", 
+        resolve: {
+          clearedUserObject: function(FirebaseFactory) {
+            return FirebaseFactory.clearUserObject();
+          }
+        }
       })
       .otherwise("/");
   });
