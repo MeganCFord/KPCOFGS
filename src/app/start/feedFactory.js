@@ -5,7 +5,7 @@ angular.module("Ident")
     let feed = {};
 
     function publishAnimal(name, picture, description) {
-      return $http ({
+      return $http({
         method: "POST", 
         url: `https://animal-identification.firebaseio.com/feed/.json`,
         data: {name: name, picture: picture, description: description}

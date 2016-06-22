@@ -51,7 +51,6 @@ angular.module("Ident")
       tree.selectedSubtaxa = null;
       FirebaseFactory.deleteLastAnswer(tree.currentTaxa.name)
       .then(()=> {
-        console.log("where I should be going.", tree.currentTaxa.classification[tree.currentTaxa.classification.length - 1].name);
         $location.path(`/tree/${tree.currentTaxa.classification[tree.currentTaxa.classification.length - 1].name}`);
       });
     };

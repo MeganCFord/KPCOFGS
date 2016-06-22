@@ -49,10 +49,9 @@ angular.module("Ident")
       return $http({
         method: "PUT", 
         url: `https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/${filepath}/.json`,
-        data: {answer: answer.question}
+        data: {answer: answer}
       }).then((res) => {
-        //don't really need to do anything with this data I don't believe.
-        return res.data;
+        console.log("success in sending user answer");
       }, 
       (e) => {
         console.log("error", e );
@@ -63,10 +62,10 @@ angular.module("Ident")
 
     //runs every time the tree or species pages load. GETTER ONLY- also runs as part of addStartingQuestion
     function getUserObject() {
-      console.log("getting user object" );
+      console.log("starting to get user object" );
       return $http({
         method: "GET", 
-        url: "https://animal-identification.firebaseio.com/currentUserObject/.json"
+        url: "https://animal-identification.firebaseio.com/currentUserObject.json"
       }).then((res)=>{
         whatIKnowAboutMyAnimalSoFar = res.data;
         return whatIKnowAboutMyAnimalSoFar;
