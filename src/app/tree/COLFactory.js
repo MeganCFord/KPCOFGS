@@ -9,7 +9,7 @@ angular.module("Ident")
 
 
     function COLforTaxa (nameToSend) {
-      console.log("COLforTaxa Data", nameToSend );
+      console.log("sending new taxa name", nameToSend );
       return $http({
         method: "GET", 
         url: `http://www.catalogueoflife.org/col/webservice?name=${nameToSend}&format=json&response=full`
@@ -17,7 +17,7 @@ angular.module("Ident")
         
         currentTaxaData = res.data.results ? 
            res.data.results[0] : res.data;
-           
+           console.log("current taxa data has been set", currentTaxaData );
         //find out if the current taxa is a stub or not. 
         findOutIfSpecies();
         
@@ -40,6 +40,7 @@ angular.module("Ident")
 
 
     function findOutIfSpecies () {
+      console.log("current taxa in species finder", currentTaxaData );
       if (currentTaxaData.rank === "Family") {
         currentTaxaData.stub = true;
       } else {

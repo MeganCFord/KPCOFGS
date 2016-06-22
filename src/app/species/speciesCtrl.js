@@ -1,5 +1,5 @@
 angular.module("Ident")
-  .controller("Species", function($timeout, FirebaseFactory, COLFactory, $scope, $sce, $location) {
+  .controller("Species", function($timeout, FirebaseFactory, FeedFactory, COLFactory, $scope, $sce, $location) {
     const species = this;
 
     //runs to make any HTML description text show correctly. 
@@ -23,8 +23,8 @@ angular.module("Ident")
       });
     };
 
-    species.publishAnimal = (name) => {
-      FirebaseFactory.publishAnimal(name)
+    species.publishAnimal = (nameToAdd) => {
+      FeedFactory.publishAnimal(nameToAdd, species.currentTaxa.url, species.currentTaxa.description)
       .then(() => {
         $location.path("/");
       });

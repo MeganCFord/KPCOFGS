@@ -11,7 +11,7 @@ angular.module("Ident")
   
   .factory ("FirebaseFactory", function($http, $timeout) {
 
-
+    //clears the user object on restart. 
     function clearUserObject () {
       return $http({
         method: "DELETE", 
@@ -19,8 +19,8 @@ angular.module("Ident")
       });
     }
 
-
-    function uploadImage(file, path="userImage") {
+    //upload image on start page.
+    function uploadImage(file, path=file.name) {
       return $timeout().then(() => (
         new Promise((resolve, reject) => {
           const uploadTask = firebase.storage().ref()
@@ -34,11 +34,34 @@ angular.module("Ident")
         })
       ));
     }
+    //runs between START page and TREE page to add the subtaxa question to the user object. 
+    function addStartingQuestion (nameToSend) {
+      return getSpecialData(nameToSend)
+        .then((res) => {
+          return sendUserAnswer(nameToSend, res);
+        }).then(()=> {
+          return getUserObject();
+        });
+    }
 
+    //send selected subtaxa to user object.
+    function sendUserAnswer(filepath, answer) {
+      return $http({
+        method: "PUT", 
+        url: `https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/${filepath}/.json`,
+        data: {answer: answer.question}
+      }).then((res) => {
+        //don't really need to do anything with this data I don't believe.
+        return res.data;
+      }, 
+      (e) => {
+        console.log("error", e );
+      });
+    }
 
     let whatIKnowAboutMyAnimalSoFar = {};
 
-    //runs every time the tree or species pages load. 
+    //runs every time the tree or species pages load. GETTER ONLY- also runs as part of addStartingQuestion
     function getUserObject() {
       console.log("getting user object" );
       return $http({
@@ -54,94 +77,43 @@ angular.module("Ident")
       return whatIKnowAboutMyAnimalSoFar;
     }
 
-    //send selected subtaxa to user object.
-    function sendUserAnswer(filepath, answer) {
-      return $http({
-        method: "PUT", 
-        url: `https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/${filepath}/.json`,
-        data: {answer: answer.question}
-      }).then((res) => {
-        console.log("return from patch", res.data );
-      }, 
-      (e) => {
-        console.log("error", e );
-      });
-    }
-
-
-    function getAnswerIntoUserAnimal (nameToSend) {
-      return getSpecialData(nameToSend)
-        .then((res) => {
-          return sendUserAnswer(nameToSend, res);
-        }).then(()=> {
-          return getUserObject();
-        });
-
-    }
+    
     //adds my question/enable or disable boolean to the subtaxa on the page. 
     function getSpecialData (nameToSend) {
-      return $http({
-        method: "GET", 
-        url: `https://animal-identification.firebaseio.com/specialData/${nameToSend}/.json`
-      }).then((res) => {
-        if (res.data ===null) {
-          return {
-            question: `is a ${nameToSend}. see 'more info'.`,
-            enableMe: true
-          };
-        } else {
-          return res.data;
-        }//end of if res is null statement.
-      });//end of get special data .then
+      if (nameToSend !== null) {
+        return $http({
+          method: "GET", 
+          url: `https://animal-identification.firebaseio.com/specialData/${nameToSend}/.json`
+        }).then((res) => {
+          if (res.data ===null) {
+            return {
+              question: `is a ${nameToSend}. see 'more info'.`,
+              enableMe: true
+            };
+          } else {
+            return res.data;
+          }//end of if res is null statement.
+        });//end of get special data .then
+      }else {
+        console.err("WTF why is the name to send null");
+      }//end of ifNameToSend !== null
     }
     
     function deleteLastAnswer(nameToDelete) {
-      console.log("the name to delete", nameToDelete);
       return $http({
         method: "DELETE", 
-        url: `https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/${nameToDelete}/.json`
+        url: `https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/${nameToDelete}.json`
       });
     }
 
-    let feed = {};
 
-    function publishAnimal(name) {
-      console.log("name to add to user object", name, "user animal", whatIKnowAboutMyAnimalSoFar);
-      return $http ({
-        method: "POST", 
-        url: `https://animal-identification.firebaseio.com/feed/.json`,
-        data: {name: name, picture: whatIKnowAboutMyAnimalSoFar.url, description: whatIKnowAboutMyAnimalSoFar.description}
-      }).then((res) => {
-        console.log("success", res);
-      }, (e) => {
-        console.log("error", e );
-      });
-    }
 
-    function getPublishedAnimals() {
-      return $http({
-        method: "GET", 
-        url: "https://animal-identification.firebaseio.com/feed/.json"
-      }).then((res)=> {
-        feed = res.data;
-        console.log("published animals", feed );
-        return feed;
-      }, (e)=> {
-        console.log("error", e );
-      });
-    }
-
-    function getFeed() {
-      return feed;
-    }
 
     //Public Functions
     return {
-      getFeed: getFeed,
-      getPublishedAnimals: getPublishedAnimals,
-      publishAnimal: publishAnimal,
       deleteLastAnswer: deleteLastAnswer,
-      getAnswerIntoUserAnimal: getAnswerIntoUserAnimal,
+      sendUserAnswer: sendUserAnswer,
+      addStartingQuestion: addStartingQuestion,
       uploadImage: uploadImage,
       getSpecialData: getSpecialData,
       getWhatIKnow: getWhatIKnow, 
@@ -154,70 +126,4 @@ angular.module("Ident")
   
 
   
- //TODO: move this data into firebase
-      
-    function addMyOwnData(taxa) {
-      const currentTaxa = taxa;
-      switch(taxa.name) {
-        //CHORDATA SUBTAXA
-      case "Actinopterygii":
-        currentTaxa.question = "is a fish with fins that are webs of skin supported by bony spines.";
-        currentTaxa.enableMe=false;
-        break;
-      case "Amphibia": 
-        currentTaxa.question = "is probably an amphibian: it has slimy skin with no scales or fur/hair, and goes through a metamorphosis from an egg laid in water to adult form.";
-        currentTaxa.enableMe=false;
-        break;
-      case "Appendicularia":
-        currentTaxa.question = "is a tiny clear plankton that usually floats near the ocean's surface and filters seawater through a sac to eat.";
-        currentTaxa.enableMe=false;
-        break;
-      case "Ascidiacea":
-        currentTaxa.question = "is attached to a rock in the ocean and filters seawater through a sac to eat.";
-        currentTaxa.enableMe=false;
-        break;
-      case "Aves":
-        currentTaxa.question = "has feathers and wings.";
-        currentTaxa.enableMe=false;
-        break;
-      case "Cephalaspidomorphi":
-        currentTaxa.question = "is fish with a sucker mouth and no jaw.";
-        currentTaxa.enableMe=false;
-        break;
-      case "Elasmobranchii":
-        currentTaxa.question = "is a fish with cartilage instead of bones and a bony jaw separate from its skull- probably a shark or ray.";
-        currentTaxa.enableMe=false;
-        break;
-      case "Holocephali":
-        currentTaxa.question = "is a fish with cartilage instead of bones, a long, whiplike tail, and a small, fleshy mouth." ;
-        currentTaxa.enableMe=false;
-        break;
-      case "Leptocardii":
-        currentTaxa.question = "is a 2-3 inch long worm-shaped fish with no fins, a poorly-shaped tail, and only a little cartilage stiffening its gills.";
-        currentTaxa.enableMe=false;
-        break;
-      case "Mammalia": 
-        currentTaxa.question = "has fur or hair and gives birth to its babies.";
-        currentTaxa.enableMe=true;
-        break;
-      case "Myxini": 
-        currentTaxa.question = "is a slimy eel-shaped fish with eye spots, a cartilaginous skull, one nostril but no spinal bones.";
-        currentTaxa.enableMe=false;
-        break;
-      case "Reptilia":
-        currentTaxa.question = "is a reptile, so it's probably dry and has scales.";
-        currentTaxa.enableMe=true;
-        break;
-      case "Sarcopterygii":
-        currentTaxa.question = "is a bony fish with lobed fins attached to the body by a single bone.";
-        currentTaxa.enableMe=true;
-        break;
-      case "Thaliacea":
-        currentTaxa.question = "is a small, free-floating sac-like creature that filters seawater for food and propulsion.";
-        currentTaxa.enableMe=false;
-        break;
-      default: ;
-        currentTaxa.enableMe=true;
-      }
-      return taxa;
-    }
+ 

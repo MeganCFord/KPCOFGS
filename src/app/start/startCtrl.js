@@ -1,5 +1,5 @@
 angular.module("Ident")
-  .controller("Start", function(FirebaseFactory, $scope, $timeout, $location) {
+  .controller("Start", function(FirebaseFactory, FeedFactory, $scope, $timeout, $location) {
     const start=this;
 
     start.startTaxa = "Animalia";
@@ -9,13 +9,17 @@ angular.module("Ident")
 
 
     start.getFeed = () => {
-      $timeout().then(()=>{start.feed = FirebaseFactory.getFeed();
+      $timeout().then(()=>{start.feed = FeedFactory.getFeed();
       console.log("start feed", start.feed );});
     };
     start.getFeed();
 
     start.openTree = function() {
-      $location.url(`/tree/${start.startTaxa}`);
+      $timeout().then(()=> {
+        FirebaseFactory.addStartingQuestion(start.startTaxa);
+      }).then(()=> {
+        $location.url(`/tree/${start.startTaxa}`);
+      });
     };
 
 

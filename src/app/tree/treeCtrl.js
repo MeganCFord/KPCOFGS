@@ -1,30 +1,32 @@
 angular.module("Ident")
   .controller("Tree", function(COLFactory, InfoFactory, FirebaseFactory, $scope, $uibModal, $location, $timeout) {
     const tree = this;
-    //this is just the name at this point. 
-    tree.mySubtaxa = null;
+
+
+    //gets assigned the entire subtaxa object.
+    tree.selectedSubtaxa = null;
     
-    //with redirect, this loads each time the submit button is clicked.
+    //runs after page load.
     tree.loadcurrentTaxa = () => {
       $timeout().then(() => {tree.currentTaxa = COLFactory.getCurrentTaxa();
-      console.log("tree.currentTaxa", tree.currentTaxa);
+      console.log("current Taxa: ", tree.currentTaxa);
       });
     };
     tree.loadcurrentTaxa(); 
 
-
-    tree.loadSubtaxa = () => {
-
-      if (tree.mySubtaxa) {
-        if (tree.currentTaxa.traversable===false){
-          $location.path(`/species/${tree.mySubtaxa}`);
-        } else {
-          $location.path(`/tree/${tree.mySubtaxa}`);
-        }
-      } else {
-        console.log("nothing was selected");
-      }//end of if tree.mySubtaxa
-    };//end of loadSubtaxa
+    //loads next page on submit button click.
+    tree.traverse = () => {
+      $timeout().then(()=>{
+        FirebaseFactory.sendUserAnswer(tree.selectedSubtaxa.name, tree.selectedSubtaxa.specialData.question)
+        .then(()=> {
+          if (tree.currentTaxa.traversable===false){
+            $location.path(`/species/${tree.selectedSubtaxa.name}`);
+          } else {
+            $location.path(`/tree/${tree.selectedSubtaxa.name}`);
+          }
+        });//end of .then
+      });//end of $timeout
+    };//end of tree.traverse
 
 
 
@@ -32,24 +34,24 @@ angular.module("Ident")
     tree.openModal = (scientificName) => {
 
       const modalInstance = $uibModal.open({
-        // animation: $scope.animationsEnabled, 
         size: "lg",
         templateUrl: "app/modal/infoModal.html", 
         controller: "modalController",
         controllerAs: "modalController", 
         resolve: { 
           data: function (InfoFactory) {
-            //TODO: run the card population in the background for faster modal load.
             return InfoFactory.populateTaxaCard(scientificName);
           }//end of data function
         }//end of resolve  
       });//end of modal.open
     }; //end of tree.openModal
 
+
     tree.goBackButton = () => {
-      console.log("go back button was clicked" );
+      tree.selectedSubtaxa = null;
       FirebaseFactory.deleteLastAnswer(tree.currentTaxa.name)
       .then(()=> {
+        console.log("where I should be going.", tree.currentTaxa.classification[tree.currentTaxa.classification.length - 1].name);
         $location.path(`/tree/${tree.currentTaxa.classification[tree.currentTaxa.classification.length - 1].name}`);
       });
     };

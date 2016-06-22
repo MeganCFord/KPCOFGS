@@ -8,10 +8,11 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
         controllerAs: "tree", 
         resolve:  {
           currentTaxa: function(COLFactory, $route) {
+            console.log("current route", $route.current.params.taxa );
             return COLFactory.COLforTaxa($route.current.params.taxa);
           }, 
-          currentUserObject: function(FirebaseFactory, $route) {
-            return FirebaseFactory.getAnswerIntoUserAnimal($route.current.params.taxa);
+          currentUserObject: function(FirebaseFactory) {
+            return FirebaseFactory.getUserObject();
           }
         }
       })
@@ -23,8 +24,8 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
           currentTaxa: function(COLFactory, $route) {
             return COLFactory.COLforTaxa($route.current.params.taxa);
           }, 
-          currentUserObject: function(FirebaseFactory, $route) {
-            return FirebaseFactory.getAnswerIntoUserAnimal($route.current.params.taxa);
+          currentUserObject: function(FirebaseFactory) {
+            return FirebaseFactory.getUserObject();
           }
         }
       })
@@ -36,8 +37,8 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
           clearedUserObject: function(FirebaseFactory) {
             return FirebaseFactory.clearUserObject();
           }, 
-          feed: function(FirebaseFactory) {
-            return FirebaseFactory.getPublishedAnimals();
+          feed: function(FeedFactory) {
+            return FeedFactory.getPublishedAnimals();
           }
         }
       })
