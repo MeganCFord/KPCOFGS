@@ -51,6 +51,7 @@ angular.module("Ident")
               if (res === true) {
                 subtaxa.pictures.push( object.mediaURL);
               }
+              return subtaxa;
             });
           }//end of if-else
 
