@@ -31,14 +31,11 @@ angular.module("Ident")
 
     function parseCommonInfo(subtaxa) {
       return new Promise(function(resolve) {
-      // console.log("parser is starting" );
-        // console.log("object", subtaxa);
         subtaxa.textStuff = [];
         subtaxa.pictures = [];
 
         subtaxa.vernacularNames.forEach((name) => {
           if(name.language === "en" && name.eol_preferred=== true) {
-            //TODO: add a QC to make the modal info prettier, but not absolutely necessary at this point.
             subtaxa.commonName = name.vernacularName;
           }//end of if-else
         });//end of vernacularname forEach 
@@ -48,8 +45,13 @@ angular.module("Ident")
             subtaxa.textStuff.push( object.description);
           } 
           if (object.mimeType === "image/jpeg") {
-            //TODO: run a function somewhere that filters this array- runs a GET and if it returns success, add it to the 'pictures' array, and if not do nothing. 
-            subtaxa.pictures.push( object.mediaURL);
+          
+            checkIfPictureLoads(object.mediaURL)
+            .then((res)=> {
+              if (res === true) {
+                subtaxa.pictures.push( object.mediaURL);
+              }
+            });
           }//end of if-else
 
         });//end of dataObjects forEach
@@ -58,6 +60,16 @@ angular.module("Ident")
       });//end of promise
     }//end of parseCommonInfo
 
+    function checkIfPictureLoads(address) {
+      return $http({
+        method: "GET", 
+        url: address
+      }).then((res) => {
+        return true;
+      }, (e) => {
+        return false;
+      });
+    }
 
     //public functions.
     return {

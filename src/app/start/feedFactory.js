@@ -43,6 +43,4 @@ angular.module("Ident")
       getFeed: getFeed
     };
 
-
-
   });
