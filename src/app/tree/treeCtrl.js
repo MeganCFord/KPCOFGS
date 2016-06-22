@@ -2,6 +2,9 @@ angular.module("Ident")
   .controller("Tree", function(COLFactory, InfoFactory, FirebaseFactory, $scope, $uibModal, $location, $timeout) {
     const tree = this;
 
+    $scope.notDisabled = function(item){
+      return (item.specialData.enableMe === true);
+    };
 
     //gets assigned the entire subtaxa object.
     tree.selectedSubtaxa = null;
@@ -33,6 +36,7 @@ angular.module("Ident")
     //loads on "more info" button click to open modal and get subtaxa info. 
     tree.openModal = (scientificName) => {
 
+
       const modalInstance = $uibModal.open({
         size: "lg",
         templateUrl: "app/modal/infoModal.html", 
@@ -44,6 +48,7 @@ angular.module("Ident")
           }//end of data function
         }//end of resolve  
       });//end of modal.open
+      tree.selectedSubtaxa = scientificName;
     }; //end of tree.openModal
 
 
@@ -55,8 +60,5 @@ angular.module("Ident")
       });
     };
 
-  });//end of controller
-
-  
-
+  })//end of controller
 
