@@ -1,5 +1,5 @@
 angular.module("Ident")
-  .controller("Species", function($timeout, COLFactory, $scope, $sce, $location) {
+  .controller("Species", function($timeout, FirebaseFactory, COLFactory, $scope, $sce, $location) {
     const species = this;
 
     //runs to make any HTML description text show correctly. 
@@ -17,6 +17,9 @@ angular.module("Ident")
 
 
     species.goBackButton = () => {
-      $location.path(`/tree/${species.currentTaxa.classification[species.currentTaxa.classification.length-1].name}`);
+      FirebaseFactory.deleteLastAnswer(species.currentTaxa.name)
+      .then(() => {
+      $location.path(`/tree/${species.currentTaxa.classification[species.currentTaxa.classification.length-1].name}`
+    );});
     };
   });

@@ -55,10 +55,11 @@ angular.module("Ident")
     }
 
     //send selected subtaxa to user object.
-    function sendUserAnswer(pathName, answer) {
+    function sendUserAnswer(filepath, answer) {
+      console.log("answer to send", answer );
       return $http({
-        method: "PATCH", 
-        url: `https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/${pathName}.json`,
+        method: "PUT", 
+        url: `https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/${filepath}/.json`,
         data: {answer: answer.question}
       }).then((res) => {
         console.log("return from patch", res.data );
@@ -73,7 +74,6 @@ angular.module("Ident")
       console.log("name to send in resolve", nameToSend);
       return getSpecialData(nameToSend)
         .then((res) => {
-          console.log("res from getSpecialData", res );
           return sendUserAnswer(nameToSend, res);
         }).then(()=> {
           return getUserObject();
@@ -98,9 +98,17 @@ angular.module("Ident")
       });//end of get special data .then
     }
     
+    function deleteLastAnswer(nameToDelete) {
+      console.log("the name to delete", nameToDelete);
+      return $http({
+        method: "DELETE", 
+        url: `https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/${nameToDelete}/.json`
+      });
+    }
 
     //Public Functions
     return {
+      deleteLastAnswer: deleteLastAnswer,
       getAnswerIntoUserAnimal: getAnswerIntoUserAnimal,
       uploadImage: uploadImage,
       getSpecialData: getSpecialData,
@@ -170,7 +178,7 @@ angular.module("Ident")
         break;
       case "Sarcopterygii":
         currentTaxa.question = "is a bony fish with lobed fins attached to the body by a single bone.";
-          currentTaxa.enableMe=true;
+        currentTaxa.enableMe=true;
         break;
       case "Thaliacea":
         currentTaxa.question = "is a small, free-floating sac-like creature that filters seawater for food and propulsion.";

@@ -46,6 +46,14 @@ angular.module("Ident")
       });//end of modal.open
     }; //end of tree.openModal
 
+    tree.goBackButton = () => {
+      console.log("go back button was clicked" );
+      FirebaseFactory.deleteLastAnswer(tree.currentTaxa.name)
+      .then(()=> {
+        $location.path(`/tree/${tree.currentTaxa.classification[tree.currentTaxa.classification.length - 1].name}`);
+      });
+    };
+
   });//end of controller
 
   
