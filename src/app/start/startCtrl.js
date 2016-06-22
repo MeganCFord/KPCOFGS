@@ -18,7 +18,7 @@ angular.module("Ident")
       $timeout().then(()=> {
         return FirebaseFactory.addStartingQuestion(start.startTaxa);
       }).then(()=> {
-         $location.url(`/tree/${start.startTaxa}`);
+        $location.url(`/tree/${start.startTaxa}`);
       });
     };
 

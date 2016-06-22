@@ -5,19 +5,18 @@ angular.module("Ident")
     let feed = {};
 
     function publishAnimal(name) {
-      $timeout().then(()=> {
-        const userAnimal = FirebaseFactory.getUserObject();
-        return userAnimal;
-      }).then((userAnimal)=> {
+      return FirebaseFactory.getUserObject()
+      .then((userAnimal)=> {
         return $http({
           method: "POST", 
           url: `https://animal-identification.firebaseio.com/feed/.json`,
-          data: {name: name, picture: userAnimal.picture, description: userAnimal.description}
+          data: {name: name, picture: userAnimal.url, description: userAnimal.description}
         }).then((res) => {
+          console.log("finished publishing animal");
           return Promise.resolve(res);
         }, (e) => {
           console.log("error", e );
-          return Promise.reject();
+          return Promise.reject(e);
         });
       });
     }

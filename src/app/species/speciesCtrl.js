@@ -26,6 +26,7 @@ angular.module("Ident")
     species.publishAnimal = (nameToAdd) => {
       FeedFactory.publishAnimal(nameToAdd)
       .then(() => {
+        console.log("starting to redirect to start page");
         $location.path("/");
       });
     };
