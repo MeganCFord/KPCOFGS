@@ -10,7 +10,9 @@
 <div ng-class="{'hideMe': start.hideUserAnimal === false}">
   <form ng-submit="start.uploadUserData()">
     <h2>Add what you know about your animal, for reference</h2>
-    <input type="file" ng-model="start.userImage" accept="image/*" />
+    <label class="btn btn-default btn-file">Upload Image
+      <input type="file" ng-model="start.userImage" accept="image/*" style="display: none"/>
+    </label>
     <input type="text" ng-model="start.userDescription" placeholder ="add an optional description" />
     <input type="submit" class="btn btn-lg btn-default" ng-class="{'hideMe': start.hideUserAnimal === false}" value="Upload Now!" />
   </form>   
