@@ -1,11 +1,18 @@
 angular.module("Ident")
-  .controller("Start", function(FirebaseFactory, $scope, $location) {
+  .controller("Start", function(FirebaseFactory, $scope, $timeout, $location) {
     const start=this;
 
     start.startTaxa = "Animalia";
     start.iKnow=false;
     start.hideUserAnimal = true;
     start.userDescription = "";
+
+
+    start.getFeed = () => {
+      $timeout().then(()=>{start.feed = FirebaseFactory.getFeed();
+      console.log("start feed", start.feed );});
+    };
+    start.getFeed();
 
     start.openTree = function() {
       $location.url(`/tree/${start.startTaxa}`);

@@ -35,6 +35,9 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
         resolve: {
           clearedUserObject: function(FirebaseFactory) {
             return FirebaseFactory.clearUserObject();
+          }, 
+          feed: function(FirebaseFactory) {
+            return FirebaseFactory.getPublishedAnimals();
           }
         }
       })

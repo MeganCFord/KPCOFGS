@@ -19,7 +19,15 @@ angular.module("Ident")
     species.goBackButton = () => {
       FirebaseFactory.deleteLastAnswer(species.currentTaxa.name)
       .then(() => {
-      $location.path(`/tree/${species.currentTaxa.classification[species.currentTaxa.classification.length-1].name}`
-    );});
+        $location.path(`/tree/${species.currentTaxa.classification[species.currentTaxa.classification.length-1].name}`);
+      });
     };
+
+    species.publishAnimal = (name) => {
+      FirebaseFactory.publishAnimal(name)
+      .then(() => {
+        $location.path("/");
+      });
+    };
+
   });

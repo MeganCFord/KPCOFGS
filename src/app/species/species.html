@@ -11,24 +11,25 @@
 
     <div class="col col-xs-10">
       <div class="row">
-        <div class="col col-xs-6 speciesColumn" ng-repeat="species in species.currentTaxa.child_taxa">
+        <div class="col col-xs-6 speciesColumn" ng-repeat="animal in species.currentTaxa.child_taxa">
           <!-- div for margins eventually -->
           <div>
             <h3>{{species.modalData.commonName}}</h3>
 
             <div class="infoImages">
               <uib-carousel active="active">
-                <uib-slide ng-repeat="image in species.modalData.pictures track by $index" index="$index">
+                <uib-slide ng-repeat="image in animal.modalData.pictures track by $index" index="$index">
                   <img ng-src="{{image}}">
                 </uib-slide>
              </uib-carousel>
             </div><!-- end of images div -->
         
             <div class="speciesText">
-              <div ng-repeat="text in species.modalData.textStuff">
+              <div ng-repeat="text in animal.modalData.textStuff">
                 <p ng-bind-html="renderHtml(text)"></p>
               </div>
             </div>
+            <button class="btn btn-lg btn-default" ng-click="species.publishAnimal(animal.name)">This is my animal!</button>
           </div><!-- end of margins div -->
         </div><!-- end of speciesColumn div -->
       </div><!-- end of row div -->

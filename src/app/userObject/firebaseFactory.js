@@ -56,7 +56,6 @@ angular.module("Ident")
 
     //send selected subtaxa to user object.
     function sendUserAnswer(filepath, answer) {
-      console.log("answer to send", answer );
       return $http({
         method: "PUT", 
         url: `https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/${filepath}/.json`,
@@ -71,13 +70,11 @@ angular.module("Ident")
 
 
     function getAnswerIntoUserAnimal (nameToSend) {
-      console.log("name to send in resolve", nameToSend);
       return getSpecialData(nameToSend)
         .then((res) => {
           return sendUserAnswer(nameToSend, res);
         }).then(()=> {
           return getUserObject();
-          console.log("user object gotten", whatIKnowAboutMyAnimalSoFar);
         });
 
     }
@@ -106,8 +103,43 @@ angular.module("Ident")
       });
     }
 
+    let feed = {};
+
+    function publishAnimal(name) {
+      console.log("name to add to user object", name, "user animal", whatIKnowAboutMyAnimalSoFar);
+      return $http ({
+        method: "POST", 
+        url: `https://animal-identification.firebaseio.com/feed/.json`,
+        data: {name: name, picture: whatIKnowAboutMyAnimalSoFar.url, description: whatIKnowAboutMyAnimalSoFar.description}
+      }).then((res) => {
+        console.log("success", res);
+      }, (e) => {
+        console.log("error", e );
+      });
+    }
+
+    function getPublishedAnimals() {
+      return $http({
+        method: "GET", 
+        url: "https://animal-identification.firebaseio.com/feed/.json"
+      }).then((res)=> {
+        feed = res.data;
+        console.log("published animals", feed );
+        return feed;
+      }, (e)=> {
+        console.log("error", e );
+      });
+    }
+
+    function getFeed() {
+      return feed;
+    }
+
     //Public Functions
     return {
+      getFeed: getFeed,
+      getPublishedAnimals: getPublishedAnimals,
+      publishAnimal: publishAnimal,
       deleteLastAnswer: deleteLastAnswer,
       getAnswerIntoUserAnimal: getAnswerIntoUserAnimal,
       uploadImage: uploadImage,
