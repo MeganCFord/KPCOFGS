@@ -1,18 +1,24 @@
 angular.module("Ident")
-  .factory("FeedFactory", function($http) {
+  .factory("FeedFactory", function($http, FirebaseFactory, $timeout) {
 
     //these three functions run on start page to get the feed. 
     let feed = {};
 
-    function publishAnimal(name, picture, description) {
-      return $http({
-        method: "POST", 
-        url: `https://animal-identification.firebaseio.com/feed/.json`,
-        data: {name: name, picture: picture, description: description}
-      }).then((res) => {
-        return res.data;
-      }, (e) => {
-        console.log("error", e );
+    function publishAnimal(name) {
+      $timeout().then(()=> {
+        const userAnimal = FirebaseFactory.getUserObject();
+        return userAnimal;
+      }).then((userAnimal)=> {
+        return $http({
+          method: "POST", 
+          url: `https://animal-identification.firebaseio.com/feed/.json`,
+          data: {name: name, picture: userAnimal.picture, description: userAnimal.description}
+        }).then((res) => {
+          return Promise.resolve(res);
+        }, (e) => {
+          console.log("error", e );
+          return Promise.reject();
+        });
       });
     }
 

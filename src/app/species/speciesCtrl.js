@@ -24,7 +24,7 @@ angular.module("Ident")
     };
 
     species.publishAnimal = (nameToAdd) => {
-      FeedFactory.publishAnimal(nameToAdd, species.currentTaxa.url, species.currentTaxa.description)
+      FeedFactory.publishAnimal(nameToAdd)
       .then(() => {
         $location.path("/");
       });

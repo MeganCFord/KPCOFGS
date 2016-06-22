@@ -38,9 +38,7 @@ angular.module("Ident")
     function addStartingQuestion (nameToSend) {
       return getSpecialData(nameToSend)
         .then((res) => {
-          return sendUserAnswer(nameToSend, res);
-        }).then(()=> {
-          return getUserObject();
+          return sendUserAnswer(nameToSend, res.question);
         });
     }
 

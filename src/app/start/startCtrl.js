@@ -16,9 +16,9 @@ angular.module("Ident")
 
     start.openTree = function() {
       $timeout().then(()=> {
-        FirebaseFactory.addStartingQuestion(start.startTaxa);
+        return FirebaseFactory.addStartingQuestion(start.startTaxa);
       }).then(()=> {
-        $location.url(`/tree/${start.startTaxa}`);
+         $location.url(`/tree/${start.startTaxa}`);
       });
     };
 
