@@ -22,7 +22,7 @@
              <!-- TODO: put an image here once I load the switch statement images into firebase. -->
               <h3>My animal also {{subtaxa.specialData.question}}</h3>
              <!-- this button opens the Modal. -->
-              <a class="btn btn-lg btn-default" ng-click="tree.openModal(subtaxa.name)">More Info</a>
+              <a class="btn btn-lg btn-default" ng-click="tree.selectedSubtaxa=subtaxa; tree.openModal(subtaxa.name)">More Info</a>
              <!-- these two buttons show/hide based on whether the taxa is selected. -->
               <label class="btn btn-primary btn-lg" ng-class="{'hideMe' : tree.selectedSubtaxa === subtaxa}""> 
                 <input type="radio" ng-value="subtaxa" name="subtaxaOptions" ng-model="tree.selectedSubtaxa">Select This Taxa

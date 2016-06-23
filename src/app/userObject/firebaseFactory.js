@@ -36,12 +36,14 @@ angular.module("Ident")
     }
     //runs between START page and TREE page to add the subtaxa question to the user object. 
     function addStartingQuestion (nameToSend) {
+      //use this function name to also grab the actual COL data. run the special data on not only the name, but also the classification data and make that the user answer object instead of pushing. That way the 'go back' button will work. 
       return getSpecialData(nameToSend)
         .then((res) => {
           return sendUserAnswer(nameToSend, res.question);
         });
     }
 
+   
     //send selected subtaxa to user object.
     function sendUserAnswer(filepath, answer) {
       return $http({
@@ -84,7 +86,7 @@ angular.module("Ident")
         }).then((res) => {
           if (res.data ===null) {
             return {
-              question: `is a ${nameToSend}. see 'more info'.`,
+              question: `is a ${nameToSend}.`,
               enableMe: true
             };
           } else {
