@@ -1,0 +1,26 @@
+$light-tan-color: #f9f6eb;
+$tan-shadow: #f3edd8;
+$dark-charcoal-color: #2b2929;
+$charcoal-color: #413e3e;
+$celery-color: #c1e09f;
+$red-color: #db4455;
+$white: #fff;
+
+.background {
+  background-color: $light-tan-color;
+  height: 100vh;
+  padding-top: 110px;
+}
+
+.navbar {
+  background-color: $charcoal-color;
+  height: 85px;
+
+  .show {
+    color: $light-tan-color;
+    font-size: 3em;
+    text-align: left;
+
+  }
+
+}

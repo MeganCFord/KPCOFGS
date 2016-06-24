@@ -12,9 +12,9 @@ const sassRelativePath = "/css";
 const sourcePath = "./src";
 
 const allDistributionPath = `${distributionPath}/**/*`;
-const allSassPath = `${sourcePath}${sassRelativePath}/**/*.scss`;
+const allSassPath = `${sourcePath}/**/*.scss`;
 const allSourcePath = `${sourcePath}/**/*`;
-const sassEntryPath = `${sourcePath}${sassRelativePath}/main.scss`;
+const sassEntryPath = `${sourcePath}${sassRelativePath}/sassy.scss`;
 const staticPath = [allSourcePath, `!${allSassPath}`];
 
 // CLEANERS
