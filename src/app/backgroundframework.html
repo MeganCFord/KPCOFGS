@@ -1,0 +1,46 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+  <<h1>nav bar</h1>
+  </div>
+</nav>
+
+<div id="mainBackground">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- empty left-hand column -->
+      <div class="col col-xs-1">
+      </div>
+
+
+      <!-- 'my animal' column -->
+      <div class="col col-xs-5">
+        <div ng-if="start" ng-controller="Start as start" ng-include="'app/start/start.html'">
+        </div>
+        <div ng-if="tree">
+          <div ng-controller="UserObject as user" ng-include="'app/userObject/myAnimal.html'"></div>
+        </div>
+        <div ng-if="end">
+          <div ng-controller="UserObject as user" ng-include="'app/userObject/myAnimal.html'"></div>
+        </div>
+      </div>
+
+
+      <!-- 'feed'/'options' column -->
+      <div class="col col-xs-5">
+        <div ng-if="start" ng-controller="Start as start" ng-include="'app/start/feed.html'">
+        </div>
+        <div ng-if="tree">
+          <div ng-controller="Tree as tree" ng-include="'app/tree/tree.html'"></div>
+        </div>
+        <div ng-if="end">
+          <div ng-controller="Species as species" ng-include="'app/species/species.html'"></div>
+        </div>
+      </div>
+
+
+      <!-- empty right-hand column -->
+      <div class="col col-xs-1">
+      </div>
+    </div>
+  </div>
+</div>

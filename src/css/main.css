@@ -29,3 +29,5 @@
   height: 240px;
   overflow-y: scroll;
 }
+
+body { padding-top: 70px; }

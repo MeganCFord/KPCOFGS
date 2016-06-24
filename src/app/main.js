@@ -3,9 +3,9 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
   .config(($routeProvider) => {
     $routeProvider
       .when("/tree/:taxa", {
-        templateUrl: "app/tree/tree.html",
-        controller: "Tree", 
-        controllerAs: "tree", 
+        templateUrl: "app/backgroundframework.html",
+        controller: "Background", 
+        controllerAs: "background", 
         resolve:  {
           currentTaxa: function(COLFactory, $route) {
             console.log("current route", $route.current.params.taxa );
@@ -17,9 +17,9 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
         }
       })
       .when("/species/:taxa", {
-        templateUrl:"app/species/species.html", 
-        controller: "Species", 
-        controllerAs: "species", 
+        templateUrl:"app/backgroundframework.html", 
+        controller: "Background", 
+        controllerAs: "background", 
         resolve: {
           currentTaxa: function(COLFactory, $route) {
             return COLFactory.COLforTaxa($route.current.params.taxa);
@@ -29,10 +29,10 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
           }
         }
       })
-      .when("/", {
-        templateUrl: "app/start/start.html", 
-        controller: "Start", 
-        controllerAs: "start", 
+      .when("/start", {
+        templateUrl: "app/backgroundframework.html", 
+        controller: "Background", 
+        controllerAs: "background", 
         resolve: {
           clearedUserObject: function(FirebaseFactory) {
             return FirebaseFactory.clearUserObject();
@@ -42,7 +42,7 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
           }
         }
       })
-      .otherwise("/");
+      .otherwise("/start");
   });
 
 
