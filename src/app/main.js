@@ -3,7 +3,7 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
   .config(($routeProvider) => {
     $routeProvider
       .when("/tree/:taxa", {
-        templateUrl: "app/background/backgroundframework.html",
+        templateUrl: "app/background/background.html",
         controller: "Background", 
         controllerAs: "background", 
         resolve:  {
@@ -17,7 +17,7 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
         }
       })
       .when("/species/:taxa", {
-        templateUrl:"app/background/backgroundframework.html", 
+        templateUrl:"app/background/background.html", 
         controller: "Background", 
         controllerAs: "background", 
         resolve: {
@@ -30,7 +30,7 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
         }
       })
       .when("/start", {
-        templateUrl: "app/background/backgroundframework.html", 
+        templateUrl: "app/background/background.html", 
         controller: "Background", 
         controllerAs: "background", 
         resolve: {

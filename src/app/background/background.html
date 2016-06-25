@@ -39,7 +39,7 @@
       <!-- 'feed'/'options' column -->
       <div class="col col-xs-6">
         <div class="recessed">
-          <div ng-if="background.start" ng-controller="Start as start" ng-include="'app/start/feed.html'">
+          <div ng-if="background.start" ng-controller="FeedCtrl as feed" ng-include="'app/feed/feed.html'">
           </div>
           <div ng-if="background.tree">
             <div ng-controller="Tree as tree" ng-include="'app/tree/tree.html'"></div>

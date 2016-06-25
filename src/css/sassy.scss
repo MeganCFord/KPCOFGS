@@ -1,4 +1,13 @@
-.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+
+$light-tan-color: #f9f6eb;
+$tan-shadow: #f3edd8;
+$dark-charcoal-color: #4e4b4b;
+$charcoal-color: #827d7d;
+$celery-color: #c1e09f;
+$dark-celery-color: #5b872c;
+$red-color: #e0af9f;
+$white: #fff;
 
 @import 'main.css';
 @import '../app/background/background.scss';

@@ -1,5 +1,5 @@
 angular.module("Ident")
-  .factory("FeedFactory", function($http, FirebaseFactory, $timeout) {
+  .factory("FeedFactory", function($http, FirebaseFactory ) {
 
     //these three functions run on start page to get the feed. 
     let feed = {};
@@ -27,6 +27,7 @@ angular.module("Ident")
         url: "https://animal-identification.firebaseio.com/feed/.json"
       }).then((res)=> {
         feed = res.data;
+        console.log("feed in factory", feed );
         return feed;
       }, (e)=> {
         console.log("error", e );
