@@ -6,13 +6,18 @@ angular.module("Ident")
       return (item.specialData && item.specialData.enableMe === true);
     };
 
+
+
     //gets assigned the entire subtaxa object.
     tree.selectedSubtaxa = null;
     
     //runs after page load.
     tree.loadcurrentTaxa = () => {
       $timeout().then(() => {tree.currentTaxa = COLFactory.getCurrentTaxa();
-      console.log("current Taxa: ", tree.currentTaxa);
+        console.log("current Taxa: ", tree.currentTaxa);
+        return tree.currentTaxa;
+      }).then(() => {
+        $scope.$emit("settingCurrentRank", tree.currentTaxa.rank);
       });
     };
     tree.loadcurrentTaxa(); 

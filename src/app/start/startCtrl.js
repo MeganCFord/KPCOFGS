@@ -8,6 +8,7 @@ angular.module("Ident")
     start.userDescription = "";
 
 
+
     start.getFeed = () => {
       $timeout().then(()=>{start.feed = FeedFactory.getFeed();
       console.log("start feed", start.feed );});

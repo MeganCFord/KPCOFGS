@@ -1,9 +1,10 @@
 $light-tan-color: #f9f6eb;
 $tan-shadow: #f3edd8;
-$dark-charcoal-color: #2b2929;
-$charcoal-color: #413e3e;
+$dark-charcoal-color: #4e4b4b;
+$charcoal-color: #827d7d;
 $celery-color: #c1e09f;
-$red-color: #db4455;
+$dark-celery-color: #5b872c;
+$red-color: #e0af9f;
 $white: #fff;
 
 .background {
@@ -14,13 +15,41 @@ $white: #fff;
 
 .navbar {
   background-color: $charcoal-color;
-  height: 85px;
+  box-shadow: inset 0 -5px 15px $dark-charcoal-color;
+  height: 120px;
+  padding-top: 10px;
 
-  .show {
+  .rank {
     color: $light-tan-color;
-    font-size: 3em;
-    text-align: left;
-
+    text-align: center;
+    text-shadow: 5px 5px 15px $dark-charcoal-color;
   }
 
+  .active-rank {
+    color: $celery-color;
+  }
+
+  .completed-rank {
+    color: $red-color;
+  }
+
+  // added these sub-classes to make the different-length words look better centered.
+  .phylum {
+    margin-left: 45px;
+  }
+
+  .class {
+    margin-left: 40px;
+  }
+}//end of nav-bar.
+
+.recessed {
+  background-color: $charcoal-color;
+  border-radius: 12px;
+  box-shadow: inset 5px 5px 15px $dark-charcoal-color;
+  height: 80vh;
+  margin: 0 25px;
+  overflow-y: scroll;
 }
+
+

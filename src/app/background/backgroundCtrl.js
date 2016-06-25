@@ -1,15 +1,52 @@
 angular.module("Ident")
   .controller("Background", function($scope, $route) {
+    const background = this;
 
-    $scope.location=$route.current.$$route.originalPath;
+    //determines which controllers load into the recessed divs.
+    background.location=$route.current.$$route.originalPath;
 
-    //this statement sets a boolean value based on the route ($location didn't work since I needed the pre-params path) to set which view shows in the background divs. 
-    if ($scope.location === "/tree/:taxa") {
-      $scope.tree = true;
-    } else if ($scope.location === "/species/:taxa") {
-      $scope.end = true;
-    }else if ($scope.location === "/start") {
-      $scope.start=true;
+    if (background.location === "/tree/:taxa") {
+      background.tree = true;
+    } else if (background.location === "/species/:taxa") {
+      background.end = true;
+    }else if (background.location === "/start") {
+      background.start=true;
     }
+
+
+    //determines current rank for navbar styling.
+    background.currentRank = null;
+    $scope.$on("settingCurrentRank", function (event, value) {
+      console.log("new current rank", value );
+      background.currentRank = value;
+    });
+
+    //TODO: making my controller aware of CSS isn't ideal- will refactor when I come up with a better idea like maybe assigning a number value to the ranking.
+    background.setRankingClasses = (navWord) => {
+      if(navWord === background.currentRank) {
+        return "active-rank";
+      } 
+      if (navWord === "Kingdom") {
+        if (background.currentRank === "Phylum" || background.currentRank === "Class" || background.currentRank === "Order" || background.currentRank === "Family" || background.currentRank === "Genus" || background.currentRank === "Species") {
+          return "completed-rank";
+        }
+      } else if (navWord === "Phylum") {
+        if (background.currentRank === "Class" || background.currentRank === "Order" || background.currentRank === "Family" || background.currentRank === "Genus" || background.currentRank === "Species") {
+          return "completed-rank";
+        }
+      } else if (navWord === "Class") {
+        if (background.currentRank === "Order" || background.currentRank === "Family" || background.currentRank === "Genus" || background.currentRank === "Species") {
+          return "completed-rank";
+        }
+      } else if (navWord === "Order") {
+        if (background.currentRank === "Family" || background.currentRank === "Genus" || background.currentRank === "Species") {
+          return "completed-rank";
+        }
+      } else if (navWord === "Family") {
+        if (background.currentRank === "Genus" || background.currentRank === "Species") {
+          return "completed-rank";
+        }
+      }
+    };
 
   });

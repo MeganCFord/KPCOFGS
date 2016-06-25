@@ -1,19 +1,15 @@
 <nav class="navbar navbar-default navbar-fixed-top">
  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="col-sm-3">
-          <div class="col-md-6 show text-center">Kingdom</div>
-          <div class="col-md-6 show text-center">Phylum</div>
-        </div>
-        <div class="col-sm-2 show text-center">Class</div>
-        <div class="col-sm-2 show text-center">Order</div>
-        <div class="col-sm-2 show text-center">Family</div>
-        <div class="col-sm-3">
-          <div class="col-md-6 show text-center">Genus</div>
-          <div class="col-md-6 show text-center">Species</div>
-        </div>
-    </div>
+  <div class="row seven-cols">
+    <div class="col-md-1"><div ng-class="background.setRankingClasses('Kingdom')" class="kingdom rank">Kingdom</div></div>
+    <div class="col-md-1"><div ng-class="background.setRankingClasses('Phylum')" class="phylum rank">Phylum</div></div>
+    <div class="col-md-1"><div ng-class="background.setRankingClasses('Class')" class="class rank">Class</div></div>
+    <div class="col-md-1"><div ng-class="background.setRankingClasses('Order')" class="order rank">Order</div></div>
+    <div class="col-md-1"><div ng-class="background.setRankingClasses('Family')" class="family rank">Family</div></div>
+    <div class="col-md-1"><div ng-class="background.setRankingClasses('Genus')" class="genus rank">Genus</div></div>
+    <div class="col-md-1"><div ng-class="background.setRankingClasses('Species')" class="species rank">Species</div></div>
+  </div>
+</div>
   </div>
 
       </div>
@@ -23,40 +19,38 @@
 <div class="background">
   <div class="container-fluid">
     <div class="row">
-      <!-- empty left-hand column -->
-      <div class="col col-xs-1">
-      </div>
-
+    
 
       <!-- 'my animal' column -->
-      <div class="col col-xs-5">
-        <div ng-if="start" ng-controller="Start as start" ng-include="'app/start/start.html'">
-        </div>
-        <div ng-if="tree">
-          <div ng-controller="UserObject as user" ng-include="'app/userObject/myAnimal.html'"></div>
-        </div>
-        <div ng-if="end">
-          <div ng-controller="UserObject as user" ng-include="'app/userObject/myAnimal.html'"></div>
+      <div class="col col-xs-6">
+        <div class="recessed">
+          <div ng-if="background.start" ng-controller="Start as start" ng-include="'app/start/start.html'">
+          </div>
+          <div ng-if="background.tree">
+            <div ng-controller="UserObject as user" ng-include="'app/userObject/myAnimal.html'"></div>
+          </div>
+          <div ng-if="background.end">
+            <div ng-controller="UserObject as user" ng-include="'app/userObject/myAnimal.html'"></div>
+          </div>
         </div>
       </div>
 
 
       <!-- 'feed'/'options' column -->
-      <div class="col col-xs-5">
-        <div ng-if="start" ng-controller="Start as start" ng-include="'app/start/feed.html'">
-        </div>
-        <div ng-if="tree">
-          <div ng-controller="Tree as tree" ng-include="'app/tree/tree.html'"></div>
-        </div>
-        <div ng-if="end">
-          <div ng-controller="Species as species" ng-include="'app/species/species.html'"></div>
+      <div class="col col-xs-6">
+        <div class="recessed">
+          <div ng-if="background.start" ng-controller="Start as start" ng-include="'app/start/feed.html'">
+          </div>
+          <div ng-if="background.tree">
+            <div ng-controller="Tree as tree" ng-include="'app/tree/tree.html'"></div>
+          </div>
+          <div ng-if="background.end">
+            <div ng-controller="Species as species" ng-include="'app/species/species.html'"></div>
+          </div>
         </div>
       </div>
 
 
-      <!-- empty right-hand column -->
-      <div class="col col-xs-1">
-      </div>
     </div>
   </div>
 </div>
