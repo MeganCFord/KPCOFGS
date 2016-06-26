@@ -9,4 +9,6 @@ angular.module("Ident")
     };
     feed.getFeed();
 
+    //TODO: add function that makes 'more info' button open species modal. 
+
   });
