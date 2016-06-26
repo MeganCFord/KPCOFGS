@@ -14,7 +14,7 @@
   .rank {
     color: $light-tan-color;
     text-align: center;
-    text-shadow: 5px 5px 15px $dark-charcoal-color;
+    text-shadow: $standard-grey-shadow;
   }
 
   .active-rank {
@@ -42,6 +42,10 @@
   height: 80vh;
   margin: 0 25px;
   overflow-y: scroll;
+}
+
+.content {
+  padding: 35px;
 }
 
 

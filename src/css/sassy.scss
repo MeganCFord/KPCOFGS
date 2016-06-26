@@ -1,5 +1,5 @@
 
-
+//COLOR SCHEME
 $light-tan-color: #f9f6eb;
 $tan-shadow: #f3edd8;
 $dark-charcoal-color: #4e4b4b;
@@ -9,8 +9,10 @@ $dark-celery-color: #5b872c;
 $red-color: #e0af9f;
 $white: #fff;
 
+
+$standard-grey-shadow: 5px 5px 15px $dark-charcoal-color;
+
 @import 'main.css';
 @import '../app/background/background.scss';
-
-
+@import '../app/feed/feed.scss'
 

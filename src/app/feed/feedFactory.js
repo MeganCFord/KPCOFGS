@@ -10,12 +10,11 @@ angular.module("Ident")
         return $http({
           method: "POST", 
           url: `https://animal-identification.firebaseio.com/feed/.json`,
+          //TODO: get the common name of the species here- instead of the scientific name. Description will go on the back of the card if at all. 
           data: {name: name, picture: userAnimal.url, description: userAnimal.description}
         }).then((res) => {
-          console.log("finished publishing animal");
           return Promise.resolve(res);
         }, (e) => {
-          console.log("error", e );
           return Promise.reject(e);
         });
       });
@@ -27,10 +26,9 @@ angular.module("Ident")
         url: "https://animal-identification.firebaseio.com/feed/.json"
       }).then((res)=> {
         feed = res.data;
-        console.log("feed in factory", feed );
         return feed;
       }, (e)=> {
-        console.log("error", e );
+        return Promise.reject(e);
       });
     }
 
@@ -38,6 +36,8 @@ angular.module("Ident")
       return feed;
     }
 
+
+    //public functions
     return {
       publishAnimal: publishAnimal, 
       getPublishedAnimals: getPublishedAnimals, 

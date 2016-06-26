@@ -2,11 +2,10 @@ angular.module("Ident")
   .controller("FeedCtrl", function($timeout, FeedFactory) {
     const feed = this;
 
-
+    //runs on page load. $http GETTER runs as part of resolve in router.
     feed.getFeed = () => {
-      console.log("starting to get feed.");
       $timeout().then(()=>{feed.feed = FeedFactory.getFeed();
-      console.log("feed", feed.feed );});
+      console.log("feed object from firebase", feed.feed );});
     };
     feed.getFeed();
 
