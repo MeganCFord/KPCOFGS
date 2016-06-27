@@ -1,8 +1,16 @@
-<div ng-controller="UserObject as user">
-  <img ng-src="{{user.userAnimal.url}}">
-  <h5>{{user.userAnimal.description}}</h5>
-  <div>
-    <h5>I know my animal:</h5>
-      <p ng-repeat="answer in user.userAnimal.answeredQuestions">{{answer.answer}}</p>
+<h1 class="feed-title">My Animal</h1>
+
+<div ng-controller="UserObject as user" class="feed-card">
+  <div class="card-img">
+    <img ng-src="{{user.userAnimal.url}}">
   </div>
+  <p>{{user.userAnimal.description}}</p>
+  <div class="clearfix"></div>
+</div>
+
+<div class="feed-card" ng-repeat="answer in user.userAnimal.answeredQuestions">
+  <p class="inline-text">This animal {{answer.answer}}</p>
+  <a href="#" class="btn btn-lg btn-success inline-button">Go Back to here</a>
+  <a href="#" class="btn btn-lg btn-success inline-button">More info</a>
+  <div class="clearfix"></div>
 </div>

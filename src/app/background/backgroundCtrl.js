@@ -17,7 +17,6 @@ angular.module("Ident")
     //determines current rank for navbar styling.
     background.currentRank = null;
     $scope.$on("settingCurrentRank", function (event, value) {
-      console.log("new current rank", value );
       background.currentRank = value;
     });
 
