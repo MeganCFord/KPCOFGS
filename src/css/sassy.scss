@@ -14,5 +14,28 @@ $standard-grey-shadow: 5px 5px 15px $dark-charcoal-color;
 
 @import 'main.css';
 @import '../app/background/background.scss';
-@import '../app/feed/feed.scss'
+@import '../app/start/start.scss';
+@import '../app/feed/feed.scss';
 
+.inline-button {
+  // display: inline-block;
+  float: right;
+  margin: 12px;
+}
+
+.inline-text {
+  display: inline-block;
+  font-size: 2em;
+  max-width: 95%;
+  padding: 12px;
+}
+
+.card-img {
+  padding: 4px;
+  width: 100%;
+
+  img {
+    border-radius: 12px 12px 0 0;
+    width: 100%;
+    }
+  }

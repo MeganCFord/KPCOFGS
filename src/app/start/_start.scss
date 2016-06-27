@@ -1,0 +1,22 @@
+.step-btn {
+  background-color: $light-tan-color;
+  border-radius: 12px;
+  box-shadow: $standard-grey-shadow;
+  margin: 35px auto;
+  padding: 8px;
+  width: 95%;
+
+  .btn {
+    font-size: 2em;
+  }
+
+  p {
+    font-size: 2em;
+    max-width: 95%;
+  }
+
+  textarea {
+    margin-bottom: 8px;
+  }
+}
+

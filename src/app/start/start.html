@@ -1,38 +1,31 @@
-<h1>Identify Your Mystery Animal!</h1>
-
-<!-- took the animal object out of the DOM here, I'm going to manually add it instead I think.  -->
-
-<div ng-class="{'hideMe': start.hideUserAnimal === true}">
-  <img ng-src="{{start.userImage}}">
-  <h5>{{start.userDescription}}</h5>
+<h1 ng-if="start.step===2" class="feed-title">Your Animal</h1>
+<!-- step 0: user chooses to get started. -->
+<div ng-if="start.step===0" class="step-btn">
+  <button class="btn btn-success btn-lg btn-block" ng-click="start.step = 1">Identify An Animal</button>
 </div>
 
-<div ng-class="{'hideMe': start.hideUserAnimal === false}">
-  <form ng-submit="start.uploadUserData()">
-    <h2>Add what you know about your animal, for reference</h2>
-    <label class="btn btn-default btn-file">Upload Image
-      <input type="file" ng-model="start.userImage" accept="image/*" style="display: none"/>
-    </label>
-    <input type="text" ng-model="start.userDescription" placeholder ="add an optional description" />
-    <input type="submit" class="btn btn-lg btn-default" ng-class="{'hideMe': start.hideUserAnimal === false}" value="Upload Now!" />
-  </form>   
-</div>
+<!-- step 1: user submits info. -->
+<form class="step-btn" ng-if="start.step === 1" ng-submit = start.uploadUserData()>
+  <label class="btn btn-lg btn-success btn-block">
+    <span ng-model="start.uploadBtnText">Choose a File</span>
+    <input type="file" ng-model="start.userImage" accept="image/*" style="display: none" onchange="angular.element(this).scope().photoChanged(this.files)"/>
+  </label>
+  <p ng-model="start.currentFileName">{{start.currentFileName}}</p>
+  <textarea class="form-control" rows="4" ng-model = "start.userDescription" placeholder="add some optional notes about your animal, for reference"></textarea>
+  <button class="btn btn-success btn-lg btn-block" type="submit" ng-class="{disabled: start.currentFileName ==='No File Selected'}">Submit</button>
+</form>
 
 
-
-
-<div ng-class="{'hideMe': start.hideUserAnimal === true}">
-  <a class="btn btn-lg btn-default" ng-click="start.hideUserAnimal=true; start.userDescription = '';
-" ng-class="{'hideMe': start.hideUserAnimal === true}">Reset</a>
-  <a class="btn btn-lg btn-default" ng-click="start.openTree()">Start at the Beginning</a>
-
-  <a class="btn btn-lg btn-default" ng-if="start.iKnow===false" ng-click="start.iKnow = true">I already know some things</a>
-</div>
-
-<div ng-if="start.iKnow===true">
-  <div ng-include="'app/start/additionalButtons.html'">
+<!-- step 2: user item verification. -->
+<div class="feed-card" ng-if="start.step===2">
+  <div class="card-img">
+    <img ng-src="{{start.userImage}}">
   </div>
-<a class="btn btn-lg btn-default" ng-click="start.iKnow = false">Never Mind</a>
+  <p class="inline-text">{{start.userDescription}}</p>
+  <button class="btn btn-success btn-lg inline-button" ng-click="start.step=1">Edit</button>
+  <div class="clearfix"></div>
 </div>
 
-
+<div class="step-btn" ng-if="start.step===2">
+  <button class="btn btn-success btn-lg btn-block" ng-click="start.openTree()">Get Started Identifying</button>
+</div>
