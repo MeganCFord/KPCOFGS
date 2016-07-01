@@ -8,7 +8,7 @@ angular.module("Ident")
     }
 
     function getMasterTaxa(nameToSend) {
-      console.log("sending new taxa name", nameToSend );
+      // console.log("sending new taxa name", nameToSend );
       return $http({
         method: "GET", 
         url: `http://www.catalogueoflife.org/col/webservice?name=${nameToSend}&format=json&response=full`
@@ -21,8 +21,6 @@ angular.module("Ident")
       
       }, (e) => {
         Promise.reject(e);
-      }).then(()=> {
-        return AnswerFactory.getSpecialData(currentTaxaData.name);
       });
     }
 

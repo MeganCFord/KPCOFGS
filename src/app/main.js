@@ -8,11 +8,10 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
         controllerAs: "background", 
         resolve:  {
           currentTaxa: function(TreeFactory, $route) {
-            console.log("current route", $route.current.params.taxa );
             return TreeFactory.buildTheTree($route.current.params.taxa);
           }, 
-          currentUserObject: function(UserObjectFactory) {
-            return UserObjectFactory.getUserObject();
+          currentUserObject: function(UserObjectFactory, $route) {
+            return UserObjectFactory.buildUserObject($route.current.params.taxa);
             //todo in here: rebuild the cumulative questions object as well. 
           }
         }
@@ -25,8 +24,8 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
           currentTaxa: function(TreeFactory, $route) {
             return TreeFactory.buildTheTree($route.current.params.taxa);
           }, 
-          currentUserObject: function(UserObjectFactory) {
-            return UserObjectFactory.getUserObject();
+          currentUserObject: function(UserObjectFactory, $route) {
+            return UserObjectFactory.buildUserObject($route.current.params.taxa);
             //to do in here: rebuild the cumulative questions object as well. 
           }
         }
