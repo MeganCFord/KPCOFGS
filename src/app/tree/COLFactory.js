@@ -23,7 +23,7 @@ angular.module("Ident")
         return currentTaxaData;
       
       }, (e) => {
-        console.err(e);
+        console.log(e);
       }).then((data) => {
 
         loadEitherQuestionsOrInfo(data);

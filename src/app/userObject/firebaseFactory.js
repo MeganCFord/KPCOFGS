@@ -39,17 +39,17 @@ angular.module("Ident")
       //use this function name to also grab the actual COL data. run the special data on not only the name, but also the classification data and make that the user answer object instead of pushing. That way the 'go back' button will work. 
       return getSpecialData(nameToSend)
         .then((res) => {
-          return sendUserAnswer(nameToSend, res.question);
+          // return sendUserAnswer(nameToSend, res.question);
         });
     }
 
    
     //send selected subtaxa to user object.
-    function sendUserAnswer(filepath, answer) {
+    function sendUserAnswer(answerArray) {
       return $http({
         method: "PUT", 
-        url: `https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/${filepath}/.json`,
-        data: {answer: answer}
+        url: `https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/.json`,
+        data: {answer: answerArray}
       }).then((res) => {
         console.log("success in sending user answer");
       }, 
@@ -97,20 +97,22 @@ angular.module("Ident")
         console.err("WTF why is the name to send null");
       }//end of ifNameToSend !== null
     }
-    
-    function deleteLastAnswer(nameToDelete) {
-      return $http({
-        method: "DELETE", 
-        url: `https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/${nameToDelete}.json`
-      });
-    }
+
+
+    //deleting this one because we'll just go back to the previous page and rebuild the entire answer object from there.
+    // function deleteLastAnswer(nameToDelete) {
+    //   return $http({
+    //     method: "DELETE", 
+    //     url: `https://animal-identification.firebaseio.com/currentUserObject/answeredQuestions/${nameToDelete}.json`
+    //   });
+    // }
 
 
 
 
     //Public Functions
     return {
-      deleteLastAnswer: deleteLastAnswer,
+      // deleteLastAnswer: deleteLastAnswer,
       sendUserAnswer: sendUserAnswer,
       addStartingQuestion: addStartingQuestion,
       uploadImage: uploadImage,

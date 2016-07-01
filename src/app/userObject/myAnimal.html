@@ -4,13 +4,13 @@
   <div class="card-img">
     <img ng-src="{{user.userAnimal.url}}">
   </div>
-  <p>{{user.userAnimal.description}}</p>
+  <p>Notes: {{user.userAnimal.description}}</p>
   <div class="clearfix"></div>
 </div>
 
 <div class="feed-card" ng-repeat="answer in user.userAnimal.answeredQuestions">
-  <p class="inline-text">This animal {{answer.answer}}</p>
-  <a href="#" class="btn btn-lg btn-success inline-button">Go Back to here</a>
-  <a href="#" class="btn btn-lg btn-success inline-button">More info</a>
+  <p>This animal {{answer.answer}}</p>
+  <a href="#" class="btn btn-success inline-button">Go Back to here</a>
+  <a href="#" class="btn btn-success inline-button">More info</a>
   <div class="clearfix"></div>
 </div>

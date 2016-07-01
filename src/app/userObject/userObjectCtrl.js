@@ -1,14 +1,16 @@
 angular.module("Ident")
-  .controller("UserObject", function(FirebaseFactory, $timeout) {
+  .controller("UserObject", function(FirebaseFactory, WikiFactory, $timeout) {
     const user = this;
 
-    user.helloWorld = "hello World";
-
+    //http GETTER runs in resolve.
     user.loadUserAnimal = () => {
       $timeout().then(() => {user.userAnimal = FirebaseFactory.getWhatIKnow();
       console.log("user animal: ", user.userAnimal);
       });
     };
     user.loadUserAnimal();
+
+    WikiFactory.getWikiData("Mollusca");
+
 
   });//end of controller
