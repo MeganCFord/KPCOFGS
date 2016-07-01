@@ -3,11 +3,11 @@ angular.module("Ident")
     const feed = this;
 
     //runs on page load. $http GETTER runs as part of resolve in router.
-    feed.getFeed = () => {
-      $timeout().then(()=>{feed.feed = FeedFactory.getFeed();
+    feed.getLoadedFeed = () => {
+      $timeout().then(()=>{feed.feed = FeedFactory.getLoadedFeed();
       console.log("feed object from firebase", feed.feed );});
     };
-    feed.getFeed();
+    feed.getLoadedFeed();
 
     //TODO: add function that makes 'more info' button open species modal. 
 

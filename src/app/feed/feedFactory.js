@@ -1,17 +1,23 @@
 angular.module("Ident")
-  .factory("FeedFactory", function($http, FirebaseFactory ) {
+  .factory("FeedFactory", function($http, UserObjectFactory ) {
 
     //these three functions run on start page to get the feed. 
     let feed = {};
 
-    function publishAnimal(name) {
-      return FirebaseFactory.getUserObject()
+    //TODO: get the common name of the species here- instead of the scientific name. Description will go on the back of the card if at all. 
+    function publishAnimaltoFeed(name) {
+      return UserObjectFactory.getUserObject()
       .then((userAnimal)=> {
+        
+        //timestamps the upload for sorting purposes.
+        const x = new Date();
+        const myDate = x.toString();
+
         return $http({
           method: "POST", 
           url: `https://animal-identification.firebaseio.com/feed/.json`,
-          //TODO: get the common name of the species here- instead of the scientific name. Description will go on the back of the card if at all. 
-          data: {name: name, picture: userAnimal.url, description: userAnimal.description}
+          
+          data: {name: name, picture: userAnimal.url, description: userAnimal.description, date: myDate}
         }).then((res) => {
           return Promise.resolve(res);
         }, (e) => {
@@ -32,16 +38,16 @@ angular.module("Ident")
       });
     }
 
-    function getFeed() {
+    function getLoadedFeed() {
       return feed;
     }
 
 
     //public functions
     return {
-      publishAnimal: publishAnimal, 
+      publishAnimal: publishAnimaltoFeed, 
       getPublishedAnimals: getPublishedAnimals, 
-      getFeed: getFeed
+      getLoadedFeed: getLoadedFeed
     };
 
   });

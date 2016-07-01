@@ -1,5 +1,5 @@
 angular.module("Ident")
-  .controller("Start", function(FirebaseFactory, FeedFactory, $scope, $timeout, $location) {
+  .controller("Start", function(UserObjectFactory, FeedFactory, $scope, $timeout, $location) {
     const start=this;
 
     start.userDescription = "";
@@ -7,7 +7,7 @@ angular.module("Ident")
     start.step =0;   
    
 
-    //displays file name. 
+    //displays file name on DOM before upload. 
     $scope.photoChanged = function(files) {
       if (files !== null ) {
         console.log("files", files );
@@ -21,27 +21,22 @@ angular.module("Ident")
       const input = document.querySelector('[type="file"]');
       const file = input.files[0];
 
-      FirebaseFactory.uploadImage(file)
+      UserObjectFactory.uploadImage(file)
         .then(res => {
           start.userImage = res.downloadURL;
-          start.hideUserAnimal = false;
+          start.step = 2;
           return res.downloadURL;
         })
         .then((userURL) => {
           firebase.database().ref("/currentUserObject").set({url: userURL, description: start.userDescription});
         }).then(() => {
           start.currentFileName = "No File Selected";
-          start.step = 2;
         });
     };
 
     //'Get Started' button.
     start.openTree = function() {
-      $timeout().then(()=> {
-        return FirebaseFactory.addStartingQuestion('Animalia');
-      }).then(()=> {
-        $location.url(`/tree/Animalia`);
-      });
+      $location.url(`/tree/Animalia`);
     };
 
   });//end of module

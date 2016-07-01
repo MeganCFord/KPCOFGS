@@ -14,13 +14,13 @@ angular.module("Ident")
     }
 
 
-    //determines current rank for navbar styling.
+    //determines current rank from child scopes, for navbar styling.
     background.currentRank = null;
     $scope.$on("settingCurrentRank", function (event, value) {
       background.currentRank = value;
     });
 
-    //TODO: making my controller aware of CSS isn't ideal- will refactor when I come up with a better idea like maybe assigning a number value to the ranking.
+    //V2: making my controller aware of CSS isn't ideal- will refactor when I come up with a better idea like maybe assigning a number value to the ranking.
     background.setRankingClasses = (navWord) => {
       if(navWord === background.currentRank) {
         return "active-rank";

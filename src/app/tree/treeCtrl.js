@@ -1,22 +1,22 @@
 angular.module("Ident")
-  .controller("Tree", function(COLFactory, InfoFactory, FirebaseFactory, $scope, $uibModal, $location, $timeout) {
+  .controller("Tree", function(TreeFactory, InfoFactory, $scope, $uibModal, $location, $timeout) {
     const tree = this;
 
+    //filter for my firebase data questions.
     $scope.notDisabled = function(item) {
       return (item.specialData && item.specialData.enableMe === true);
     };
-
-
 
     //gets assigned the entire subtaxa object.
     tree.selectedSubtaxa = null;
     
     //runs after page load.
     tree.loadcurrentTaxa = () => {
-      $timeout().then(() => {tree.currentTaxa = COLFactory.getCurrentTaxa();
+      $timeout().then(() => {tree.currentTaxa = TreeFactory.getLoadedCurrentTaxa();
         console.log("current Taxa: ", tree.currentTaxa);
         return tree.currentTaxa;
       }).then(() => {
+        //emits to parent scope for navbar coloration.
         $scope.$emit("settingCurrentRank", tree.currentTaxa.rank);
       });
     };
@@ -24,8 +24,7 @@ angular.module("Ident")
 
     //loads next page on submit button click.
     tree.traverse = () => {
-      $timeout().then(()=>{
-        FirebaseFactory.sendUserAnswer(tree.selectedSubtaxa.name, tree.selectedSubtaxa.specialData.question)
+      $timeout()
         .then(()=> {
           if (tree.currentTaxa.traversable===false){
             $location.path(`/species/${tree.selectedSubtaxa.name}`);
@@ -33,7 +32,6 @@ angular.module("Ident")
             $location.path(`/tree/${tree.selectedSubtaxa.name}`);
           }
         });//end of .then
-      });//end of $timeout
     };//end of tree.traverse
 
 
@@ -56,13 +54,12 @@ angular.module("Ident")
     }; //end of tree.openModal
 
 
+    
     tree.goBackButton = () => {
       tree.selectedSubtaxa = null;
-      FirebaseFactory.deleteLastAnswer(tree.currentTaxa.name)
-      .then(()=> {
-        $location.path(`/tree/${tree.currentTaxa.classification[tree.currentTaxa.classification.length - 1].name}`);
-      });
+      $location.path(`/tree/${tree.currentTaxa.classification[tree.currentTaxa.classification.length - 1].name}`);
+      // });
     };
 
-  })//end of controller
+  });//end of controller
 

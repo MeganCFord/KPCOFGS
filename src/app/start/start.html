@@ -9,6 +9,7 @@
 <form class="step-btn" ng-if="start.step === 1" ng-submit = start.uploadUserData()>
   <label class="btn btn-lg btn-success btn-block">
     <span ng-model="start.uploadBtnText">Choose a File</span>
+    <!-- this input broadcasts the name of the file loaded for display. -->
     <input type="file" ng-model="start.userImage" accept="image/*" style="display: none" onchange="angular.element(this).scope().photoChanged(this.files)"/>
   </label>
   <p ng-model="start.currentFileName">{{start.currentFileName}}</p>

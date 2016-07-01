@@ -1,5 +1,5 @@
 angular.module("Ident")
-  .controller("Species", function($timeout, FirebaseFactory, FeedFactory, COLFactory, $scope, $sce, $location) {
+  .controller("Species", function($timeout, UserObjectFactory, FeedFactory, TreeFactory, $scope, $sce, $location) {
     const species = this;
 
     //runs to make any HTML description text show correctly. 
@@ -9,7 +9,7 @@ angular.module("Ident")
 
 
     species.loadcurrentTaxa = () => {
-      $timeout().then(() => {species.currentTaxa = COLFactory.getCurrentTaxa();
+      $timeout().then(() => {species.currentTaxa = TreeFactory.getCurrentTaxa();
       console.log("species.currentTaxa", species.currentTaxa);
       });
     };
@@ -17,7 +17,7 @@ angular.module("Ident")
 
 
     species.goBackButton = () => {
-      FirebaseFactory.deleteLastAnswer(species.currentTaxa.name)
+      UserObjectFactory.deleteLastAnswer(species.currentTaxa.name)
       .then(() => {
         $location.path(`/tree/${species.currentTaxa.classification[species.currentTaxa.classification.length-1].name}`);
       });

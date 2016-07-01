@@ -7,12 +7,13 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
         controller: "Background", 
         controllerAs: "background", 
         resolve:  {
-          currentTaxa: function(COLFactory, $route) {
+          currentTaxa: function(TreeFactory, $route) {
             console.log("current route", $route.current.params.taxa );
-            return COLFactory.COLforTaxa($route.current.params.taxa);
+            return TreeFactory.buildTheTree($route.current.params.taxa);
           }, 
-          currentUserObject: function(FirebaseFactory) {
-            return FirebaseFactory.getUserObject();
+          currentUserObject: function(UserObjectFactory) {
+            return UserObjectFactory.getUserObject();
+            //todo in here: rebuild the cumulative questions object as well. 
           }
         }
       })
@@ -21,11 +22,12 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
         controller: "Background", 
         controllerAs: "background", 
         resolve: {
-          currentTaxa: function(COLFactory, $route) {
-            return COLFactory.COLforTaxa($route.current.params.taxa);
+          currentTaxa: function(TreeFactory, $route) {
+            return TreeFactory.buildTheTree($route.current.params.taxa);
           }, 
-          currentUserObject: function(FirebaseFactory) {
-            return FirebaseFactory.getUserObject();
+          currentUserObject: function(UserObjectFactory) {
+            return UserObjectFactory.getUserObject();
+            //to do in here: rebuild the cumulative questions object as well. 
           }
         }
       })
@@ -34,8 +36,8 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
         controller: "Background", 
         controllerAs: "background", 
         resolve: {
-          clearedUserObject: function(FirebaseFactory) {
-            return FirebaseFactory.clearUserObject();
+          clearedUserObject: function(UserObjectFactory) {
+            return UserObjectFactory.clearUserObject();
           }, 
           feed: function(FeedFactory) {
             return FeedFactory.getPublishedAnimals();

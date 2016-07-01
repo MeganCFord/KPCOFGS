@@ -1,14 +1,13 @@
 angular.module("Ident")
-  .factory("COLFactory", function($http, FirebaseFactory, InfoFactory) {
+  .factory("TreeFactory", function($http, AnswerFactory, InfoFactory) {
 
     let currentTaxaData = null;
 
-    function getCurrentTaxa () {
+    function getLoadedCurrentTaxa () {
       return currentTaxaData;
     }
 
-
-    function COLforTaxa (nameToSend) {
+    function getMasterTaxa(nameToSend) {
       console.log("sending new taxa name", nameToSend );
       return $http({
         method: "GET", 
@@ -17,26 +16,15 @@ angular.module("Ident")
         
         currentTaxaData = res.data.results ? 
            res.data.results[0] : res.data;
-        //find out if the current taxa is a stub or not. 
-        findOutIfSpecies();
         
         return currentTaxaData;
       
       }, (e) => {
-        console.log(e);
-      }).then((data) => {
-
-        loadEitherQuestionsOrInfo(data);
-        
-        //KEEP THIS HERE. 
-        return Promise.resolve(data);
-        // 
-      }).then((data) => {
-        currentTaxaData = data;
-        return currentTaxaData;
-      });//end of .then. 
-    }//end of COLforTaxa
-
+        Promise.reject(e);
+      }).then(()=> {
+        return AnswerFactory.getSpecialData(currentTaxaData.name);
+      });
+    }
 
     function findOutIfSpecies () {
       if (currentTaxaData.rank === "Family") {
@@ -52,37 +40,47 @@ angular.module("Ident")
     }
      
 
-    function loadEitherQuestionsOrInfo (data) {
+    function loadEitherQuestionsOrInfo () {
       //if we're going to continue traversing, add the questions to the subtaxa. 
-      if (data.stub ===false) {
-        return Promise.all(data.child_taxa.map((cardInfo) => {
-          return FirebaseFactory.getSpecialData(cardInfo.name)
+      if (currentTaxaData.stub ===false) {
+        return Promise.all(currentTaxaData.child_taxa.map((cardInfo) => {
+          return AnswerFactory.getSpecialData(cardInfo.name)
           .then((res) => {
             cardInfo.specialData = res;
             return cardInfo;
           });//end of firebaseFactory .then
         })).then(() => {
-          return data;
+          return currentTaxaData;
         });//end of .then for promise.all
         //if we're not going to continue traversing, add the modal info to the subtaxa.
       } else {
-        return Promise.all(data.child_taxa.map((cardInfo) => {
+        return Promise.all(currentTaxaData.child_taxa.map((cardInfo) => {
           return InfoFactory.populateTaxaCard(cardInfo.name)
           .then((res)=> {
             cardInfo.modalData = res;
             return cardInfo;
           });//end of infoFactory.then
         })).then(()=> {
-          return data;
+          return currentTaxaData;
         });//end of .then for promise.all
       }//end of if else statement
 
     }
+
+    function buildTheTree (nameToSend) {
+      return getMasterTaxa(nameToSend).then(() => {
+        return findOutIfSpecies();
+      }).then(() => {
+        return loadEitherQuestionsOrInfo();
+      }); 
+    }//end of COLforTaxa
     
     //public functions
     return {
-      COLforTaxa: COLforTaxa, 
-      getCurrentTaxa: getCurrentTaxa
+      buildTheTree: buildTheTree, 
+      getLoadedCurrentTaxa: getLoadedCurrentTaxa, 
+      getMasterTaxa: getMasterTaxa
+
       
     };//end of return
 
