@@ -12,6 +12,7 @@ angular.module("Ident")
   .factory("UserObjectFactory", function($http, $timeout, TreeFactory, AnswerFactory) {
 
     let userAnimal = {};
+    let currentMasterTaxa = {};
 
     //clears the user object on restart. 
     function clearUserObject () {
@@ -41,37 +42,52 @@ angular.module("Ident")
     function buildUserObject(route) {
       return TreeFactory.getMasterTaxa(route)
         .then((res) => {
-          //get the master 'question'
-          AnswerFactory.getSpecialData(res.name)
+          currentMasterTaxa = res;
+          
+          //get/set the master 'question'
+          return AnswerFactory.getSpecialData(currentMasterTaxa.name)
           .then((res)=> {
-            userAnimal.masterQuestion = res.question;
+            userAnimal.masterAnswer = res.question;
+            return sendMasterAnswer(userAnimal.masterAnswer);
           });
-          return Promise.resolve(res);
 
-        }).then((res)=>{
+        }).then(()=>{
           //get the 'questions' for all the taxa above the current taxa.
           userAnimal.answerArray = [];
-          return Promise.all(res.classification.map(function(parentTaxa) {
+          return Promise.all(currentMasterTaxa.classification.map(function(parentTaxa) {
             return AnswerFactory.getSpecialData(parentTaxa.name)
               .then((res) => {
-                userAnimal.answerArray.push(res.question);
+                return userAnimal.answerArray.push(res.question);
               });
           }))
           //update the firebase object, then get it for the page.
           .then(()=> {
-            return sendAnswerArray(userAnimal);
+            return sendAnswerArray(userAnimal.answerArray);
           }).then(()=> {
-            getUserObject();
+            return getUserObject();
           }); 
         });   
     }
    
-    // I've separated the master question for styling purposes.
-    function sendAnswerArray(userAnimal) {
+
+    function sendMasterAnswer(answer) {
       return $http({
-        method: "PUT", 
-        url: `https://animal-identification.firebaseio.com/currentUserObject/cumulative.json`,
-        data: {masterQuestion: userAnimal.masterQuestion, answers: userAnimal.answerArray}
+        method: "PATCH", 
+        url: `https://animal-identification.firebaseio.com/currentUserObject.json`,
+        data: {masterQuestion: answer}
+      }).then((res) => {
+        Promise.resolve(res);
+      }, (e) => {
+        Promise.reject(e);
+      });
+    }
+
+    // I've separated the master question for styling purposes for now.
+    function sendAnswerArray(array) {
+      return $http({
+        method: "PATCH", 
+        url: `https://animal-identification.firebaseio.com/currentUserObject.json`,
+        data: {questionArray: array}
       }).then((res) => {
         Promise.resolve(res);
       }, (e) => {

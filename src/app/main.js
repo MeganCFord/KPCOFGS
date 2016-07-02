@@ -12,7 +12,6 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
           }, 
           currentUserObject: function(UserObjectFactory, $route) {
             return UserObjectFactory.buildUserObject($route.current.params.taxa);
-            //todo in here: rebuild the cumulative questions object as well. 
           }
         }
       })
@@ -26,7 +25,6 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
           }, 
           currentUserObject: function(UserObjectFactory, $route) {
             return UserObjectFactory.buildUserObject($route.current.params.taxa);
-            //to do in here: rebuild the cumulative questions object as well. 
           }
         }
       })

@@ -10,7 +10,6 @@ angular.module("Ident")
     //displays file name on DOM before upload. 
     $scope.photoChanged = function(files) {
       if (files !== null ) {
-        console.log("files", files );
         start.currentFileName = files[0].name;
         $scope.$apply();
       }

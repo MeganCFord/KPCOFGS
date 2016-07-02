@@ -38,38 +38,36 @@ angular.module("Ident")
     }
      
 
-    function loadEitherQuestionsOrInfo () {
-      //if we're going to continue traversing, add the questions to the subtaxa. 
-      if (currentTaxaData.stub ===false) {
-        return Promise.all(currentTaxaData.child_taxa.map((cardInfo) => {
-          return AnswerFactory.getSpecialData(cardInfo.name)
-          .then((res) => {
-            cardInfo.specialData = res;
-            return cardInfo;
-          });//end of firebaseFactory .then
-        })).then(() => {
-          return currentTaxaData;
-        });//end of .then for promise.all
-        //if we're not going to continue traversing, add the modal info to the subtaxa.
-      } else {
-        return Promise.all(currentTaxaData.child_taxa.map((cardInfo) => {
-          return InfoFactory.populateTaxaCard(cardInfo.name)
-          .then((res)=> {
-            cardInfo.modalData = res;
-            return cardInfo;
-          });//end of infoFactory.then
-        })).then(()=> {
-          return currentTaxaData;
-        });//end of .then for promise.all
-      }//end of if else statement
-
-    }
-
     function buildTheTree (nameToSend) {
       return getMasterTaxa(nameToSend).then(() => {
         return findOutIfSpecies();
       }).then(() => {
-        return loadEitherQuestionsOrInfo();
+        if (currentTaxaData.stub ===false) {
+          return Promise.all(currentTaxaData.child_taxa.map((cardInfo) => {
+            return AnswerFactory.getSpecialData(cardInfo.name)
+            .then((res) => {
+              cardInfo.specialData = res;
+              return cardInfo;
+            });//end of firebaseFactory .then
+          })).then(() => {
+            return currentTaxaData;
+          });//end of .then for promise.all
+          //if we're not going to continue traversing, add the modal info to the subtaxa.
+        } else {
+          return Promise.all(currentTaxaData.child_taxa.map((cardInfo) => {
+            return InfoFactory.populateTaxaCard(cardInfo.name)
+            .then((res)=> {
+              cardInfo.modalData = res;
+              return cardInfo;
+            });//end of infoFactory.then
+          })).then(()=> {
+            return currentTaxaData;
+          });//end of .then for promise.all
+        }//end of if else statement
+      })
+      .then((res)=> {
+        currentTaxaData = res;
+        return currentTaxaData;
       }); 
     }//end of COLforTaxa
     
