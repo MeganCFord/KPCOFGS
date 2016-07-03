@@ -23,7 +23,7 @@ angular.module("Ident")
     tree.loadcurrentTaxa(); 
 
     //loads next page on submit button click.
-    tree.traverse = () => {
+    tree.traverse = () => { 
       $timeout()
         .then(()=> {
           if (tree.currentTaxa.traversable===false){

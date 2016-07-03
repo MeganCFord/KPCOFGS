@@ -10,7 +10,11 @@ angular.module("Ident")
 
     species.loadcurrentTaxa = () => {
       $timeout().then(() => {species.currentTaxa = TreeFactory.getCurrentTaxa();
-      console.log("species.currentTaxa", species.currentTaxa);
+        console.log("species.currentTaxa", species.currentTaxa);
+        return species.currentTaxa;
+      }).then(() => {
+        //emits to parent scope for navbar coloration.
+        $scope.$emit("settingCurrentRank", species.currentTaxa.rank);
       });
     };
     species.loadcurrentTaxa();
@@ -26,8 +30,7 @@ angular.module("Ident")
     species.publishAnimal = (nameToAdd) => {
       FeedFactory.publishAnimal(nameToAdd)
       .then(() => {
-        console.log("starting to redirect to start page");
-        $location.path("/");
+        $location.path("/start");
       });
     };
 

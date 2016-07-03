@@ -39,9 +39,9 @@ angular.module("Ident")
      
 
     function buildTheTree (nameToSend) {
-      return getMasterTaxa(nameToSend).then(() => {
-        return findOutIfSpecies();
-      }).then(() => {
+      return getMasterTaxa(nameToSend)
+      .then(() => {
+        findOutIfSpecies();
         if (currentTaxaData.stub ===false) {
           return Promise.all(currentTaxaData.child_taxa.map((cardInfo) => {
             return AnswerFactory.getSpecialData(cardInfo.name)
