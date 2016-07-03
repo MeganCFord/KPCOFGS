@@ -1,11 +1,11 @@
-
+<div id="tree">
 <h1 class="feed-title">Traverse The Tree</h1>
 
     <form ng-submit="tree.traverse()">
     <div class="feed-card"  ng-class="{'specialTest': tree.selectedSubtaxa===subtaxa}" ng-repeat="subtaxa in tree.currentTaxa.child_taxa | filter:notDisabled">
       <div class="btn-group" data-toggle="buttons">
        <!-- TODO: put an image here once I load the switch statement images into firebase. -->
-        <p>My animal also {{subtaxa.specialData.question}}</p>
+        <p>This animal also {{subtaxa.specialData.question}}</p>
        <!-- this button opens the Modal. -->
         <a class="btn inline-button btn-success" ng-click="tree.selectedSubtaxa=subtaxa; tree.openModal(subtaxa.name)">More Info</a>
        <!-- these two buttons show/hide based on whether the taxa is selected. -->
@@ -16,7 +16,7 @@
         <a class="btn btn-success inline-button" ng-class="{'hideMe': tree.selectedSubtaxa !== subtaxa}" ng-click="tree.selectedSubtaxa = null">Deselect</a>
 
       </div>
-    </div>
+    </div class="treeButtons">
         <!-- SUBMIT BUTTON -->
         <button class="btn btn-lg btn-success" type="submit" ng-class="{'disabled': tree.selectedSubtaxa === null}">Submit</button> 
         <!-- START OVER BUTTON -->
@@ -26,7 +26,7 @@
        <!-- reverse the filter. -->
        <button class="btn btn-lg btn-success">None Of These</button>
     </form>
-
+</div>
 
 
 

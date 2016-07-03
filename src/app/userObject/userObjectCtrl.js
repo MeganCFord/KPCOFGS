@@ -1,5 +1,5 @@
 angular.module("Ident")
-  .controller("UserObject", function(UserObjectFactory, $timeout) {
+  .controller("UserObject", function(UserObjectFactory, $timeout, $uibModal) {
     const user = this;
 
     user.loadUserAnimal = () => {
@@ -8,6 +8,24 @@ angular.module("Ident")
       });
     };
     user.loadUserAnimal();
+
+
+    //loads on "more info" button click to open modal and get subtaxa info. 
+    user.openModal = (scientificName) => {
+
+
+      const modalInstance = $uibModal.open({
+        size: "lg",
+        templateUrl: "app/modal/infoModal.html", 
+        controller: "modalController",
+        controllerAs: "modalController", 
+        resolve: { 
+          data: function (InfoFactory) {
+            return InfoFactory.populateTaxaCard(scientificName);
+          }//end of data function
+        }//end of resolve  
+      });//end of modal.open
+    }; //end of tree.openModal
 
 
   });//end of controller

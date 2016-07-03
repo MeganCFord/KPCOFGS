@@ -47,8 +47,7 @@ angular.module("Ident")
           //get/set the master 'question'
           return AnswerFactory.getSpecialData(currentMasterTaxa.name)
           .then((res)=> {
-            userAnimal.masterAnswer = res.question;
-            return sendMasterAnswer(userAnimal.masterAnswer);
+            return sendMasterAnswer(res);
           });
 
         }).then(()=>{
@@ -57,7 +56,7 @@ angular.module("Ident")
           return Promise.all(currentMasterTaxa.classification.map(function(parentTaxa) {
             return AnswerFactory.getSpecialData(parentTaxa.name)
               .then((res) => {
-                return userAnimal.answerArray.push(res.question);
+                return userAnimal.answerArray.push(res);
               });
           }))
           //update the firebase object, then get it for the page.

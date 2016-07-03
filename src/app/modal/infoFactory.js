@@ -1,19 +1,30 @@
 angular.module("Ident")
   .factory("InfoFactory", function($http) {
 
+    const stockModalInfo = {
+      textStuff: ["this animal doesn't have any collegiate data stored. Try Wikipedia!"],
+      stock: true
+    };
+
     function populateTaxaCard (nameToSend) {
+      console.log("name I'm sending", nameToSend );
       return $http({
         method: "GET", 
         url: `http://eol.org/api/search/1.0.json?q=${nameToSend}&page=1&exact=true&filter_by_taxon_concept_id=&filter_by_hierarchy_entry_id=&filter_by_string=&cache_ttl=`
       }).then((res) => {
-        return (res.data.results[0].id? res.data.results[0].id : res.data);
+        return (res.data.results[0]? res.data.results[0].id : stockModalInfo);
       }, (e) => {
         console.log("error", e );
       })//end of resolve/reject
       .then((currentEolId)=> {
-        return EOLforCommonInfo(currentEolId);
-      })
-      .then((data) => parseCommonInfo(data));//end of .then
+        if (currentEolId.stock === true) {
+          return currentEolId;
+        } else {
+          return EOLforCommonInfo(currentEolId)
+          .then((data) => parseCommonInfo(data));//end of .then;
+        }
+      });
+      
     }//end of populateTaxaCard
 
 

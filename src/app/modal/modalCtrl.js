@@ -12,10 +12,12 @@ angular.module("Ident")
 
     $scope.active = 0;
 
+
+
     // //TODO: make this ok button connect to the appropriate radio button.
 
     // modalController.ok = function (nameToSend) {
-    //   $scope.$$prevSibling.tree.mySubtaxa = nameToSend;
+    //   $scope.$id($9).tree.mySubtaxa = nameToSend;
     //   $uibModalInstance.close();
 
     // };

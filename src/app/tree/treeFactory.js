@@ -65,11 +65,10 @@ angular.module("Ident")
           });//end of .then for promise.all
         }//end of if else statement
       })
-      .then((res)=> {
-        currentTaxaData = res;
-        return currentTaxaData;
+      .then(()=> {
+        return Promise.resolve(currentTaxaData);
       }); 
-    }//end of COLforTaxa
+    }//end of buildTheTree
     
     //public functions
     return {

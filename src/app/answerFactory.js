@@ -8,14 +8,19 @@ angular.module("Ident")
           method: "GET", 
           url: `https://animal-identification.firebaseio.com/specialData/${nameToSend}/.json`
         }).then((res) => {
-          if (res.data ===null) {
+          if (res.data === null) {
             return {
+              name: nameToSend,
               question: `is a ${nameToSend}.`,
               //TODO: change 'enableMe' default to false once I get enough questions loaded into firebase.
               enableMe: true
             };
           } else {
-            return res.data;
+            return {
+              name: nameToSend,
+              question: res.data.question, 
+              enableMe: res.data.enableMe
+            };
           }
         });
       }
