@@ -1,3 +1,5 @@
+
+
 <div class="modal-header">
   <h3>{{modalController.data.commonName}}</h3>
   <h5>Scientific Name: {{modalController.data.scientificName}}</h5>
@@ -11,7 +13,6 @@
   </div><!-- end of images div -->
 </div>  <!-- end of header -->
 
-
 <div class="modal-body">
   <!-- text -->
   <div  class="infoText" ng-repeat="text in modalController.data.textStuff">
@@ -21,9 +22,10 @@
 
 
 <div class="modal-footer">
+  
   <button type="button" class="btn" 
           data-ng-click="modalController.cancel()">Back</button>          
-  <button class="btn btn-primary" 
+  <button class="btn btn-success" 
           data-ng-click="modalController.ok(modalController.data.scientificName);">Select This Taxa</button>
 </div>
 

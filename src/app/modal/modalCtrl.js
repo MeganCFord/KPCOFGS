@@ -1,9 +1,11 @@
 angular.module("Ident")
-  .controller("modalController", function($scope, $uibModalInstance, data, $sce) {
+  .controller("modalController", function($scope, $uibModalInstance, , $timeout, data, $sce) {
     const modalController = this;
 
     modalController.data= data;
     console.log("Controller data", data );
+  
+  modalController.Wikipedia = false;
 
     //runs to make any HTML description text show correctly. 
     $scope.renderHtml = function(code) {

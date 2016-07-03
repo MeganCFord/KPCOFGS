@@ -41,8 +41,6 @@ angular.module("Ident")
         if (child.name === value) {
           tree.selectedSubtaxa = child;
           console.log("set the subtaxa", tree.selectedSubtaxa );
-        } else {
-          console.log("not the subtaxa", child );
         }
       });
     });
