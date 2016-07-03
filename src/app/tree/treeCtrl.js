@@ -1,5 +1,5 @@
 angular.module("Ident")
-  .controller("Tree", function(TreeFactory, InfoFactory, $scope, $uibModal, $location, $timeout) {
+  .controller("Tree", function(TreeFactory, InfoFactory, $scope, $rootScope, $uibModal, $location, $timeout) {
     const tree = this;
 
     //filter for my firebase data questions.
@@ -34,7 +34,18 @@ angular.module("Ident")
         });//end of .then
     };//end of tree.traverse
 
-
+    //selects the subtaxa from the modal.
+    $rootScope.$on("modalPickedTaxa", function(event, value) {
+      
+      tree.currentTaxa.child_taxa.forEach(function(child) {
+        if (child.name === value) {
+          tree.selectedSubtaxa = child;
+          console.log("set the subtaxa", tree.selectedSubtaxa );
+        } else {
+          console.log("not the subtaxa", child );
+        }
+      });
+    });
 
     //loads on "more info" button click to open modal and get subtaxa info. 
     tree.openModal = (scientificName) => {
