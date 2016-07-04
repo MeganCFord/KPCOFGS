@@ -25,7 +25,7 @@ angular.module("Ident")
     }
 
     function findOutIfSpecies () {
-      return new Promise(()=> {
+      
       if (currentTaxaData.rank === "Family") {
         currentTaxaData.stub = true;
       } else {
@@ -36,8 +36,6 @@ angular.module("Ident")
       } else {
         currentTaxaData.traversable = true;
       }
-      return currentTaxaData;
-      });
     }
      
 

@@ -31,7 +31,7 @@ angular.module("Ident")
     tree.traverse = () => { 
       $timeout()
         .then(()=> {
-          if (tree.currentTaxa.traversable===false){
+          if (tree.selectedSubtaxa.rank==="Family"){
             $location.path(`/species/${tree.selectedSubtaxa.name}`);
           } else {
             $location.path(`/tree/${tree.selectedSubtaxa.name}`);
