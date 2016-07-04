@@ -1,3 +1,13 @@
 .treeButtons {
   position: fixed;
 }
+
+.inner-recessed {
+  height: 50%;
+  background-color: $charcoal-color;
+  border-radius: 12px;
+  box-shadow: inset 0 0 15px $dark-charcoal-color;
+  margin: 0 25px;
+  overflow-y: scroll;
+
+}

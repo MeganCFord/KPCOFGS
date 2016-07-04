@@ -25,6 +25,7 @@ angular.module("Ident")
     }
 
     function findOutIfSpecies () {
+      return new Promise(()=> {
       if (currentTaxaData.rank === "Family") {
         currentTaxaData.stub = true;
       } else {
@@ -35,6 +36,8 @@ angular.module("Ident")
       } else {
         currentTaxaData.traversable = true;
       }
+      return currentTaxaData;
+      });
     }
      
 
@@ -45,13 +48,16 @@ angular.module("Ident")
       }).then(()=> {
         if (currentTaxaData.stub ===false) {
           return Promise.all(currentTaxaData.child_taxa.map((cardInfo) => {
+            cardInfo.specialData = {};
             return AnswerFactory.getSpecialData(cardInfo.name)
             .then((res) => {
               cardInfo.specialData = res;
-              console.log("finished one promise", cardInfo);
               return cardInfo;
             });//end of firebaseFactory .then
-          }))
+          })).then((res)=> {
+            currentTaxaData.child_taxa = res;
+            return currentTaxaData;
+          });
           //if we're not going to continue traversing, add the modal info to the subtaxa.
         } else {
           return Promise.all(currentTaxaData.child_taxa.map((cardInfo) => {
@@ -64,6 +70,9 @@ angular.module("Ident")
             return currentTaxaData;
           });//end of .then for promise.all
         }//end of if else statement
+      }).then(()=> {
+        console.log("special data should be added here.", currentTaxaData );
+        return currentTaxaData;
       });
     }//end of buildTheTree
     

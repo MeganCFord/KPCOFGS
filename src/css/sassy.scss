@@ -32,11 +32,17 @@ $standard-grey-shadow: 5px 5px 15px $dark-charcoal-color;
 }
 
 .card-img {
+  max-width: 850px;
   padding: 4px;
   width: 100%;
+  margin: 0 auto;
 
   img {
     border-radius: 12px 12px 0 0;
     width: 100%;
     }
   }
+
+.specialTest {
+  background-color: $celery-color;
+}
