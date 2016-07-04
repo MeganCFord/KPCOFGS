@@ -8,11 +8,13 @@
   <div class="clearfix"></div>
 </div>
 
+<div class="user-inner-recessed">
 <div class="feed-card" ng-repeat="answer in user.userAnimal.questionArray">
   <p>This animal {{answer.question}}</p>
   <a href="#/tree/{{answer.name}}" class="btn btn-success inline-button">Go Back to here</a>
   <a ng-click="user.openModal(answer.name)" class="btn btn-success inline-button">More info</a>
   <div class="clearfix"></div>
+</div>
 </div>
 <div class="feed-card">
   <p>This animal {{user.userAnimal.masterQuestion.question}}</p>

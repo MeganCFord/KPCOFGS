@@ -1,13 +1,29 @@
-.treeButtons {
-  position: fixed;
+.tree-buttons {
+  padding: 16px;
+
+  button {
+    margin: 20px;
+  }
+  a {
+    margin: 20px;
+  }
 }
 
 .inner-recessed {
-  height: 50%;
+  height: 78vh;
   background-color: $charcoal-color;
   border-radius: 12px;
   box-shadow: inset 0 0 15px $dark-charcoal-color;
   margin: 0 25px;
   overflow-y: scroll;
 
+}
+
+.user-inner-recessed {
+  height: 20vh;
+  background-color: $charcoal-color;
+  border-radius: 12px;
+  box-shadow: inset 0 0 15px $dark-charcoal-color;
+  margin: 0 25px;
+  overflow-y: scroll;
 }

@@ -66,7 +66,9 @@ angular.module("Ident")
               cardInfo.modalData = res;
               return cardInfo;
             });//end of infoFactory.then
-          })).then(()=> {
+          })).then((res)=> {
+            console.log("res", res );
+            currentTaxaData.child_taxa = res;
             return currentTaxaData;
           });//end of .then for promise.all
         }//end of if else statement
