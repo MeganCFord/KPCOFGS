@@ -42,16 +42,16 @@ angular.module("Ident")
       return getMasterTaxa(nameToSend)
       .then(() => {
         findOutIfSpecies();
+      }).then(()=> {
         if (currentTaxaData.stub ===false) {
           return Promise.all(currentTaxaData.child_taxa.map((cardInfo) => {
             return AnswerFactory.getSpecialData(cardInfo.name)
             .then((res) => {
               cardInfo.specialData = res;
+              console.log("finished one promise", cardInfo);
               return cardInfo;
             });//end of firebaseFactory .then
-          })).then(() => {
-            return currentTaxaData;
-          });//end of .then for promise.all
+          }))
           //if we're not going to continue traversing, add the modal info to the subtaxa.
         } else {
           return Promise.all(currentTaxaData.child_taxa.map((cardInfo) => {
@@ -64,10 +64,7 @@ angular.module("Ident")
             return currentTaxaData;
           });//end of .then for promise.all
         }//end of if else statement
-      })
-      .then(()=> {
-        return Promise.resolve(currentTaxaData);
-      }); 
+      });
     }//end of buildTheTree
     
     //public functions

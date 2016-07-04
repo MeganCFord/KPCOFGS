@@ -2,9 +2,14 @@ angular.module("Ident")
   .controller("Tree", function(TreeFactory, InfoFactory, $scope, $rootScope, $uibModal, $location, $timeout) {
     const tree = this;
 
+    tree.primary = true;
     //filter for my firebase data questions.
     $scope.notDisabled = function(item) {
-      return (item.specialData && item.specialData.enableMe === true);
+      if (tree.primary === true) {
+        return (item.specialData && item.specialData.enableMe === true);
+      } else {
+        return (item.specialData && item.specialData.enableMe === false);
+      }
     };
 
     //gets assigned the entire subtaxa object.
@@ -34,13 +39,13 @@ angular.module("Ident")
         });//end of .then
     };//end of tree.traverse
 
-    //selects the subtaxa from the modal.
-    $rootScope.$on("modalPickedTaxa", function(event, value) {
-      
+
+
+    //grabs the data from the modal "select this taxa" button. YAY.
+    $rootScope.$on("modalPickedTaxa", function(event, value) { 
       tree.currentTaxa.child_taxa.forEach(function(child) {
         if (child.name === value) {
           tree.selectedSubtaxa = child;
-          console.log("set the subtaxa", tree.selectedSubtaxa );
         }
       });
     });
