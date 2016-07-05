@@ -6,7 +6,8 @@
     <div class="inner-recessed">
       <div class="feed-card"  ng-class="{'specialTest': tree.selectedSubtaxa===subtaxa}" ng-repeat="subtaxa in tree.currentTaxa.child_taxa | filter:notDisabled">
         <div class="btn-group" data-toggle="buttons">
-          <p>This animal also {{subtaxa.specialData.question}}</p>
+          <p ng-if="tree.primary===true">This animal also {{subtaxa.specialData.question}}</p>
+          <p ng-if="tree.primary===false">{{subtaxa.name}}</p>
          <!-- this button opens the Modal. -->
           <a class="btn inline-button btn-success" ng-click="tree.openModal(subtaxa.name)">More Info</a>
          <!-- these two buttons show/hide based on whether the taxa is selected. -->
