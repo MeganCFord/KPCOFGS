@@ -1,5 +1,9 @@
 body {
   overflow-y: hidden;
+  p {
+    font-size: 2em;
+    color: $dark-charcoal-color;
+  }
 }
 
 .background {

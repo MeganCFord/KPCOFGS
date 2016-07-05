@@ -17,6 +17,7 @@ $standard-grey-shadow: 5px 5px 15px $dark-charcoal-color;
 @import '../app/start/start.scss';
 @import '../app/feed/feed.scss';
 @import '../app/tree/tree.scss';
+@import '../app/modal/modal.scss';
 
 .inline-button {
   // display: inline-block;
@@ -45,4 +46,16 @@ $standard-grey-shadow: 5px 5px 15px $dark-charcoal-color;
 
 .specialTest {
   background-color: $celery-color;
+}
+
+.active-rank {
+  color: $celery-color;
+}
+
+.completed-rank {
+  color: $red-color;
+}
+
+.btn {
+  font-size: 2em;
 }
