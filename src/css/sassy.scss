@@ -68,3 +68,12 @@ $standard-grey-shadow: 5px 5px 15px $dark-charcoal-color;
   background-color: $dark-celery-color;
   color: $light-tan-color;
 }
+
+.speciesText {
+  height: 240px;
+  overflow-y: scroll;
+  p {
+  font-size: 1em !important;
+    
+  }
+}
