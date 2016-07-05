@@ -11,7 +11,6 @@ angular.module("Ident")
           return {
             name: nameToSend,
             question: `is a ${nameToSend}.`,
-            
             enableMe: false
           };
         } else {

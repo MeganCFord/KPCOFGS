@@ -26,7 +26,7 @@
   
   <button type="button" class="btn btn-success" 
           data-ng-click="modalController.cancel()">Back</button>
-  <a class="btn btn-success" href="https://en.wikipedia.org/wiki/{{modalController.data.commonName}}" target="_blank">Search Wikipedia</a>          
+  <a class="btn btn-success" href="https://en.wikipedia.org/wiki/{{modalController.data.scientificName}}" target="_blank">Search Wikipedia</a>          
   <button class="btn btn-success" 
           ng-if="modalController.selectable === true"
           data-ng-click="modalController.ok(modalController.data.scientificName);">Select This Taxa</button>

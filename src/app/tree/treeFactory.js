@@ -70,9 +70,9 @@ angular.module("Ident")
             return currentTaxaData;
           });//end of .then for promise.all
         }//end of if else statement
-      }).then(()=> {
-        console.log("special data should be added here.", currentTaxaData );
-        return currentTaxaData;
+      }).then((res)=> {
+        console.log("special data should be added here.", res );
+        return res;
       });
     }//end of buildTheTree
     
