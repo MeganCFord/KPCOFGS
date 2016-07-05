@@ -22,7 +22,8 @@ angular.module("Ident")
         resolve: { 
           data: function (InfoFactory) {
             return InfoFactory.populateTaxaCard(scientificName);
-          }//end of data function
+          }, 
+          buttons: false
         }//end of resolve  
       });//end of modal.open
     }; //end of tree.openModal

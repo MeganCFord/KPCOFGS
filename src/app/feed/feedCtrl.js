@@ -20,7 +20,7 @@ angular.module("Ident")
           data: function (InfoFactory) {
             return InfoFactory.populateTaxaCard(scientificName);
           }, 
-          buttons: "not sure what's going here yet"
+          buttons: false
         }//end of resolve  
       });//end of modal.open
     }; //end of tree.openModal

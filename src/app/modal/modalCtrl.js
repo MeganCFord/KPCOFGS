@@ -1,9 +1,12 @@
 angular.module("Ident")
-  .controller("modalController", function($scope, $uibModalInstance, $timeout, data, $sce) {
+  .controller("modalController", function($scope, $uibModalInstance, $timeout, data, buttons, $sce) {
     const modalController = this;
 
     modalController.data= data;
     console.log("Modal data", data );
+
+    modalController.selectable = buttons;
+    console.log("whether to have the 'select this taxa' button showing", modalController.selectable );
   
     //runs to make any HTML description text show correctly. 
     $scope.renderHtml = function(code) {
