@@ -1,12 +1,12 @@
 angular.module("Ident")
-  .factory("FeedFactory", function($http, UserObjectFactory ) {
+  .factory("FeedFactory", function($http, $timeout, UserObjectFactory ) {
 
     //these three functions run on start page to get the feed. 
     let feed = {};
 
     //TODO: get the common name of the species here- instead of the scientific name. Description will go on the back of the card if at all. 
     function publishAnimaltoFeed(name) {
-      return UserObjectFactory.getUserObject()
+      $timeout().then(()=>{return UserObjectFactory.getLoadedUserAnimal();})
       .then((userAnimal)=> {
         
         //timestamps the upload for sorting purposes.
@@ -16,7 +16,6 @@ angular.module("Ident")
         return $http({
           method: "POST", 
           url: `https://animal-identification.firebaseio.com/feed/.json`,
-          
           data: {name: name, picture: userAnimal.url, description: userAnimal.description, date: myDate}
         }).then((res) => {
           return Promise.resolve(res);

@@ -8,6 +8,14 @@
   <div class="clearfix"></div>
 </div>
 
+<h1 class="feed-title">Current Answer</h1>
+<div class="feed-card">
+  <p>This animal {{user.userAnimal.masterQuestion.question}}</p>
+  <a ng-click="user.openModal(user.userAnimal.masterQuestion.name)" class="btn btn-success inline-button">More info</a>
+  <div class="clearfix"></div>
+</div>
+
+<h1 class="feed-title">Previous Answers</h1>
 <div class="user-inner-recessed">
 <div class="feed-card" ng-repeat="answer in user.userAnimal.questionArray">
   <p>This animal {{answer.question}}</p>
@@ -16,8 +24,5 @@
   <div class="clearfix"></div>
 </div>
 </div>
-<div class="feed-card">
-  <p>This animal {{user.userAnimal.masterQuestion.question}}</p>
-  <a ng-click="user.openModal(user.userAnimal.masterQuestion.name)" class="btn btn-success inline-button">More info</a>
-  <div class="clearfix"></div>
-</div>
+
+<a href="#/start" class="btn btn-success">Start Over</a>

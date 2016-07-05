@@ -1,24 +1,12 @@
 
 
-<h1>You're at the genus/species level! </h1>
-<h5>Your animal is probably one of the following:</h5>
+<h5 class="feed-title">This animal is probably one of the following:</h5>
 
 
-<!-- <base target="_blank"> -->
-
-
-<div class="container">
-  <div class="row">
-    <!-- empty left column -->
-    <div class="col col-xs-1">
-    </div>
-
-    <div class="col col-xs-10">
-      <div class="row">
-        <div class="col col-xs-6 speciesColumn" ng-repeat="animal in species.currentTaxa.child_taxa">
+        <div class="species-inner-recessed">
           <!-- div for margins eventually -->
-          <div>
-            <h3>{{species.modalData.commonName}}</h3>
+          <div class="feed-card" ng-class="{'specialTest': species.publishableAnimal === animal}" ng-repeat ="animal in species.currentTaxa.child_taxa">
+            <h3>{{animal.name}}</h3>
 
             <div class="infoImages">
               <uib-carousel active="active">
@@ -33,15 +21,18 @@
                 <p ng-bind-html="renderHtml(text)"></p>
               </div>
             </div>
-            <button class="btn btn-lg btn-default" ng-click="species.publishAnimal(animal.name)">This is my animal!</button>
+            <button class="btn btn-success inline-button" ng-click="species.publishableAnimal = animal">This is my animal!</button>
+            <a href="https://en.wikipedia.org/wiki/{{animal.name}}" target="_blank" class="btn btn-success inline-button">Search Wikipedia</a>
+            <div class="clearfix"></div>
           </div><!-- end of margins div -->
-        </div><!-- end of speciesColumn div -->
-      </div><!-- end of row div -->
+        </div><!-- end of innerRecessed Div -->
 
+      <div class="tree-buttons">
+        <button class="btn btn-success" ng-click="species.publishAnimal()" ng-class="{'disabled': species.publishableAnimal === null}">Submit</button>
         <!-- START OVER BUTTON -->
-        <a href="#/" class="btn btn-lg btn-default">Start Over</a>
+        <a href="#/" class="btn btn-success">Start Over</a>
         <!-- GO BACK BUTTON -->
-        <button class="btn btn-lg btn-default" ng-click="species.goBackButton()">Go Back</button>
+        <button class="btn btn-success" ng-click="species.goBackButton()">Go Back</button>
     </div>
 
     <!-- empty right column -->

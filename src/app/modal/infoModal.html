@@ -22,10 +22,12 @@
 
 
 <div class="modal-footer">
-  
+
+  <a class="btn btn-success" href="https://en.wikipedia.org/wiki/{{modalController.data.commonName}}" target="_blank">Search Wikipedia</a>
   <button type="button" class="btn" 
           data-ng-click="modalController.cancel()">Back</button>          
   <button class="btn btn-success" 
+          ng-if="modalController.selectable === true"
           data-ng-click="modalController.ok(modalController.data.scientificName);">Select This Taxa</button>
 </div>
 

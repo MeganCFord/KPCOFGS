@@ -7,9 +7,10 @@ angular.module("Ident")
       return $sce.trustAsHtml(code);
     };
 
+    species.publishableAnimal = null;
 
     species.loadcurrentTaxa = () => {
-      $timeout().then(() => {species.currentTaxa = TreeFactory.getCurrentTaxa();
+      $timeout().then(() => {species.currentTaxa = TreeFactory.getLoadedCurrentTaxa();
         console.log("species.currentTaxa", species.currentTaxa);
         return species.currentTaxa;
       }).then(() => {
@@ -27,8 +28,8 @@ angular.module("Ident")
       });
     };
 
-    species.publishAnimal = (nameToAdd) => {
-      FeedFactory.publishAnimal(nameToAdd)
+    species.publishAnimal = () => {
+      $timeout().then(()=> {FeedFactory.publishAnimal(species.publishableAnimal.name);})
       .then(() => {
         $location.path("/start");
       });
