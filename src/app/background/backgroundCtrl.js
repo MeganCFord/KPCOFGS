@@ -26,19 +26,19 @@ angular.module("Ident")
         return "active-rank";
       } 
       if (navWord === "Kingdom") {
-        if (background.currentRank === "Phylum" || background.currentRank === "Class" || background.currentRank === "Order" || background.currentRank === "Family" || background.currentRank === "Genus" || background.currentRank === "Species") {
+        if (background.currentRank === "Phylum" || background.currentRank === "Class" || background.currentRank === "Order" || background.currentRank === "Superfamily" || background.currentRank === "Family" || background.currentRank === "Genus" || background.currentRank === "Species") {
           return "completed-rank";
         }
       } else if (navWord === "Phylum") {
-        if (background.currentRank === "Class" || background.currentRank === "Order" || background.currentRank === "Family" || background.currentRank === "Genus" || background.currentRank === "Species") {
+        if (background.currentRank === "Class" || background.currentRank === "Order" || background.currentRank === "Superfamily" || background.currentRank === "Family" || background.currentRank === "Genus" || background.currentRank === "Species") {
           return "completed-rank";
         }
       } else if (navWord === "Class") {
-        if (background.currentRank === "Order" || background.currentRank === "Family" || background.currentRank === "Genus" || background.currentRank === "Species") {
+        if (background.currentRank === "Order" || background.currentRank === "Superfamily" || background.currentRank === "Family" || background.currentRank === "Genus" || background.currentRank === "Species") {
           return "completed-rank";
         }
       } else if (navWord === "Order") {
-        if (background.currentRank === "Family" || background.currentRank === "Genus" || background.currentRank === "Species") {
+        if (background.currentRank === "Superfamily" || background.currentRank === "Family" || background.currentRank === "Genus" || background.currentRank === "Species") {
           return "completed-rank";
         }
       } else if (navWord === "Family") {
