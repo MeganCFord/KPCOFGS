@@ -11,8 +11,8 @@ angular.module("Ident")
           return {
             name: nameToSend,
             question: `is a ${nameToSend}.`,
-            //TODO: change 'enableMe' default to false once I get enough questions loaded into firebase.
-            enableMe: true
+            
+            enableMe: false
           };
         } else {
           return {
