@@ -1,11 +1,18 @@
 angular.module("Ident")
   .controller("FeedCtrl", function($timeout, $uibModal, FeedFactory) {
     const feed = this;
-
+    feed.feed=[];
     //runs on page load. $http GETTER runs as part of resolve in router.
     feed.getLoadedFeed = () => {
-      $timeout().then(()=>{feed.feed = FeedFactory.getLoadedFeed();
-      console.log("feed object from firebase", feed.feed );});
+      $timeout().then(()=>{feed.tempFeed = FeedFactory.getPublishedAnimals();
+        return feed.tempFeed;
+      }).then((res)=> {
+        for (item in res) {
+          feed.feed.push(res[item]);
+        }
+        console.log("feed should now be an array", feed.feed);
+        return feed.feed;
+      });
     };
     feed.getLoadedFeed();
 

@@ -6,9 +6,12 @@ angular.module("Ident")
 
     //TODO: get the common name of the species here- instead of the scientific name. Description will go on the back of the card if at all. 
     function publishAnimaltoFeed(name) {
-      $timeout().then(()=>{return UserObjectFactory.getLoadedUserAnimal();})
-      .then((userAnimal)=> {
-        
+      $timeout().then(()=> {
+        const animalToPublish= UserObjectFactory.getLoadedUserAnimal();
+        return animalToPublish;
+      })
+        .then((userAnimal)=> {
+        console.log("starting to post." );
         //timestamps the upload for sorting purposes.
         const x = new Date();
         const myDate = x.toString();
@@ -16,9 +19,10 @@ angular.module("Ident")
         return $http({
           method: "POST", 
           url: `https://animal-identification.firebaseio.com/feed/.json`,
-          data: {name: name, picture: userAnimal.url, description: userAnimal.description, date: myDate}
+          data: {sortableDate: x, name: name, picture: userAnimal.url, description: userAnimal.description, date: myDate}
         }).then((res) => {
-          return Promise.resolve(res);
+          console.log("finished posting." );
+          return Promise.resolve();
         }, (e) => {
           return Promise.reject(e);
         });
@@ -26,12 +30,14 @@ angular.module("Ident")
     }
 
     function getPublishedAnimals() {
+      console.log("starting to get feed." );
       return $http({
         method: "GET", 
         url: "https://animal-identification.firebaseio.com/feed/.json"
       }).then((res)=> {
         feed = res.data;
-        return feed;
+        console.log("feed", feed );
+        return Promise.resolve(feed);
       }, (e)=> {
         return Promise.reject(e);
       });

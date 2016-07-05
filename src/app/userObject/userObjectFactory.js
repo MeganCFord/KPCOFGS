@@ -114,6 +114,7 @@ angular.module("Ident")
       clearUserObject: clearUserObject,
       uploadImage: uploadImage,
       buildUserObject: buildUserObject, 
+      getUserObject: getUserObject,
       getLoadedUserAnimal: getLoadedUserAnimal
     };
 

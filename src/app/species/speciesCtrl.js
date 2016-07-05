@@ -22,14 +22,13 @@ angular.module("Ident")
 
 
     species.goBackButton = () => {
-      UserObjectFactory.deleteLastAnswer(species.currentTaxa.name)
-      .then(() => {
         $location.path(`/tree/${species.currentTaxa.classification[species.currentTaxa.classification.length-1].name}`);
-      });
     };
 
     species.publishAnimal = () => {
-      $timeout().then(()=> {FeedFactory.publishAnimal(species.publishableAnimal.name);})
+      $timeout().then(()=> {
+        return FeedFactory.publishAnimal(species.publishableAnimal.name);
+      })
       .then(() => {
         $location.path("/start");
       });
