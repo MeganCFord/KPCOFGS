@@ -8,6 +8,6 @@
         <img class="img-responsive" ng-src="{{animal.picture}}">
       </div>
       <p class="inline-text">this animal was identified as a {{animal.name}} on {{animal.date}}</p>
-      <a href="feed.openModal(animal.name)" class="btn btn-success inline-button">More Info</a>
+      <button ng-click="feed.openModal(animal.name)" class="btn btn-success inline-button">More Info</button>
       <div class="clearfix"></div>
     </div>
