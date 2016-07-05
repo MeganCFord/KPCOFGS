@@ -1,7 +1,9 @@
 <h1 ng-if="start.step===2" class="feed-title">My Animal</h1>
 
 <!-- step 0: user chooses to get started. -->
-<h3 ng-if="start.step === 0" class="feed-title">Welcome to KPCOFGS. This app can help you identify an animal by answering a series of questions. It uses the Catalog of Life and up to 120 additional databases to provide information about animals at every level of the classification tree. Get started below!</h3>
+<div ng-if="start.step === 0" class="user-inner-recessed">
+<h3 class="feed-title">Welcome to KPCOFGS. This app can help you identify an animal by answering a series of questions. It uses the Catalog of Life and up to 120 additional databases to provide information about animals at every level of the classification tree. Get started below!</h3>
+</div>
 <div ng-if="start.step===0" class="step-btn">
   <button class="btn btn-success btn-lg btn-block" ng-click="start.step = 1">Identify An Animal</button>
 </div>

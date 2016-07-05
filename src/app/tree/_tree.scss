@@ -10,7 +10,7 @@
 }
 
 .inner-recessed {
-  height: 78vh;
+  height: 76vh;
   background-color: $charcoal-color;
   border: 2px $charcoal-color;
   border-radius: 12px;
@@ -47,4 +47,15 @@
   float: right !important;
 
   }
+}
+
+.feed-inner-recessed {
+  height: 82vh;
+  background-color: $charcoal-color;
+  border: 2px $charcoal-color;
+  border-radius: 12px;
+  box-shadow: inset 0 0 15px $dark-charcoal-color;
+  margin: 0 25px;
+  overflow-y: scroll;
+
 }
