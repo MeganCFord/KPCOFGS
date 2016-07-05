@@ -1,0 +1,40 @@
+.modal-content {
+  background: $light-tan-color;
+  border-radius: 12px;
+  height: 85vh;
+  width: 50vh;
+  position: relative;
+}
+
+.modal-body {
+  border-bottom: 2px $charcoal-color;
+  border-top: 2px $charcoal-color;
+  height: 60%;
+
+  p {
+    font-size: 1em;
+  }
+}
+
+
+.modal-open {
+  .modal-header {
+    h3 {
+      color: $dark-charcoal-color;
+      font-size: 3em;
+      text-align: center;
+    }
+
+    h5 {
+      color: $dark-charcoal-color;
+      font-size: 2em;
+      text-align: center;
+    }
+  }
+  .modal-footer {
+    width: 97%;
+    bottom: 15px;
+    position: absolute;
+    right: 12px;
+  }
+}

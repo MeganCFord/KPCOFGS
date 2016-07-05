@@ -1,7 +1,7 @@
 
 //COLOR SCHEME
 $light-tan-color: #f9f6eb;
-$tan-shadow: #f3edd8;
+$tan-shadow: #e7dbb1;
 $dark-charcoal-color: #4e4b4b;
 $charcoal-color: #827d7d;
 $celery-color: #c1e09f;
@@ -45,7 +45,7 @@ $standard-grey-shadow: 5px 5px 15px $dark-charcoal-color;
   }
 
 .specialTest {
-  background-color: $celery-color;
+  background-color: $tan-shadow;
 }
 
 .active-rank {
@@ -58,4 +58,14 @@ $standard-grey-shadow: 5px 5px 15px $dark-charcoal-color;
 
 .btn {
   font-size: 2em;
+  background-color: $celery-color;
+  border-radius: 8px;
+  border: $dark-celery-color;
+  color: $charcoal-color;
+
+}
+
+.btn:hover {
+  background-color: $dark-celery-color;
+  color: $light-tan-color;
 }

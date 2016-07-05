@@ -8,7 +8,8 @@
         <div class="btn-group" data-toggle="buttons">
           <p ng-if="tree.primary===true">This animal also {{subtaxa.specialData.question}}</p>
           <p ng-if="tree.primary===false">{{subtaxa.name}}</p>
-         <!-- this button opens the Modal. -->
+         
+          <!-- this button opens the Modal. -->
           <a class="btn btn-success inline-button" ng-click="tree.openModal(subtaxa.name)">More Info</a>
          <!-- these two buttons show/hide based on whether the taxa is selected. -->
           <label class="btn btn-success inline-button" ng-class="{'hideMe' : tree.selectedSubtaxa === subtaxa}""> 
@@ -16,6 +17,9 @@
           </label>
 
           <a class="btn btn-success inline-button" ng-class="{'hideMe': tree.selectedSubtaxa !== subtaxa}" ng-click="tree.selectedSubtaxa = null">Deselect</a>
+          <div class="clearfix"></div>
+
+         
         </div>
       </div>
     </div>

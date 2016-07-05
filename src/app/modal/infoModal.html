@@ -1,4 +1,4 @@
-
+<div class="myModal">
 
 <div class="modal-header">
   <h3>{{modalController.data.commonName}}</h3>
@@ -23,12 +23,14 @@
 
 <div class="modal-footer">
 
-  <a class="btn btn-success" href="https://en.wikipedia.org/wiki/{{modalController.data.commonName}}" target="_blank">Search Wikipedia</a>
-  <button type="button" class="btn" 
-          data-ng-click="modalController.cancel()">Back</button>          
+  
+  <button type="button" class="btn btn-success" 
+          data-ng-click="modalController.cancel()">Back</button>
+  <a class="btn btn-success" href="https://en.wikipedia.org/wiki/{{modalController.data.commonName}}" target="_blank">Search Wikipedia</a>          
   <button class="btn btn-success" 
           ng-if="modalController.selectable === true"
           data-ng-click="modalController.ok(modalController.data.scientificName);">Select This Taxa</button>
+</div>
 </div>
 
 <!-- NOTE: in order to make this carousel work, I had to remove the animation from the angular template file. The "$scope.$currentTransition"s are commented out per this github issue: https://github.com/angular-ui/bootstrap/issues/5379

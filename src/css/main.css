@@ -5,16 +5,16 @@
 }
 
 .modal-body {
-  max-height: 600px;
+  max-height: 47vh;
   overflow-y: scroll;
 }
 
 .infoImages {
-  height: 400px;
+  height: 500px;
 }
 
 .infoImages img {
-  max-height: 400px;
+  max-height: 500px;
   margin: auto;
 }
 
