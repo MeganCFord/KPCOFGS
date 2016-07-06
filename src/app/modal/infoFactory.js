@@ -1,4 +1,4 @@
-angular.module("Ident")
+  angular.module("Ident")
   .factory("InfoFactory", function($http) {
 
     const stockModalInfo = {
