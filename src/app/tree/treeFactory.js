@@ -2,9 +2,10 @@ angular.module("Ident")
   .factory("TreeFactory", function($http, AnswerFactory, InfoFactory) {
 
     let currentTaxaData = null;
+    let newTaxaData = null;
 
     function getLoadedCurrentTaxa () {
-      return currentTaxaData;
+      return newTaxaData;
     }
 
     function getMasterTaxa(nameToSend) {
@@ -36,6 +37,7 @@ angular.module("Ident")
       } else {
         currentTaxaData.traversable = true;
       }
+      return currentTaxaData;
     }
      
 
@@ -72,7 +74,8 @@ angular.module("Ident")
         }//end of if else statement
       }).then((res)=> {
         console.log("special data should be added here.", res );
-        return res;
+        newTaxaData = res;
+        return newTaxaData;
       });
     }//end of buildTheTree
     
