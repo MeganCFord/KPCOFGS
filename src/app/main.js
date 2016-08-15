@@ -2,7 +2,7 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
 
   .config(($routeProvider) => {
     $routeProvider
-      .when("/tree/:taxa", {
+      .when("tree/:taxa", {
         templateUrl: "app/background/background.html",
         controller: "Background", 
         controllerAs: "background", 
@@ -15,7 +15,7 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
           }
         }
       })
-      .when("/species/:taxa", {
+      .when("species/:taxa", {
         templateUrl:"app/background/background.html", 
         controller: "Background", 
         controllerAs: "background", 
@@ -28,7 +28,7 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
           }
         }
       })
-      .when("/start", {
+      .when("start", {
         templateUrl: "app/background/background.html", 
         controller: "Background", 
         controllerAs: "background", 
@@ -41,7 +41,7 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
           }
         }
       })
-      .otherwise("/start");
+      .otherwise("start");
   });
 
 
