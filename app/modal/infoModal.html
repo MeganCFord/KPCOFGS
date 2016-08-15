@@ -1,0 +1,50 @@
+<div class="myModal">
+
+<div class="modal-header">
+  <h3>{{modalController.data.commonName}}</h3>
+  <h5>Scientific Name: {{modalController.data.scientificName}}</h5>
+   <!-- images -->
+  <div class="infoImages">
+    <uib-carousel active="active">
+      <uib-slide ng-repeat="image in modalController.data.pictures track by $index" index="$index">
+        <img ng-src="{{image}}">
+      </uib-slide>
+    </uib-carousel>
+  </div><!-- end of images div -->
+</div>  <!-- end of header -->
+
+<div class="modal-body">
+  <!-- text -->
+  <div  class="infoText" ng-repeat="text in modalController.data.textStuff">
+    <p ng-bind-html="renderHtml(text)"></p>
+  </div>
+</div>
+
+
+<div class="modal-footer">
+
+  
+  <button type="button" class="btn btn-success" 
+          data-ng-click="modalController.cancel()">Back</button>
+  <a class="btn btn-success" href="https://en.wikipedia.org/wiki/{{modalController.data.scientificName}}" target="_blank">Search Wikipedia</a>          
+  <button class="btn btn-success" 
+          ng-if="modalController.selectable === true"
+          data-ng-click="modalController.ok(modalController.data.scientificName);">Select This Taxa</button>
+</div>
+</div>
+
+<!-- NOTE: in order to make this carousel work, I had to remove the animation from the angular template file. The "$scope.$currentTransition"s are commented out per this github issue: https://github.com/angular-ui/bootstrap/issues/5379
+For reference, this is the full function, currently found on lines 489 ff of ui-bootstrap-tpls.js: 
+
+
+//Prevent this user-triggered transition from occurring if there is already one in progress
+    if (nextSlide.slide.index !== currentIndex 
+    //&& !$scope.$currentTransition <<<<<<<<<< COMMENTED THIS OUT
+      ) {
+      goNext(nextSlide.slide, nextIndex, direction);
+    } else if (nextSlide && nextSlide.slide.index !== currentIndex 
+    //&& $scope.$currentTransition <<<<<<<<<<< COMMENTED THIS OUT
+      ) {
+      bufferedTransitions.push(slides[nextIndex]);
+    }
+  }; -->

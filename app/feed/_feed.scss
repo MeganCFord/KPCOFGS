@@ -1,0 +1,20 @@
+.feed-title {
+  padding: 18px;
+  color: $light-tan-color;
+  font-size: 4em;
+  font-weight: normal;
+  margin-top: 0;
+  text-align: center;
+  text-shadow: $standard-grey-shadow;
+}
+
+.feed-card {
+  background-color: $light-tan-color;
+  border-radius: 12px;
+  box-shadow: $standard-grey-shadow;
+  margin: 35px auto;
+  padding: 8px;
+  width: 95%;
+
+
+}
