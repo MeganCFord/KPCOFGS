@@ -3,4 +3,6 @@ node_modules
 src/lib
 npm-debug.log
 dist
-
+__pycache__
+lib
+db.sqlite3
