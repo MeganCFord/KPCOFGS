@@ -1,34 +1,41 @@
 angular.module("Ident")
-  .controller("FeedCtrl", function($timeout, $uibModal, FeedFactory) {
-    const feed = this;
-    feed.feed=[];
-    //runs on page load. $http GETTER runs as part of resolve in router.
-    feed.getLoadedFeed = () => {
-      $timeout().then(()=>{feed.tempFeed = FeedFactory.getPublishedAnimals();
-        return feed.tempFeed;
-      }).then((res)=> {
-        for (item in res) {
-          feed.feed.push(res[item]);
-        }
-        console.log("feed should now be an array", feed.feed);
-        return feed.feed;
-      });
-    };
-    feed.getLoadedFeed();
+  .controller("FeedCtrl", [
+    "$timeout", 
+    "$scope", 
+    "$uibModal", 
+    "FeedFactory", 
+    function($timeout, $scope, $uibModal, FeedFactory) {
+    
+      $scope.feed=[];
+      //Get firebase feed on page load.
+      FeedFactory.getPublishedAnimals()
+        .then((res)=>{
+          // turn the feed object into an array for sorting by date in feed.html.
+          for (key in res) {
+            $scope.feed.push(res[key]);
+            $timeout();
+          }
+        });
 
+      // Open Modal.
+      $scope.openModal = (scientificName) => {
+        const modalInstance = $uibModal.open({
+          size: "lg",
+          templateUrl: "app/modal/infoModal.html", 
+          controller: "modalController",
+          controllerAs: "modalController", 
+          resolve: { 
+            data: function (InfoFactory) {
+              return InfoFactory.populateTaxaCard(scientificName);
+            }, 
+            buttons: false
+          }//end of resolve  
+        });//end of modal.open
+      }; 
 
-    feed.openModal = (scientificName) => {
-      const modalInstance = $uibModal.open({
-        size: "lg",
-        templateUrl: "app/modal/infoModal.html", 
-        controller: "modalController",
-        controllerAs: "modalController", 
-        resolve: { 
-          data: function (InfoFactory) {
-            return InfoFactory.populateTaxaCard(scientificName);
-          }, 
-          buttons: false
-        }//end of resolve  
-      });//end of modal.open
-    }; //end of tree.openModal
-  });
+      //reformat published dates into a pipe-able string for Angular filter. 
+      $scope.formatDate = (date) => {
+        return new Date(date);
+      };
+
+    }]);

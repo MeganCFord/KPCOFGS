@@ -2,7 +2,7 @@ angular.module("Ident")
   .factory("FeedFactory", function($http, $timeout, UserObjectFactory ) {
 
     //these three functions run on start page to get the feed. 
-    let feed = {};
+    let feedgetter = $http.get("https://animal-identification.firebaseio.com/feed/.json");
 
     //TODO: get the common name of the species here- instead of the scientific name. Description will go on the back of the card if at all. 
     function publishAnimaltoFeed(name) {
@@ -29,30 +29,16 @@ angular.module("Ident")
       });
     }
 
-    function getPublishedAnimals() {
-      console.log("starting to get feed." );
-      return $http({
-        method: "GET", 
-        url: "https://animal-identification.firebaseio.com/feed/.json"
-      }).then((res)=> {
-        feed = res.data;
-        console.log("feed", feed );
-        return Promise.resolve(feed);
-      }, (e)=> {
-        return Promise.reject(e);
-      });
-    }
-
-    function getLoadedFeed() {
-      return feed;
-    }
-
-
     //public functions
     return {
       publishAnimal: publishAnimaltoFeed, 
-      getPublishedAnimals: getPublishedAnimals, 
-      getLoadedFeed: getLoadedFeed
-    };
+      getPublishedAnimals: () => {
+        return feedgetter
+          .then(
+            res => res.data, 
+            e => console.log("get published animals error", e)
+          );
+      } //getPublishedAnimals
 
+    };
   });
