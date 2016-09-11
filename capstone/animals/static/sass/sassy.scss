@@ -17,7 +17,7 @@ $standard-grey-shadow: 5px 5px 15px $dark-charcoal-color;
 @import '../app/start/start.scss';
 @import 'feed.scss';
 @import '../app/tree/tree.scss';
-@import '../app/modal/modal.scss';
+@import 'modal.scss';
 
 .inline-button {
   // display: inline-block;
