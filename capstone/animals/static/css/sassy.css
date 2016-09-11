@@ -126,34 +126,33 @@ body {
   background: #f9f6eb;
   border-radius: 12px;
   height: 85vh;
-  width: 50vh;
-  position: relative; }
+  position: relative;
+  width: 70vh; }
 
-.modal-body {
-  border-bottom: 2px #827d7d;
-  border-top: 2px #827d7d;
-  overflow-y: scroll; }
-  .modal-body p {
-    font-size: 1em; }
+.modal-open .modal-header h3 {
+  color: #4e4b4b;
+  font-size: 3em;
+  text-align: center; }
 
-.modal-open {
-  overflow-y: scroll; }
-  .modal-open .modal-header h3 {
-    color: #4e4b4b;
-    font-size: 3em;
-    text-align: center; }
-  .modal-open .modal-header h5 {
-    color: #4e4b4b;
-    font-size: 2em;
-    text-align: center; }
-  .modal-open .infoText {
-    max-height: 47vh;
-    overflow-y: scroll; }
-  .modal-open .modal-footer {
-    width: 97%;
-    bottom: 15px;
-    position: absolute;
-    right: 12px; }
+.modal-open .modal-header h5 {
+  color: #4e4b4b;
+  font-size: 2em;
+  text-align: center; }
+
+.modal-open .modal-body {
+  overflow-y: auto;
+  height: 30vh; }
+
+.modal-open .modal-carousel {
+  height: 30vh; }
+  .modal-open .modal-carousel img {
+    max-height: 30vh; }
+
+.modal-open .modal-footer {
+  width: 97%;
+  bottom: 15px;
+  position: absolute;
+  right: 12px; }
 
 .inline-button {
   float: right;

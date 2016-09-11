@@ -2,25 +2,11 @@
   background: $light-tan-color;
   border-radius: 12px;
   height: 85vh;
-  width: 50vh;
   position: relative;
+  width: 70vh;
 }
-
-.modal-body {
-  border-bottom: 2px $charcoal-color;
-  border-top: 2px $charcoal-color;
-  // height: 60%;
-  // max-height: 47vh;
-  overflow-y: scroll;
-
-  p {
-    font-size: 1em;
-  }
-}
-
 
 .modal-open {
-  overflow-y: scroll;
   .modal-header {
     h3 {
       color: $dark-charcoal-color;
@@ -34,9 +20,16 @@
       text-align: center;
     }
   }
-  .infoText {
-    max-height: 47vh;
-    overflow-y: scroll;
+  .modal-body {
+    overflow-y: auto;
+    height: 30vh;
+  }
+
+  .modal-carousel {
+    height: 30vh ;
+    img {
+      max-height: 30vh;
+    }
   }
   .modal-footer {
     width: 97%;
