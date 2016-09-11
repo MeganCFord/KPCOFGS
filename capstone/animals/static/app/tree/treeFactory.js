@@ -1,5 +1,5 @@
 angular.module("Ident")
-  .factory("TreeFactory", function($http, AnswerFactory, InfoFactory) {
+  .factory("TreeFactory", function($http, AnswerFactory, ModalFactory) {
 
     let currentTaxaData = null;
     let newTaxaData = null;
@@ -61,7 +61,7 @@ angular.module("Ident")
           //if we're not going to continue traversing, add the modal info to the subtaxa.
         } else {
           return Promise.all(currentTaxaData.child_taxa.map((cardInfo) => {
-            return InfoFactory.populateTaxaCard(cardInfo.name)
+            return ModalFactory.populateTaxaCard(cardInfo.name)
             .then((res)=> {
               cardInfo.modalData = res;
               return cardInfo;

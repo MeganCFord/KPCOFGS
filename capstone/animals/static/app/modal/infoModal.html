@@ -4,7 +4,7 @@
   <h3>{{modalController.data.commonName}}</h3>
   <h5>Scientific Name: {{modalController.data.scientificName}}</h5>
    <!-- images -->
-  <div class="infoImages">
+  <div ng-if="modalController.data.pictures.length > 0" class="infoImages">
     <uib-carousel active="active">
       <uib-slide ng-repeat="image in modalController.data.pictures track by $index" index="$index">
         <img ng-src="{{image}}">
@@ -15,8 +15,16 @@
 
 <div class="modal-body">
   <!-- text -->
-  <div  class="infoText" ng-repeat="text in modalController.data.textStuff">
-    <p ng-bind-html="renderHtml(text)"></p>
+  <div class="infoText">
+    <h5>Sources:</h5>
+    <ul ng-repeat="link in modalController.data.links">
+      <li><a href="{{ link }}">{{ link }}</a></li>
+    </ul>
+
+    <h5>Info:</h5>
+    <div ng-repeat="text in modalController.data.textStuff">
+      <p ng-bind-html="renderHtml(text)"></p>
+    </div>
   </div>
 </div>
 

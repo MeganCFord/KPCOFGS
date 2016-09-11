@@ -1,28 +1,41 @@
 angular.module("Ident")
-  .controller("modalController", function($scope, $uibModalInstance, $timeout, data, buttons, $sce) {
-    const modalController = this;
+  .controller("modalController", [
+    "$scope",
+    "$uibModalInstance",
+    "$timeout", 
+    "data", //all the pictures/etc for the selected animal. 
+    "selectbutton", //Boolean of whether to show the 'select taxa' button on this modal instance.
+    "$sce",
+    function($scope, $uibModalInstance, $timeout, data, selectbutton, $sce) {
+      // UIB modals require a controllerAs.
+      const modalController = this;
 
-    modalController.data= data;
-    console.log("Modal data", data );
+      // Activates/hides the 'select taxa' button based on where the modal was instantiated from.
+      modalController.selectable = selectbutton;
 
-    modalController.selectable = buttons;
-    console.log("whether to have the 'select this taxa' button showing", modalController.selectable );
-  
-    //runs to make any HTML description text show correctly. 
-    $scope.renderHtml = function(code) {
-      return $sce.trustAsHtml(code);
-    };
+      modalController.data= data;
+      // TODO: delete this console log.
+      console.log("Modal data", data );
 
-    $scope.active = 0;
+    
+      // Runs to make any HTML description text show correctly. 
+      $scope.renderHtml = function(code) {
+        return $sce.trustAsHtml(code);
+      };
 
-    modalController.ok = function (nameToSend) {
-      $scope.$emit("modalPickedTaxa", nameToSend);
-      $uibModalInstance.close();
+      //This has something to do with getting the scope emitter to get to the root scope correctly. TODO: test commenting this out once I get to tree refactor.
+      $scope.active = 0;
 
-    };
+      modalController.ok = function (nameToSend) {
+        // Emits the selected taxa to the tree when activated.
+        $scope.$emit("modalPickedTaxa", nameToSend);
+        $uibModalInstance.close();
 
-    modalController.cancel = function () {
-      $uibModalInstance.dismiss("cancel");
-    };
+      };
 
-  });
+      modalController.cancel = function () {
+        // Closes the modal, doing nothing.
+        $uibModalInstance.dismiss("cancel");
+      };
+
+    }]);

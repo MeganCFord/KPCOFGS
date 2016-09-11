@@ -17,7 +17,7 @@ angular.module("Ident")
           }
         });
 
-      // Open Modal.
+      // Open and populate info modal.
       $scope.openModal = (scientificName) => {
         const modalInstance = $uibModal.open({
           size: "lg",
@@ -25,10 +25,10 @@ angular.module("Ident")
           controller: "modalController",
           controllerAs: "modalController", 
           resolve: { 
-            data: function (InfoFactory) {
-              return InfoFactory.populateTaxaCard(scientificName);
+            data: function (ModalFactory) {
+              return ModalFactory.populateModal(scientificName);
             }, 
-            buttons: false
+            selectbutton: false
           }//end of resolve  
         });//end of modal.open
       }; 

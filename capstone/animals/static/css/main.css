@@ -4,10 +4,6 @@
 .hideMe {
   display: none; }
 
-.modal-body {
-  max-height: 47vh;
-  overflow-y: scroll; }
-
 .infoImages {
   height: 500px; }
 
