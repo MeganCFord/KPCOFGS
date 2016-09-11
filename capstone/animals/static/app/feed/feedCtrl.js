@@ -21,7 +21,7 @@ angular.module("Ident")
       $scope.openModal = (scientificName) => {
         const modalInstance = $uibModal.open({
           size: "lg",
-          templateUrl: "app/modal/infoModal.html", 
+          templateUrl: "../../static/app/modal/infoModal.html", 
           controller: "modalController",
           controllerAs: "modalController", 
           resolve: { 
