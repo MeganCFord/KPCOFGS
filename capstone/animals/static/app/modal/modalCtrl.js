@@ -12,19 +12,15 @@ angular.module("Ident")
 
       // Activates/hides the 'select taxa' button based on where the modal was instantiated from.
       modalController.selectable = selectbutton;
+      // What picture to start the image carousel on.
+      $scope.active = 0;
 
       modalController.data= data;
-      // TODO: delete this console log.
-      console.log("Modal data", data );
-
     
       // Runs to make any HTML description text show correctly. 
       $scope.renderHtml = function(code) {
         return $sce.trustAsHtml(code);
       };
-
-      //This has something to do with getting the scope emitter to get to the root scope correctly. TODO: test commenting this out once I get to tree refactor.
-      $scope.active = 0;
 
       modalController.ok = function (nameToSend) {
         // Emits the selected taxa to the tree when activated.

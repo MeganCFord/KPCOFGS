@@ -41,18 +41,19 @@ def EOLforModalInfo(request, taxa_id):
         pass
 
   for data in r["dataObjects"]:
-    # Add source links.
-    info["links"].append(data["source"])
-
-    # Add text data to 'textStuff'.
-    if data["mimeType"] == "text/plain":
-      info["textStuff"].append(data["description"])
-    elif data["mimeType"] == "text/html":
-      info["textStuff"].append(data["description"])
-
     # Add image data to 'pictures'    
-    elif data["mimeType"] == "image/jpeg":
+    if data["mimeType"] == "image/jpeg":
       info["pictures"].append(data["mediaURL"])
+    else: 
+      # Add source links.
+      info["links"].append(data["source"])
+  
+      # Add text data to 'textStuff'.
+      if data["mimeType"] == "text/plain":
+        info["textStuff"].append(data["description"])
+      elif data["mimeType"] == "text/html":
+        info["textStuff"].append(data["description"])
+
 
   return JsonResponse(info) 
 

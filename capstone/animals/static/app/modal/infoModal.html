@@ -23,8 +23,11 @@
     </div>
 
     <h5>Info:</h5>
-    <div ng-repeat="text in modalController.data.textStuff">
+    <div ng-if="modalController.data.textStuff.length >0" ng-repeat="text in modalController.data.textStuff">
       <p ng-bind-html="renderHtml(text)"></p>
+    </div>
+    <div ng-if="modalController.data.textStuff.length == 0">
+      <p>The Encyclopedia of Life does not have any data on this taxa. Check Wikipedia!</p>
     </div>
 </div>
 
