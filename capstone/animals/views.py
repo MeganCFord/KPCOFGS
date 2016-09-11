@@ -7,3 +7,8 @@ from django.conf.urls.static import static
 
 class IndexView(generic.TemplateView):
   template_name = 'animals/index.html'
+
+
+def populateModal(request, taxa):
+  print(taxa)
+
