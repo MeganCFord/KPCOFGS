@@ -73,14 +73,14 @@ def loadTree(request, taxa_name):
 
   try:
     taxa["question"] = f["question"]
-  except KeyError:
+  except TypeError:
     taxa["question"] = ""
   finally:
     pass
 
   try: 
     taxa["childtaxa"] = f["childtaxa"]
-  except KeyError:
+  except TypeError:
     # if the COL data hasn't already been added to the taxa in Firebase, get it from COL.
     r = get("http://www.catalogueoflife.org/col/webservice?name=" + taxa_name + "&format=json&response=full")
     r=r.json()
@@ -107,7 +107,7 @@ def loadTree(request, taxa_name):
     c = c.json()
     try:
       child["question"] = c["question"]
-    except KeyError:
+    except TypeError:
       child["question"] = ""
     finally:
       pass
@@ -117,8 +117,8 @@ def loadTree(request, taxa_name):
     p = p.json()
     try: 
       parent["question"] = p["question"]
-    except KeyError:
-      parent["question"] = ""
+    except TypeError:
+      child["question"] = ""
     finally:
       pass    
 

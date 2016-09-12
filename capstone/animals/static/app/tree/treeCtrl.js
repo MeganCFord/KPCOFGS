@@ -6,11 +6,12 @@ angular.module("Ident")
     "$rootScope", 
     "$uibModal", 
     "$location", 
-    function(TreeFactory, ModalFactory, $scope, $rootScope, $uibModal, $location) {
+    "$timeout",
+    function(TreeFactory, ModalFactory, $scope, $rootScope, $uibModal, $location, $timeout) {
 
       //main tree object, loading all sub and super taxa accordingly.
       $scope.taxa = TreeFactory.gimmeTheTree();
-  
+
       //The subtaxa that gets selected/passed to tree traversal.
       $scope.selectedSubtaxa = null;
 
@@ -24,6 +25,15 @@ angular.module("Ident")
         $scope.primary = !$scope.primary;
       };
 
+      $scope.setsubtaxa = (name) => {
+        console.log("this is what the taxa used to be", $scope.selectedSubtaxa );
+        $scope.selectedSubtaxa = name;
+      };
+
+      $scope.resetsubtaxa = () => {
+        console.log("this is what the taxa used to be.", $scope.selectedSubtaxa);
+        $scope.selectedSubtaxa = null;
+      };
 
       $scope.notDisabled = function(item) {
         if ($scope.primary === true) {
@@ -33,13 +43,12 @@ angular.module("Ident")
         }
       };
      
-
       //loads next page on submit button click. In a function because it's technically a form submit.
       $scope.traverse = () => { 
         if ($scope.selectedSubtaxa.rank==="Family"){
-          $location.path(`/species/${$scope.selectedSubtaxa.name}`);
+          $location.path(`/species/${$scope.selectedSubtaxa}`);
         } else {
-          $location.path(`/tree/${$scope.selectedSubtaxa.name}`);
+          $location.path(`/tree/${$scope.selectedSubtaxa}`);
         }
       };
 
