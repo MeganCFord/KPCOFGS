@@ -1,80 +1,82 @@
 angular.module("Ident")
-  .controller("Tree", function(TreeFactory, InfoFactory, $scope, $rootScope, $uibModal, $location, $timeout) {
-    const tree = this;
+  .controller("Tree", [
+    "TreeFactory", 
+    "ModalFactory", 
+    "$scope", 
+    "$rootScope", 
+    "$uibModal", 
+    "$route", 
+    "$location", 
+    "$timeout",
+    function(TreeFactory, ModalFactory, $scope, $rootScope, $uibModal, $route, $location, $timeout) {
 
-    tree.primary = true;
-    //filter for my firebase data questions.
-    $scope.notDisabled = function(item) {
-      if (tree.primary === true) {
-        return (item.specialData && item.specialData.enableMe === true);
-      } else {
-        return (item.specialData && item.specialData.enableMe === false);
-      }
-    };
+      $scope.currentTaxaName = $route.current.params.taxa;
+      //main tree object, loading all sub and super taxa accordingly.
+      $scope.taxa = null;
+      //The subtaxa that gets selected/passed to tree traversal.
+      $scope.selectedSubtaxa = null;
 
-    //gets assigned the entire subtaxa object.
-    tree.selectedSubtaxa = null;
-    
-    //runs after page load.
-    tree.loadcurrentTaxa = () => {
-      $timeout().then(() => {tree.currentTaxa = TreeFactory.getLoadedCurrentTaxa();
-        console.log("current Taxa: ", tree.currentTaxa);
-        return tree.currentTaxa;
-      }).then(() => {
-        //emits to parent scope for navbar coloration.
-        $scope.$emit("settingCurrentRank", tree.currentTaxa.rank);
-      });
-    };
-    tree.loadcurrentTaxa(); 
-
-    //loads next page on submit button click.
-    tree.traverse = () => { 
-      $timeout()
-        .then(()=> {
-          if (tree.selectedSubtaxa.rank==="Family"){
-            $location.path(`/species/${tree.selectedSubtaxa.name}`);
-          } else {
-            $location.path(`/tree/${tree.selectedSubtaxa.name}`);
-          }
-        });//end of .then
-    };//end of tree.traverse
+      //get tree object on page load.
+      TreeFactory.loadTree($scope.currentTaxaName)
+        .then((res) => {
+          console.log("loaded tree. here's what's in it.", res.data);
+          $scope.taxa = res.data;
+          $scope.$emit("settingCurrentRank", $scope.taxa.rank);
+        });
 
 
-
-    //grabs the data from the modal "select this taxa" button. YAY.
-    $rootScope.$on("modalPickedTaxa", function(event, value) { 
-      tree.currentTaxa.child_taxa.forEach(function(child) {
-        if (child.name === value) {
-          tree.selectedSubtaxa = child;
+      //filter for my firebase data questions.
+      $scope.primary = true;
+      $scope.notDisabled = function(item) {
+        if ($scope.primary === true) {
+          return (item.specialData && item.specialData.enableMe === true);
+        } else {
+          return (item.specialData && item.specialData.enableMe === false);
         }
+      };
+     
+
+      //loads next page on submit button click. In a function because it's technically a form submit.
+      $scope.traverse = () => { 
+        $timeout()
+          .then(()=> {
+            if ($scope.selectedSubtaxa.rank==="Family"){
+              $location.path(`/species/${$scope.selectedSubtaxa.name}`);
+            } else {
+              $location.path(`/tree/${$scope.selectedSubtaxa.name}`);
+            }
+          });
+      };
+
+      //grabs the data from the modal "select this taxa" button.
+      $rootScope.$on("modalPickedTaxa", function(event, value) { 
+        $scope.currentTaxa.child_taxa.forEach(function(child) {
+          if (child.name === value) {
+            $scope.selectedSubtaxa = child;
+          }
+        });
       });
-    });
+   
 
-    //loads on "more info" button click to open modal and get subtaxa info. 
-    tree.openModal = (scientificName) => {
+      $scope.openModal = (scientificName) => {
+        const modalInstance = $uibModal.open({
+          size: "lg",
+          templateUrl: "../../static/app/modal/infoModal.html", 
+          controller: "modalController",
+          controllerAs: "modalController", 
+          resolve: { 
+            data: function (ModalFactory) {
+              return ModalFactory.populateModal(scientificName);
+            },
+            buttons: true
+          }  
+        });
+      }; 
 
+      $scope.goBackButton = () => {
+        $scope.selectedSubtaxa = null;
+        $location.path(`/tree/${$scope.taxa.classification[$scope.taxa.classification.length - 1].name}`);
+      };
 
-      const modalInstance = $uibModal.open({
-        size: "lg",
-        templateUrl: "app/modal/infoModal.html", 
-        controller: "modalController",
-        controllerAs: "modalController", 
-        resolve: { 
-          data: function (InfoFactory) {
-            return InfoFactory.populateTaxaCard(scientificName);
-          }, 
-          buttons: true
-        }//end of resolve  
-      });//end of modal.open
-    }; //end of tree.openModal
-
-
-    
-    tree.goBackButton = () => {
-      tree.selectedSubtaxa = null;
-      $location.path(`/tree/${tree.currentTaxa.classification[tree.currentTaxa.classification.length - 1].name}`);
-      // });
-    };
-
-  });//end of controller
+    }]);
 

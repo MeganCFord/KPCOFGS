@@ -9,7 +9,7 @@ angular.module("Ident")
     });
   })
   
-  .factory("UserObjectFactory", function($http, $timeout, TreeFactory, AnswerFactory) {
+  .factory("UserObjectFactory", function($http, $timeout, AnswerFactory) {
 
     let userAnimal = {};
     let currentMasterTaxa = {};
@@ -39,34 +39,34 @@ angular.module("Ident")
     }
 
 
-    function buildUserObject(route) {
-      return TreeFactory.getMasterTaxa(route)
-        .then((res) => {
-          currentMasterTaxa = res;
+    // function buildUserObject(route) {
+    //   return TreeFactory.getMasterTaxa(route)
+    //     .then((res) => {
+    //       currentMasterTaxa = res;
           
-          //get/set the master 'question'
-          return AnswerFactory.getSpecialData(currentMasterTaxa.name)
-          .then((res)=> {
-            return sendMasterAnswer(res);
-          });
+    //       //get/set the master 'question'
+    //       return AnswerFactory.getSpecialData(currentMasterTaxa.name)
+    //       .then((res)=> {
+    //         return sendMasterAnswer(res);
+    //       });
 
-        }).then(()=>{
-          //get the 'questions' for all the taxa above the current taxa.
-          userAnimal.answerArray = [];
-          return Promise.all(currentMasterTaxa.classification.map(function(parentTaxa) {
-            return AnswerFactory.getSpecialData(parentTaxa.name)
-              .then((res) => {
-                return userAnimal.answerArray.push(res);
-              });
-          }))
-          //update the firebase object, then get it for the page.
-          .then(()=> {
-            return sendAnswerArray(userAnimal.answerArray);
-          }).then(()=> {
-            return getUserObject();
-          }); 
-        });   
-    }
+    //     }).then(()=>{
+    //       //get the 'questions' for all the taxa above the current taxa.
+    //       userAnimal.answerArray = [];
+    //       return Promise.all(currentMasterTaxa.classification.map(function(parentTaxa) {
+    //         return AnswerFactory.getSpecialData(parentTaxa.name)
+    //           .then((res) => {
+    //             return userAnimal.answerArray.push(res);
+    //           });
+    //       }))
+    //       //update the firebase object, then get it for the page.
+    //       .then(()=> {
+    //         return sendAnswerArray(userAnimal.answerArray);
+    //       }).then(()=> {
+    //         return getUserObject();
+    //       }); 
+    //     });   
+    // }
    
 
     function sendMasterAnswer(answer) {
@@ -113,7 +113,7 @@ angular.module("Ident")
     return {
       clearUserObject: clearUserObject,
       uploadImage: uploadImage,
-      buildUserObject: buildUserObject, 
+      // buildUserObject: buildUserObject, 
       getUserObject: getUserObject,
       getLoadedUserAnimal: getLoadedUserAnimal
     };

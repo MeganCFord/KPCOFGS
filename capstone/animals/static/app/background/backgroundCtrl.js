@@ -9,7 +9,7 @@ angular.module("Ident")
       background.tree = true;
     } else if (background.location === "/species/:taxa") {
       background.end = true;
-    }else if (background.location === "/start") {
+    }else if (background.location === "/") {
       background.start=true;
     }
 

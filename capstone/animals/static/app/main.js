@@ -5,36 +5,19 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
       .when("/tree/:taxa", {
         templateUrl: "../../static/app/background/background.html",
         controller: "Background", 
-        controllerAs: "background", 
-        resolve:  {
-          currentTaxa: function(TreeFactory, $route) {
-            return TreeFactory.buildTheTree($route.current.params.taxa);
-          }, 
-          currentUserObject: function(UserObjectFactory, $route) {
-            return UserObjectFactory.buildUserObject($route.current.params.taxa);
-          }
-        }
+        controllerAs: "background"
       })
       .when("/species/:taxa", {
         templateUrl:"../../static/app/background/background.html", 
         controller: "Background", 
-        controllerAs: "background", 
-        resolve: {
-          currentTaxa: function(TreeFactory, $route) {
-            return TreeFactory.buildTheTree($route.current.params.taxa);
-          }, 
-          currentUserObject: function(UserObjectFactory, $route) {
-            return UserObjectFactory.buildUserObject($route.current.params.taxa);
-          }
-        }
+        controllerAs: "background"
       })
-      .when("/start", {
+      .when("/", {
         templateUrl: "../../static/app/background/background.html", 
         controller: "Background", 
         controllerAs: "background"
-        }
       })
-      .otherwise("/start");
+      .otherwise("/");
   });
 
 

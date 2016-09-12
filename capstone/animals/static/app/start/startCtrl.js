@@ -2,7 +2,7 @@ angular.module("Ident")
   .controller("Start", function(UserObjectFactory, FeedFactory, $scope) {
     const start=this;
 
-    UserObjectFactory.clearUserData();
+    UserObjectFactory.clearUserObject();
 
     start.userDescription = "";
     start.currentFileName = "No File Selected";

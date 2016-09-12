@@ -11,15 +11,13 @@
          
           <!-- this button opens the Modal. -->
           <a class="btn btn-success inline-button" ng-click="tree.openModal(subtaxa.name)">More Info</a>
+
          <!-- these two buttons show/hide based on whether the taxa is selected. -->
           <label class="btn btn-success inline-button" ng-class="{'hideMe' : tree.selectedSubtaxa === subtaxa}""> 
             <input type="radio" ng-value="subtaxa" name="subtaxaOptions" ng-model="tree.selectedSubtaxa">Select This Taxa
           </label>
-
           <a class="btn btn-success inline-button" ng-class="{'hideMe': tree.selectedSubtaxa !== subtaxa}" ng-click="tree.selectedSubtaxa = null">Deselect</a>
           <div class="clearfix"></div>
-
-         
         </div>
       </div>
     </div>

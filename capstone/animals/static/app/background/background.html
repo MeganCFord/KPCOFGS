@@ -21,9 +21,8 @@
       <div class="col col-xs-6">
         <div class="recessed">
 
-          <div class="content" ng-if="background.start" ng-controller="Start as start" ng-include="'../../static/app/start/start.html'">
+          <div class="content" ng-if="background.start" ng-controller="Start as start" ng-include="'../../static/app/start/start.html'"> <!-- leaving this as a controllerAs for now. -->
           </div>
-
           <div class="content" ng-if="background.tree || background.end" ng-controller="UserObject as user" ng-include="'../../static/app/userObject/myAnimal.html'">
           </div>
         </div>
@@ -37,7 +36,7 @@
           <div class="content" ng-if="background.start" ng-controller="FeedCtrl" ng-include="'../../static/app/feed/feed.html'">
           </div>
 
-          <div class="content" ng-if="background.tree" ng-controller="Tree as tree" ng-include="'../../static/app/tree/tree.html'">
+          <div class="content" ng-if="background.tree" ng-controller="Tree" ng-include="'../../static/app/tree/tree.html'">
           </div>
 
           <div class="content" ng-if="background.end" ng-controller="Species as species" ng-include="'../../static/app/species/species.html'">
