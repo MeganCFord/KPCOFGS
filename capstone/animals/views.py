@@ -62,9 +62,7 @@ def EOLforModalInfo(request, taxa_id):
   return JsonResponse(info) 
 
 
-def loadTree(request, taxa_name):
-  # Load a 'current taxa' object with the names, questions, and firebase status of all subtaxa and supertaxa. Automates migration away from catalogue of life API, which is deprecated. Also automates creation of 'enableMe' and 'question' fields on all taxa I haven't gotten into. Once migration is complete, this function will be a LOT shorter.
-
+def loadTaxaObject(taxa_name):
   taxa = {"childtaxa": [], "supertaxa": [], "rank": "", "name": taxa_name, "question": ""}
   # Get firebase data on selected taxa.
   f = get("https://animal-identification.firebaseio.com/specialData/" + taxa_name + "/.json")
@@ -99,7 +97,13 @@ def loadTree(request, taxa_name):
     # patch the taxa object back to firebase. 
     putter = put("https://animal-identification.firebaseio.com/specialData/" + taxa_name + "/.json", json=taxa)
   finally:
-    pass
+    return taxa
+
+
+def loadTree(request, taxa_name):
+  # Load a 'current taxa' object with the names, questions, and firebase status of all subtaxa and supertaxa. Automates migration away from catalogue of life API, which is deprecated. Also automates creation of 'enableMe' and 'question' fields on all taxa I haven't gotten into. Once migration is complete, this function will be a LOT shorter.
+
+  taxa = loadTaxaObject(taxa_name)
 
   # Get the 'question' data for each subtaxa and supertaxa.
   for child in taxa["childtaxa"]:
