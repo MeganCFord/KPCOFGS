@@ -33,11 +33,5 @@ angular.module("Ident")
         });
     };
 
-    //'Get Started' button.
-    start.openTree = function() {
-      $location.url(`/tree/Animalia`);
-    };
-
-
   });//end of module
   
