@@ -7,7 +7,6 @@ angular.module("Ident")
       loadTree: (taxa_name) => {
         return $http.get(`http://localhost:8000/animals/tree/${taxa_name}`)
         .then((res)=> {
-          console.log("res in factory", res.data );
           currentTaxa = res.data;
         });
       },

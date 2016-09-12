@@ -9,7 +9,7 @@ angular.module("Ident")
     });
   })
   
-  .factory("UserObjectFactory", function($http, $timeout, AnswerFactory) {
+  .factory("UserObjectFactory", function($http, $timeout) {
 
     let userAnimal = {};
     let currentMasterTaxa = {};
