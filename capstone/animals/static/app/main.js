@@ -31,14 +31,7 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
       .when("/start", {
         templateUrl: "../../static/app/background/background.html", 
         controller: "Background", 
-        controllerAs: "background", 
-        resolve: {
-          clearedUserObject: function(UserObjectFactory) {
-            return UserObjectFactory.clearUserObject();
-          }, 
-          feed: function(FeedFactory) {
-            return FeedFactory.getPublishedAnimals();
-          }
+        controllerAs: "background"
         }
       })
       .otherwise("/start");
