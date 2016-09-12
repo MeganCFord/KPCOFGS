@@ -41,20 +41,22 @@ def EOLforModalInfo(request, taxa_id):
         pass
 
   for data in r["dataObjects"]:
-    # Add image data to 'pictures'    
-    if data["mimeType"] == "image/jpeg":
-      r = get(data["mediaURL"])
-      print(r.status_text)
-      info["pictures"].append(data["mediaURL"])
-    else: 
-      # Add source links.
-      info["links"].append(data["source"])
+    print(data)
+    # Add image data to 'pictures'
+    try:    
+      if data["mimeType"] == "image/jpeg":
+        info["pictures"].append(data["mediaURL"])
+      else: 
+        # Add source links.
+        info["links"].append(data["source"])
   
-      # Add text data to 'textStuff'.
-      if data["mimeType"] == "text/plain":
-        info["textStuff"].append(data["description"])
-      elif data["mimeType"] == "text/html":
-        info["textStuff"].append(data["description"])
+        # Add text data to 'textStuff'.
+        if data["mimeType"] == "text/plain":
+          info["textStuff"].append(data["description"])
+        elif data["mimeType"] == "text/html":
+          info["textStuff"].append(data["description"])
+    except KeyError:
+      pass
 
   return JsonResponse(info) 
 
@@ -62,17 +64,15 @@ def EOLforModalInfo(request, taxa_id):
 def loadTree(request, taxa_name):
   # Load a 'current taxa' object with the names, questions, and firebase status of all subtaxa and supertaxa. Automates migration away from catalogue of life API, which is deprecated. Also automates creation of 'enableMe' and 'question' fields on all taxa I haven't gotten into. Once migration is complete, this function will be a LOT shorter.
 
-  taxa = {"childtaxa": [], "supertaxa": [], "rank": "", "name": taxa_name, "question": "", "enableMe": False}
+  taxa = {"childtaxa": [], "supertaxa": [], "rank": "", "name": taxa_name, "question": ""}
   # Get firebase data on selected taxa.
   f = get("https://animal-identification.firebaseio.com/specialData/" + taxa_name + "/.json")
   f = f.json()
 
-  
+
   try:
     taxa["question"] = f["question"]
-    taxa["enableMe"] = f["enableMe"]
   except KeyError:
-    taxa["enableMe"] = False
     taxa["question"] = ""
   finally:
     pass
@@ -84,6 +84,7 @@ def loadTree(request, taxa_name):
     r = get("http://www.catalogueoflife.org/col/webservice?name=" + taxa_name + "&format=json&response=full")
     r=r.json()
     r = r["results"][0]
+
     taxa["rank"] = r["rank"]
 
     for child in r["child_taxa"]:
@@ -93,8 +94,6 @@ def loadTree(request, taxa_name):
     for parent in r["classification"]:
       to_add = {"name": parent["name"]}
       taxa["supertaxa"].append(to_add)
-
-    taxa["rank"] = r["rank"]
     
     # patch the taxa object back to firebase. 
     putter = put("https://animal-identification.firebaseio.com/specialData/" + taxa_name + "/.json", json=taxa)
@@ -107,22 +106,19 @@ def loadTree(request, taxa_name):
     c = c.json()
     try:
       child["question"] = c["question"]
-      child["enableMe"] = c["enableMe"]
     except KeyError:
       child["question"] = ""
-      child["enableMe"] = False
     finally:
       pass
+
   for parent in taxa["supertaxa"]:
     p = get("https://animal-identification.firebaseio.com/specialData/" + parent["name"] + "/.json")
     p = p.json()
     try: 
       parent["question"] = p["question"]
-      parent["enableMe"] = p["enableMe"]
     except KeyError:
       parent["question"] = ""
-      parent["enableMe"] = False
     finally:
       pass    
-  # return the taxa object
+
   return JsonResponse(taxa)
