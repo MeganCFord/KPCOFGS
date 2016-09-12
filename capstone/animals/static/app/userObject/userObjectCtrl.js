@@ -1,32 +1,30 @@
 angular.module("Ident")
-  .controller("UserObject", function(UserObjectFactory, $timeout, $uibModal) {
-    const user = this;
+  .controller("UserObject", function(TreeFactory, UserObjectFactory, $scope, $timeout, $uibModal) {
 
-    user.loadUserAnimal = () => {
-      $timeout().then(() => {user.userAnimal = UserObjectFactory.getLoadedUserAnimal();
-      console.log("user animal: ", user.userAnimal);
+    $scope.animalObject = TreeFactory.gimmeTheTree();
+
+    $scope.userInfo = {};
+
+    UserObjectFactory.getUserObject()
+      .then((res) => {
+        $scope.userInfo = res.data;
+        $timeout();
       });
-    };
-    user.loadUserAnimal();
 
-
-    //loads on "more info" button click to open modal and get subtaxa info. 
-    user.openModal = (scientificName) => {
-
-
+    $scope.openModal = (scientificName) => {
       const modalInstance = $uibModal.open({
         size: "lg",
-        templateUrl: "app/modal/infoModal.html", 
+        templateUrl: "../../static/app/modal/infoModal.html", 
         controller: "modalController",
         controllerAs: "modalController", 
         resolve: { 
-          data: function (InfoFactory) {
-            return InfoFactory.populateTaxaCard(scientificName);
-          }, 
-          buttons: false
-        }//end of resolve  
-      });//end of modal.open
-    }; //end of tree.openModal
+          data: function (ModalFactory) {
+            return ModalFactory.populateModal(scientificName);
+          },
+          selectbutton: false
+        }  
+      });
+    }; 
 
 
   });//end of controller

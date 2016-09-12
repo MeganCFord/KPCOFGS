@@ -71,6 +71,8 @@ def loadTaxaObject(taxa_name):
 
   try:
     taxa["question"] = f["question"]
+  except KeyError: 
+    taxa["question"] = ""
   except TypeError:
     taxa["question"] = ""
   finally:
@@ -78,11 +80,31 @@ def loadTaxaObject(taxa_name):
 
   try: 
     taxa["childtaxa"] = f["childtaxa"]
+    taxa["supertaxa"] = f["supertaxa"]
+  except KeyError: 
+    # if the COL data hasn't already been added to the taxa in Firebase, get it from COL.
+    r = get("http://www.catalogueoflife.org/col/webservice?name=" + taxa_name + "&format=json&response=full")
+    r=r.json()
+    r = r["results"][0]
+
+    taxa["rank"] = r["rank"]
+
+    for child in r["child_taxa"]:
+      to_add = {"name": child["name"]}
+      taxa["childtaxa"].append(to_add)
+
+    for parent in r["classification"]:
+      to_add = {"name": parent["name"]}
+      taxa["supertaxa"].append(to_add)
+    
+    # patch the taxa object back to firebase. 
+    putter = put("https://animal-identification.firebaseio.com/specialData/" + taxa_name + "/.json", json=taxa)
   except TypeError:
     # if the COL data hasn't already been added to the taxa in Firebase, get it from COL.
     r = get("http://www.catalogueoflife.org/col/webservice?name=" + taxa_name + "&format=json&response=full")
     r=r.json()
     r = r["results"][0]
+    print(r)
 
     taxa["rank"] = r["rank"]
 
@@ -111,6 +133,8 @@ def loadTree(request, taxa_name):
     c = c.json()
     try:
       child["question"] = c["question"]
+    except KeyError: 
+      child["question"] = ""
     except TypeError:
       child["question"] = ""
     finally:
@@ -121,6 +145,8 @@ def loadTree(request, taxa_name):
     p = p.json()
     try: 
       parent["question"] = p["question"]
+    except KeyError:
+      child["question"] = ""
     except TypeError:
       child["question"] = ""
     finally:

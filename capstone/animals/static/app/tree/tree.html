@@ -14,7 +14,7 @@
   <!-- SUBMIT BUTTON -->
   <button class="btn btn-lg btn-success inline-button" ng-click="traverse()" ng-disabled="selectedSubtaxa === null">Submit</button>
   <!-- GO BACK BUTTON -->
-  <button ng-if="taxa.rank!='Kingdom'" class="btn btn-lg btn-success inline-button" ng-click="goBackButton()">Go Back</button>
+  <button   class="btn btn-lg btn-success inline-button" ng-click="goBackButton()">Go Back</button>
   <!-- reverse the filter. -->
   <button ng-if="primary" ng-click="switchPrimary()" class="btn btn-lg btn-success inline-button">See More</button>
   <button ng-if="!primary" ng-click="switchPrimary()" class="btn btn-lg btn-success inline-button">Back to Questions</button>

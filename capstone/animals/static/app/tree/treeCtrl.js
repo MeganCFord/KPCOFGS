@@ -70,14 +70,21 @@ angular.module("Ident")
       $rootScope.$on("modalPickedTaxa", function(event, value) { 
         $scope.taxa.childtaxa.forEach(function(child) {
           if (child.name === value) {
-            $scope.selectedSubtaxa = child;
+            $scope.selectedSubtaxa = child.name;
           }
         });
       });
 
       $scope.goBackButton = () => {
         $scope.selectedSubtaxa = null;
-        $location.path(`/tree/${$scope.taxa.supertaxa[$scope.taxa.supertaxa.length - 1].name}`);
+        console.log($scope.taxa.supertaxa);
+        if ($scope.taxa.supertaxa[$scope.taxa.supertaxa.length - 1] != undefined) {
+          $location.path(`/tree/${$scope.taxa.supertaxa[$scope.taxa.supertaxa.length - 1].name}`);
+        } else {
+          $location.path('/tree/Animalia');
+        }
+
+
       };
 
     }]);
