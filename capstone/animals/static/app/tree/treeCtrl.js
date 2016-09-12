@@ -26,15 +26,14 @@ angular.module("Ident")
       };
 
       $scope.setsubtaxa = (name) => {
-        console.log("this is what the taxa used to be", $scope.selectedSubtaxa );
         $scope.selectedSubtaxa = name;
       };
 
       $scope.resetsubtaxa = () => {
-        console.log("this is what the taxa used to be.", $scope.selectedSubtaxa);
         $scope.selectedSubtaxa = null;
       };
 
+      // Filter that handles which cards to show based on whether I wrote a question for them.
       $scope.notDisabled = function(item) {
         if ($scope.primary === true) {
           return (item.question !== "");
