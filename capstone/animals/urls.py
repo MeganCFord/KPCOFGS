@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'id/(?P<taxa_name>[A-Za-z]*)$', views.EOLforId),
     url(r'info/(?P<taxa_id>[0-9]*)$', views.EOLforModalInfo),
     url(r'tree/(?P<taxa_name>[A-Za-z]*)$', views.loadTree),
+    url(r'species/(?P<taxa_name>[A-Za-z]*)$', views.loadSpecies),
 ]

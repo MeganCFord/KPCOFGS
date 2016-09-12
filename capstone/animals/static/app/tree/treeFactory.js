@@ -11,6 +11,13 @@ angular.module("Ident")
           currentTaxa = res.data;
         });
       },
+      loadSpecies: (taxa_name) => {
+        return $http.get(`http://localhost:8000/animals/species/${taxa_name}`)
+        .then((res)=> {
+          console.log("species info", res.data);
+          currentTaxa = res.data;
+        });
+      },
       gimmeTheTree: () => {
         return currentTaxa;
       }

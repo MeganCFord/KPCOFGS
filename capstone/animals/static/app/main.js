@@ -15,8 +15,12 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
       .when("/species/:taxa", {
         templateUrl:"../../static/app/background/background.html", 
         controller: "Background", 
-        controllerAs: "background"
-      // TODO: load species here.
+        controllerAs: "background",
+        resolve: {
+          currentTaxa: function(TreeFactory, $route) {
+            return TreeFactory.loadSpecies($route.current.params.taxa);
+          } 
+        }
       })
       .when("/", {
         templateUrl: "../../static/app/background/background.html", 

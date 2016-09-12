@@ -2,6 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views import generic
 from django.conf.urls.static import static
 from requests import *
+import json
 
 # Create your views here.
 
@@ -78,9 +79,17 @@ def loadTaxaObject(taxa_name):
   finally:
     pass
 
+  try:
+    taxa["rank"] = f["rank"]
+  except KeyError:
+    pass
+  except TypeError:
+    pass
+  finally:
+    pass
+
   try: 
     taxa["childtaxa"] = f["childtaxa"]
-    taxa["supertaxa"] = f["supertaxa"]
   except KeyError: 
     # if the COL data hasn't already been added to the taxa in Firebase, get it from COL.
     r = get("http://www.catalogueoflife.org/col/webservice?name=" + taxa_name + "&format=json&response=full")
@@ -104,7 +113,6 @@ def loadTaxaObject(taxa_name):
     r = get("http://www.catalogueoflife.org/col/webservice?name=" + taxa_name + "&format=json&response=full")
     r=r.json()
     r = r["results"][0]
-    print(r)
 
     taxa["rank"] = r["rank"]
 
@@ -121,11 +129,10 @@ def loadTaxaObject(taxa_name):
   finally:
     return taxa
 
-
-def loadTree(request, taxa_name):
+def loadTreeStuff(taxa_name):
   # Load a 'current taxa' object with the names, questions, and firebase status of all subtaxa and supertaxa. Automates migration away from catalogue of life API, which is deprecated. Also automates creation of 'enableMe' and 'question' fields on all taxa I haven't gotten into. Once migration is complete, this function will be a LOT shorter.
-
   taxa = loadTaxaObject(taxa_name)
+  print(taxa)
 
   # Get the 'question' data for each subtaxa and supertaxa.
   for child in taxa["childtaxa"]:
@@ -150,6 +157,32 @@ def loadTree(request, taxa_name):
     except TypeError:
       child["question"] = ""
     finally:
-      pass    
+      pass
 
+  return taxa    
+
+def loadTree(request, taxa_name):
+  taxa = loadTreeStuff(taxa_name)
+
+  return JsonResponse(taxa)
+
+def loadSpecies(request, taxa_name):
+  # Load all the taxa info and all the questions and then also load all the modal info for each species option.
+  taxa = loadTreeStuff(taxa_name)
+  print(taxa)
+  # try: 
+  #   for child in taxa["childtaxa"]:
+  #     child["modalId"] = ""
+  #     # child["modalInfo"] = {}
+  #     r = EOLforId(child["name"])
+  #     print(r)
+  #     child["modalId"] = r.data
+  #     if child["modalId"] is not 0:
+  #       child["modalInfo"] = EOLforModalInfo(child["modalId"])
+  # except TypeError:
+  #   print(taxa)
+  # except KeyError:
+  #   print(taxa)
+  # finally:
+  #   pass
   return JsonResponse(taxa)
