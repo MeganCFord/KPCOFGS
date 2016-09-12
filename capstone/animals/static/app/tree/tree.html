@@ -1,38 +1,38 @@
 <div id="tree">
 <h1 class="feed-title">Traverse The Tree</h1>
 
-<form  ng-submit="tree.traverse()">
+<form ng-submit="traverse()">
 
     <div class="inner-recessed">
-      <div class="feed-card"  ng-class="{'specialTest': tree.selectedSubtaxa===subtaxa}" ng-repeat="subtaxa in tree.currentTaxa.child_taxa | filter:notDisabled">
+      <div class="feed-card"  ng-class="{'specialTest': selectedSubtaxa===subtaxa}" ng-repeat="subtaxa in taxa.childtaxa | filter:notDisabled">
         <div class="btn-group" data-toggle="buttons">
-          <p ng-if="tree.primary===true">This animal also {{subtaxa.specialData.question}}</p>
-          <p ng-if="tree.primary===false">{{subtaxa.name}}</p>
+          <p ng-if="primary">This animal also {{subtaxa.question}}</p>
+          <p ng-if="!primary">{{subtaxa.name}}</p>
          
           <!-- this button opens the Modal. -->
-          <a class="btn btn-success inline-button" ng-click="tree.openModal(subtaxa.name)">More Info</a>
+          <a class="btn btn-success inline-button" ng-click="openModal(subtaxa.name)">More Info</a>
 
          <!-- these two buttons show/hide based on whether the taxa is selected. -->
-          <label class="btn btn-success inline-button" ng-class="{'hideMe' : tree.selectedSubtaxa === subtaxa}""> 
-            <input type="radio" ng-value="subtaxa" name="subtaxaOptions" ng-model="tree.selectedSubtaxa">Select This Taxa
+          <label class="btn btn-success inline-button" ng-class="{'hideMe' : selectedSubtaxa === subtaxa}"> 
+            <input type="radio" ng-value="subtaxa" name="subtaxaOptions" ng-model="selectedSubtaxa">Select This Taxa
           </label>
-          <a class="btn btn-success inline-button" ng-class="{'hideMe': tree.selectedSubtaxa !== subtaxa}" ng-click="tree.selectedSubtaxa = null">Deselect</a>
+          <a class="btn btn-success inline-button" ng-class="{'hideMe': selectedSubtaxa !== subtaxa}" ng-click="selectedSubtaxa = null">Deselect</a>
           <div class="clearfix"></div>
         </div>
       </div>
     </div>
     <div class="tree-buttons">
         <!-- SUBMIT BUTTON -->
-        <button class="btn btn-lg btn-success inline-button" type="submit" ng-class="{'disabled': tree.selectedSubtaxa === null}">Submit</button> 
+        <button class="btn btn-lg btn-success inline-button" type="submit" ng-class="{'disabled': selectedSubtaxa === null}">Submit</button> 
         <!-- GO BACK BUTTON -->
-       <button class="btn btn-lg btn-success inline-button" ng-click="tree.goBackButton()">Go Back</button>
-       
+       <button ng-if="taxa.rank!='Kingdom'" class="btn btn-lg btn-success inline-button" ng-click="goBackButton()">Go Back</button>
+
        <!-- reverse the filter. -->
-       <button ng-if="tree.primary===true" ng-click="tree.primary=false" class="btn btn-lg btn-success inline-button">None Of These</button>
-       <button ng-if="tree.primary===false" ng-click="tree.primary=true" class="btn btn-lg btn-success inline-button">Back to Questions</button>
        <div class="clearfix"></div>
     </div>
-    </form>
+  </form>
+       <button ng-if="primary" ng-click="switchPrimary()" class="btn btn-lg btn-success inline-button">See More</button>
+       <button ng-if="!primary" ng-click="switchPrimary()" class="btn btn-lg btn-success inline-button">Back to Questions</button>
 </div>
 
 

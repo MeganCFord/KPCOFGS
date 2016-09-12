@@ -5,35 +5,30 @@ angular.module("Ident")
     "$scope", 
     "$rootScope", 
     "$uibModal", 
-    "$route", 
     "$location", 
-    "$timeout",
-    function(TreeFactory, ModalFactory, $scope, $rootScope, $uibModal, $route, $location, $timeout) {
+    function(TreeFactory, ModalFactory, $scope, $rootScope, $uibModal, $location) {
 
-      $scope.currentTaxaName = $route.current.params.taxa;
       //main tree object, loading all sub and super taxa accordingly.
-      $scope.taxa = null;
+      $scope.taxa = TreeFactory.gimmeTheTree();
+  
       //The subtaxa that gets selected/passed to tree traversal.
       $scope.selectedSubtaxa = null;
 
       //filter for firebase data questions vs no question.
       $scope.primary = true;
 
-      //get tree object on page load.
-      TreeFactory.loadTree($scope.currentTaxaName)
-        .then((res) => {
-          $scope.taxa = res.data;
-          $scope.$emit("settingCurrentRank", $scope.taxa.rank);
-          $timeout();
-        });
+      //emit tree rank on page load for background.
+      $scope.$emit("settingCurrentRank", $scope.taxa.rank);
+
+      $scope.switchPrimary = function() {
+        $scope.primary = !$scope.primary;
+      };
 
 
       $scope.notDisabled = function(item) {
         if ($scope.primary === true) {
-          console.log("primary is true", item.question );
           return (item.question !== "");
         } else if ($scope.primary === false) {
-          console.log("primary is false", item.question);
           return (item.question === "");
         }
       };
@@ -78,4 +73,3 @@ angular.module("Ident")
       };
 
     }]);
-

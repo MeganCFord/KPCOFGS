@@ -41,11 +41,12 @@ def EOLforModalInfo(request, taxa_id):
         pass
 
   for data in r["dataObjects"]:
-    print(data)
     # Add image data to 'pictures'
     try:    
       if data["mimeType"] == "image/jpeg":
-        info["pictures"].append(data["mediaURL"])
+        p = get(data["mediaURL"])
+        if p.status_code == 200:
+          info["pictures"].append(data["mediaURL"])
       else: 
         # Add source links.
         info["links"].append(data["source"])
