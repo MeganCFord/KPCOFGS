@@ -7,7 +7,7 @@ import datetime
 
 # Create your views here.
 
-root_url = "http://localhost:8000/"
+root_url = "http://localhost:8000/animals/"
 
 class IndexView(generic.TemplateView):
   # Main index.html.
