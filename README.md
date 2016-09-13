@@ -36,7 +36,7 @@ Converted to full stack Angular/Django web application September 2016 (5 day tim
 ### Installation 
 
 ```
-$ git clone [link](https://github.com/MeganCFord/KPCOFGS.git)
+$ git clone https://github.com/MeganCFord/KPCOFGS.git
 $ cd animal-ident-capstone
 $ npm install 
 $ bower install 
