@@ -34,6 +34,9 @@ angular.module("Ident")
       },
       getUserObject: () => {
         return $http.get("https://animal-identification.firebaseio.com/currentUserObject.json");
+      }, 
+      publishAnimal: (name) => {
+        return $http.get(`http://localhost:8000/publish/${name}`);
       }
     };
 
