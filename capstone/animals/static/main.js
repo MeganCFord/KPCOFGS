@@ -29,7 +29,7 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
         }
       })
       .when("start", {
-        templateUrl: "app/background/background.html", 
+        templateUrl: "/animals/static/app/background/background.html", 
         controller: "Background", 
         controllerAs: "background", 
         resolve: {
