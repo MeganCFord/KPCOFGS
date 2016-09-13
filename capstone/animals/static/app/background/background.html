@@ -1,0 +1,50 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="row seven-cols">
+      <div class="col-md-1"><div ng-class="background.setRankingClasses('Kingdom')" class="kingdom rank">Kingdom</div></div>
+      <div class="col-md-1"><div ng-class="background.setRankingClasses('Phylum')" class="phylum rank">Phylum</div></div>
+      <div class="col-md-1"><div ng-class="background.setRankingClasses('Class')" class="class rank">Class</div></div>
+      <div class="col-md-1"><div ng-class="background.setRankingClasses('Order')" class="order rank">Order</div></div>
+      <div class="col-md-1"><div ng-class="background.setRankingClasses('Family')" class="family rank">Family</div></div>
+      <div class="col-md-1"><div ng-class="background.setRankingClasses('Genus')" class="genus rank">Genus</div></div>
+      <div class="col-md-1"><div ng-class="background.setRankingClasses('Species')" class="species rank">Species</div></div>
+    </div>
+  </div>
+</nav>
+
+<div class="background">
+  <div class="container-fluid">
+    <div class="row">
+    
+
+      <!-- 'my animal' column -->
+      <div class="col col-xs-6">
+        <div class="recessed">
+
+          <div class="content" ng-if="background.start" ng-controller="Start as start" ng-include="'../../static/app/start/start.html'"> <!-- leaving this as a controllerAs for now. -->
+          </div>
+          <div class="content" ng-if="background.tree || background.end" ng-controller="UserObject as user" ng-include="'../../static/app/userObject/myAnimal.html'">
+          </div>
+        </div>
+      </div>
+
+
+      <!-- 'feed'/'options' column -->
+      <div class="col col-xs-6">
+        <div class="recessed">
+
+          <div class="content" ng-if="background.start" ng-controller="FeedCtrl" ng-include="'../../static/app/feed/feed.html'">
+          </div>
+
+          <div class="content" ng-if="background.tree" ng-controller="Tree" ng-include="'../../static/app/tree/tree.html'">
+          </div>
+
+          <div class="content" ng-if="background.end" ng-controller="Species as species" ng-include="'../../static/app/species/species.html'">
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+
+<div>
+  <h1 class="feed-title">Traverse The Tree</h1>
+
+  <div class="inner-recessed">
+    <div class="feed-card" ng-class="{'specialTest': selectedSubtaxa === subtaxa.name}" ng-repeat="subtaxa in taxa.childtaxa | filter:notDisabled">
+      <p ng-if="primary">This animal also {{ subtaxa.question }}</p>
+      <p ng-if="!primary">{{ subtaxa.name }}</p>
+      <a class="btn btn-success" ng-click="openModal(subtaxa.name)">More Info</a>
+      <button class="btn btn-success" ng-if="selectedSubtaxa !== subtaxa.name" ng-click="setsubtaxa(subtaxa.name)" >Select This Taxa</button>
+      <button class="btn btn-success" ng-if="selectedSubtaxa === subtaxa.name" ng-click="resetsubtaxa()" >Deselect</button>
+    </div>
+  </div>
+  <!-- SUBMIT BUTTON -->
+  <button class="btn btn-lg btn-success inline-button" ng-click="traverse()" ng-disabled="selectedSubtaxa === null">Submit</button>
+  <!-- GO BACK BUTTON -->
+  <button   class="btn btn-lg btn-success inline-button" ng-click="goBackButton()">Go Back</button>
+  <!-- reverse the filter. -->
+  <button ng-if="primary" ng-click="switchPrimary()" class="btn btn-lg btn-success inline-button">See More</button>
+  <button ng-if="!primary" ng-click="switchPrimary()" class="btn btn-lg btn-success inline-button">Back to Questions</button>
+</div>

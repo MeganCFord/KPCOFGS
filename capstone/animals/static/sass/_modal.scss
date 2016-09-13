@@ -1,0 +1,40 @@
+.modal-content {
+  background: $light-tan-color;
+  border-radius: 12px;
+  height: 85vh;
+  position: relative;
+  width: 70vh;
+}
+
+.modal-open {
+  .modal-header {
+    h3 {
+      color: $dark-charcoal-color;
+      font-size: 3em;
+      text-align: center;
+    }
+
+    h5 {
+      color: $dark-charcoal-color;
+      font-size: 2em;
+      text-align: center;
+    }
+  }
+  .modal-body {
+    overflow-y: auto;
+    height: 30vh;
+  }
+
+  .modal-carousel {
+    height: 30vh ;
+    img {
+      max-height: 30vh;
+    }
+  }
+  .modal-footer {
+    width: 97%;
+    bottom: 15px;
+    position: absolute;
+    right: 12px;
+  }
+}

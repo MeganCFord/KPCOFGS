@@ -1,0 +1,36 @@
+
+
+<h5 class="feed-title">This animal is probably one of the following:</h5>
+
+
+<div class="species-inner-recessed">
+
+  <div class="feed-card" ng-class="{'specialTest': publishableAnimal === animal.name}" ng-repeat ="animal in species.childtaxa">
+    <h3>{{animal.name}}</h3>
+
+    <div class="infoImages">
+      <uib-carousel active="active">
+        <uib-slide ng-repeat="image in animal.modalData.pictures track by $index" index="$index">
+          <img ng-src="{{image}}">
+        </uib-slide>
+     </uib-carousel>
+    </div><!-- end of images div -->
+
+    <div class="speciesText">
+      <div ng-repeat="text in animal.modalData.textStuff">
+        <p ng-bind-html="renderHtml(text)"></p>
+      </div>
+    </div>
+
+    <button class="btn btn-success inline-button" ng-click="setpublishableAnimal(animal.name)">This is my animal!</button>
+    <a href="https://en.wikipedia.org/wiki/{{animal.name}}" target="_blank" class="btn btn-success inline-button">Search Wikipedia</a>
+    <div class="clearfix"></div>
+  </div>
+</div><!-- end of innerRecessed Div -->
+
+<div class="tree-buttons">
+  <button class="btn btn-success" ng-click="publishAnimal()" ng-disable="publishableAnimal === null">Submit</button>
+  <!-- GO BACK BUTTON -->
+  <button class="btn btn-success" ng-click="goBackButton()">Go Back</button>
+</div>
+

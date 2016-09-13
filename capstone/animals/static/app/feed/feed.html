@@ -1,0 +1,14 @@
+
+
+<h1 class="feed-title">Recently Identified Animals</h1>
+
+  <div class="feed-inner-recessed">
+    <div class="feed-card" ng-repeat="animal in feed | orderBy: 'date': false">
+      <div class="card-img">
+        <img class="img-responsive" ng-src="{{animal.picture}}">
+      </div>
+      <p>this animal was identified as a {{animal.name}} on {{formatDate(animal.date) | date:"MM/dd/yyyy"}}</p>
+      <button ng-click="openModal(animal.name)" class="btn btn-success inline-button">More Info</button>
+      <div class="clearfix"></div>
+    </div>
+  </div>

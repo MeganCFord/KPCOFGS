@@ -1,0 +1,36 @@
+<h1 ng-if="start.step===2" class="feed-title">My Animal</h1>
+
+<!-- step 0: user chooses to get started. -->
+<div ng-if="start.step === 0" class="user-inner-recessed">
+<h3 class="feed-title">Welcome to KPCOFGS. This app can help you identify an animal by answering a series of questions. It uses the Catalog of Life and up to 120 additional databases to provide information about animals at every level of the classification tree. Get started below!</h3>
+</div>
+<div ng-if="start.step===0" class="step-btn">
+  <button class="btn btn-success btn-lg btn-block" ng-click="start.step = 1">Identify An Animal</button>
+</div>
+
+<!-- step 1: user submits info. -->
+<form class="step-btn" ng-if="start.step === 1" ng-submit = start.uploadUserData()>
+  <label class="btn btn-lg btn-success btn-block">
+    <span ng-model="start.uploadBtnText">Choose a File</span>
+    <!-- this input broadcasts the name of the file loaded for display. -->
+    <input type="file" ng-model="start.userImage" accept="image/*" style="display: none" onchange="angular.element(this).scope().photoChanged(this.files)"/>
+  </label>
+  <p ng-model="start.currentFileName">{{start.currentFileName}}</p>
+  <textarea class="form-control" rows="4" ng-model = "start.userDescription" placeholder="add some optional notes about your animal, for reference"></textarea>
+  <button class="btn btn-success btn-lg btn-block" type="submit" ng-class="{disabled: start.currentFileName ==='No File Selected'}">Submit</button>
+</form>
+
+
+<!-- step 2: user item verification. -->
+<div class="feed-card" ng-if="start.step===2">
+  <div class="card-img">
+    <img ng-src="{{start.userImage}}">
+  </div>
+  <p>{{start.userDescription}}</p>
+  <button class="btn btn-success btn-lg inline-button" ng-click="start.step=1">Edit</button>
+  <div class="clearfix"></div>
+</div>
+
+<div class="step-btn" ng-if="start.step===2">
+  <a class="btn btn-success btn-lg btn-block" href="#/tree/Animalia">Get Started Identifying</a>
+</div>
