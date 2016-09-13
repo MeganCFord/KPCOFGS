@@ -36,7 +36,7 @@ angular.module("Ident")
         return $http.get("https://animal-identification.firebaseio.com/currentUserObject.json");
       }, 
       publishAnimal: (name) => {
-        return $http.get(`http://127.0.0.1:8000/animals/publish/${name}`);
+        return $http.get(`http://meganfordcodes.com/animals/publish/${name}`);
       }
     };
 
