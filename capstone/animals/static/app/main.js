@@ -18,7 +18,7 @@ angular.module("Ident", ["ngRoute", "ui.bootstrap", "ngAnimate"])
         controllerAs: "background",
         resolve: {
           currentTaxa: function(TreeFactory, $route) {
-            return TreeFactory.loadSpecies($route.current.params.taxa);
+            return TreeFactory.loadTree($route.current.params.taxa);
           } 
         }
       })
