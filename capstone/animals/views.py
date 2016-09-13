@@ -102,10 +102,6 @@ def loadTaxaObject(taxa_name):
       to_add = {"name": child["name"]}
       taxa["childtaxa"].append(to_add)
 
-    for parent in r["classification"]:
-      to_add = {"name": parent["name"]}
-      taxa["supertaxa"].append(to_add)
-    
     # patch the taxa object back to firebase. 
     putter = put("https://animal-identification.firebaseio.com/specialData/" + taxa_name + "/.json", json=taxa)
   except TypeError:
@@ -119,20 +115,39 @@ def loadTaxaObject(taxa_name):
     for child in r["child_taxa"]:
       to_add = {"name": child["name"]}
       taxa["childtaxa"].append(to_add)
-
-    for parent in r["classification"]:
-      to_add = {"name": parent["name"]}
-      taxa["supertaxa"].append(to_add)
     
     # patch the taxa object back to firebase. 
     putter = put("https://animal-identification.firebaseio.com/specialData/" + taxa_name + "/.json", json=taxa)
   finally:
-    return taxa
+    pass
+  try: 
+    taxa["supertaxa"] = f["supertaxa"]
+  except KeyError:
+    r = get("http://www.catalogueoflife.org/col/webservice?name=" + taxa_name + "&format=json&response=full")
+    r=r.json()
+    r = r["results"][0]
+    taxa["rank"] = r["rank"]
+    for parent in r["classification"]:
+      to_add = {"name": parent["name"]}
+      taxa["supertaxa"].append(to_add)
+    putter = put("https://animal-identification.firebaseio.com/specialData/" + taxa_name + "/.json", json=taxa)  
+  except TypeError:
+    r = get("http://www.catalogueoflife.org/col/webservice?name=" + taxa_name + "&format=json&response=full")
+    r=r.json()
+    r = r["results"][0]
+    taxa["rank"] = r["rank"]
+    for parent in r["classification"]:
+      to_add = {"name": parent["name"]}
+      taxa["supertaxa"].append(to_add)
+    putter = put("https://animal-identification.firebaseio.com/specialData/" + taxa_name + "/.json", json=taxa)
+  finally:
+    pass
 
-def loadTreeStuff(taxa_name):
+  return taxa
+
+def loadTree(response, taxa_name):
   # Load a 'current taxa' object with the names, questions, and firebase status of all subtaxa and supertaxa. Automates migration away from catalogue of life API, which is deprecated. Also automates creation of 'enableMe' and 'question' fields on all taxa I haven't gotten into. Once migration is complete, this function will be a LOT shorter.
   taxa = loadTaxaObject(taxa_name)
-  print(taxa)
 
   # Get the 'question' data for each subtaxa and supertaxa.
   for child in taxa["childtaxa"]:
@@ -159,30 +174,31 @@ def loadTreeStuff(taxa_name):
     finally:
       pass
 
-  return taxa    
+  return JsonResponse(taxa)    
 
-def loadTree(request, taxa_name):
-  taxa = loadTreeStuff(taxa_name)
-
-  return JsonResponse(taxa)
 
 def loadSpecies(request, taxa_name):
   # Load all the taxa info and all the questions and then also load all the modal info for each species option.
-  taxa = loadTreeStuff(taxa_name)
-  print(taxa)
-  # try: 
-  #   for child in taxa["childtaxa"]:
-  #     child["modalId"] = ""
-  #     # child["modalInfo"] = {}
-  #     r = EOLforId(child["name"])
-  #     print(r)
-  #     child["modalId"] = r.data
-  #     if child["modalId"] is not 0:
-  #       child["modalInfo"] = EOLforModalInfo(child["modalId"])
-  # except TypeError:
-  #   print(taxa)
-  # except KeyError:
-  #   print(taxa)
-  # finally:
-  #   pass
+  taxa = get("http://localhost:8000/animals/tree/" + taxa_name)
+  taxa = taxa.json()
+  
+  for child in taxa["childtaxa"]:
+    child["id"] = 0
+    try:
+      r = get("http://localhost:8000/animals/id/"+ child["name"])
+      r=r.json()
+      child["id"] = r
+    except TypeError:
+      child["id"] = 0
+    except KeyError:
+      child["id"] = 0
+    finally:
+      pass
+
+  for child in taxa["childtaxa"]:
+    child["modaldata"] = None
+    m = get("http://localhost:8000/animals/info/" + str(child["id"]))
+    m=m.json()
+    child["modaldata"] = m
+
   return JsonResponse(taxa)

@@ -44,7 +44,7 @@ angular.module("Ident")
      
       //loads next page on submit button click. In a function because it's technically a form submit.
       $scope.traverse = () => { 
-        if ($scope.taxa.rank ==="Family"){
+        if ($scope.taxa.rank ==="Order" || $scope.taxa.rank === "Superfamily"){
           $location.path(`/species/${$scope.selectedSubtaxa}`);
         } else {
           $location.path(`/tree/${$scope.selectedSubtaxa}`);
