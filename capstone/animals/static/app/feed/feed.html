@@ -3,7 +3,7 @@
 <h1 class="feed-title">Recently Identified Animals</h1>
 
   <div class="feed-inner-recessed">
-    <div class="feed-card" ng-repeat="animal in feed | orderBy: 'date': true">
+    <div class="feed-card" ng-repeat="animal in feed | orderBy: 'date': false">
       <div class="card-img">
         <img class="img-responsive" ng-src="{{animal.picture}}">
       </div>
