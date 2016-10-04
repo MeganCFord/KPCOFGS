@@ -5,9 +5,6 @@ from requests import *
 import json
 import datetime
 
-# Create your views here.
-
-root_url = "http://meganfordcodes.com/animals/"
 
 class IndexView(generic.TemplateView):
   # Main index.html.
@@ -15,7 +12,13 @@ class IndexView(generic.TemplateView):
 
 
 def EOLforId(request, taxa_name):
-  # Get the Encyclopedia of life ID match given a taxa scientific name. Separated from modal info call in case there is no match.
+  '''
+  Get Encyclopedia of life ID match given a taxa scientific name. 
+  Separated from modal info call in case there is no match.
+
+  Method argument: string scientific taxa name.
+  '''
+
   taxa_id = 0
   try:
     r = get('http://eol.org/api/search/1.0.json?q='+ taxa_name + '&page=1&exact=true&filter_by_taxon_concept_id=&filter_by_hierarchy_entry_id=&filter_by_string=&cache_ttl=&key=1ded9f1eb184c38df6511aef3ba552a11b96e4c9')
@@ -32,7 +35,13 @@ def EOLforId(request, taxa_name):
 
 
 def EOLforModalInfo(request, taxa_id):
-  # Get and parse the EOL info for a given ID.
+  '''
+  Get and parse Encyclopedia of Life info for a given taxa ID.
+  Check all photos returned.
+  Used to populate species cards and modals- this is a lot of info.
+
+  Method Argument: EOL taxa ID obtained from EOLforId.
+  '''
   info = {"textStuff": [], "links": [], "pictures": [], "commonName": "", "scientificName": ""}
 
   try:
@@ -55,7 +64,7 @@ def EOLforModalInfo(request, taxa_id):
         pass
 
   for data in r["dataObjects"]:
-    # Add image data to 'pictures'
+    # Add image data to 'pictures'. TODO: concurrency-this.
     try:    
       if data["mimeType"] == "image/jpeg":
         p = get(data["mediaURL"])
@@ -77,6 +86,14 @@ def EOLforModalInfo(request, taxa_id):
 
 
 def loadTaxaObject(taxa_name):
+  '''
+  Creates/populates a 'current taxa' object with lists of subtaxa and supertaxa, given a scientific name. 
+  Mimics structure of Catalog of life database object.
+  Checks Firebase database first, but if info is missing, this function gets it from the Catalog of Life API 
+  and 'put's it into Firebase as an automigration.
+
+  Method Argument: string scientific taxa name.
+  '''
   taxa = {"childtaxa": [], "supertaxa": [], "rank": "", "name": taxa_name, "question": ""}
   # Get firebase data on selected taxa.
   try:
@@ -161,7 +178,11 @@ def loadTaxaObject(taxa_name):
   return taxa
 
 def loadTree(response, taxa_name):
-  # Load a 'current taxa' object with the names, questions, and firebase status of all subtaxa and supertaxa. Automates migration away from catalogue of life API, which is deprecated. Also automates creation of 'enableMe' and 'question' fields on all taxa I haven't gotten into. Once migration is complete, this function will be a LOT shorter.
+  '''
+  Loads a 'current taxa' object with the names, questions, and firebase status of all subtaxa and supertaxa, via loadTaxaObject function. Once migration is complete, I will combine this with loadTaxaObject.
+
+  Method Argument: string scientific name of taxa.
+  '''
   taxa = loadTaxaObject(taxa_name)
 
   # Get the 'question' data for each subtaxa and supertaxa.
@@ -188,6 +209,13 @@ def loadTree(response, taxa_name):
   return JsonResponse(taxa)    
 
 def publishAnimal(response, taxa_name):
+  '''
+  Publishes user image to firebase database 'feed' table with current datetime and identified object. 
+  Noted that this app only has one database url for a user image so if multiple people use it at once, the image upload will get super messed up. 
+  On V2 to-do list to add users or sessioning/saving in django database.
+
+  Method Argument: String scientific name of taxa.
+  '''
   userInfo = get("https://animal-identification.firebaseio.com/currentUserObject.json")
   userInfo = userInfo.json()
 
